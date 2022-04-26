@@ -35,7 +35,7 @@ public class CurrentAccount {
     @Column(name = "ACCOUNT_NUMBER")
     private String accountNumber;
     @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
+    @JoinColumn(name = "ACCOUNT_TYPE_ID")
     private AccountType accountType;
     @Column(name = "INITIAL_BALANCE_DATE")
     @Temporal(TemporalType.DATE)
