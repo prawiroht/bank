@@ -14,6 +14,8 @@ import com.bank.backend.wrapper.UserWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,11 @@ public class UserService {
     // get
     public List<UserWrapper> findAll(){
         return toWrapperList(userRepository.findAll(Sort.by("userId").ascending()));
+    }
+
+    public PaginationList<UserWrapper,User> findAll(int page,int size){
+        Pageable paging = PageRequest.of(page, size);
+        return toPaginationList(userRepository.findAll(paging));
     }
 
     public UserWrapper getById(Long id){
