@@ -14,24 +14,35 @@
 <div class="card">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
+        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData(page)" />
     </span>
-    <p-table [value]="customers" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
+    <p-table [value]="users" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Company</th>
-                <th>Representative</th>
+                <th>No</th>
+                <th>Username</th>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Group</th>
+                <th>Status</th>
+                <th>Last Login</th>
+                <th>Action</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-customer>
+        <ng-template pTemplate="body" let-user>
             <tr>
-                <td>{{customer.name}}</td>
-                <td>{{customer.country.name}}</td>
-                <td>{{customer.company}}</td>
-                <td>{{customer.representative.name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <ul *ngFor="let i of user.group"><li>{{user.group[i]}}</li></ul>
+                </td>
+                <td>{{user.status}}</td>
+                <td>{{user.lastLogin}}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success"></button>
+                </td>
             </tr>
         </ng-template>
     </p-table>

@@ -1,8 +1,10 @@
 package com.bank.backend.controller;
 
+import com.bank.backend.entity.User;
 import com.bank.backend.service.UserService;
 import com.bank.backend.util.DataResponse;
 import com.bank.backend.util.DataResponseList;
+import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.UserWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,10 @@ public class UserController {
     @GetMapping(path = "/findAll")
     public DataResponseList<UserWrapper> findAll(){
         return new DataResponseList<UserWrapper>(userService.findAll());
+    }
+    @GetMapping(path = "/findAllPagination")
+    public DataResponsePagination<UserWrapper,User> findAllPagination(@RequestParam("page")int page,@RequestParam("size")int size){
+        return new DataResponsePagination<UserWrapper,User>(userService.findAll(page,size));
     }
     @GetMapping(path = "/findById")
     public DataResponse<UserWrapper> findById(@RequestParam("id")Long id){
