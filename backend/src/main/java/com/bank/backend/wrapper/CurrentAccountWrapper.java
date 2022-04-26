@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 public class CurrentAccountWrapper {
     private Long currentAccountId;
     private Long universityId;
-    private String bankId;
+    private String universityName;
+    private Long bankId;
+    private String code;
     private String bankName;
-    private Long depositId;
     private String accountNumber;
     private Long accountTypeId;
     private String accountTypeName;

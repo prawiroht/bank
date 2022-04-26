@@ -16,13 +16,13 @@ import lombok.Setter;
 @Entity
 @Table(name = "FUNDS")
 public class Fund {
-    
+
     @Id
     @Column(name = "FUND_ID")
     @GeneratedValue(generator = "FUND_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "FUND_GEN", sequenceName = "FUNDS_SEQ", allocationSize = 1)
-    private String fundId;
-    
+    private Long fundId;
+    private String alias;
     @Column(name = "FUND_NAME")
     private String fundName;
 }

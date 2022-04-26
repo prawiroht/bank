@@ -12,9 +12,12 @@ import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.CurrentAccountRepository;
 import com.bank.backend.repository.UniversityRepository;
+import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.CurrentAccountWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,15 +55,18 @@ public class CurrentAccountService {
 
     private CurrentAccountWrapper toWrapper(CurrentAccount entity) {
         CurrentAccountWrapper wrapper = new CurrentAccountWrapper();
-        wrapper.setCurrentAccountId(wrapper.getCurrentAccountId());
+        wrapper.setCurrentAccountId(entity.getCurrentAccountId());
         wrapper.setUniversityId(entity.getUniversity() != null ? entity.getUniversity().getUniversityId() : null);
+        wrapper.setUniversityName(entity.getUniversity() != null ? entity.getUniversity().getUniversityName() : null);
         wrapper.setBankId(entity.getBank() != null ? entity.getBank().getBankId() : null);
+        wrapper.setCode(entity.getBank() != null ? entity.getBank().getCode() : null);
         wrapper.setBankName(entity.getBank() != null ? entity.getBank().getBankName() : null);
-        wrapper.setAccountNumber(wrapper.getAccountNumber());
+        wrapper.setAccountNumber(entity.getAccountNumber());
         wrapper.setAccountTypeId(entity.getAccountType() != null ? entity.getAccountType().getAccountTypeId() : null);
-        wrapper.setAccountTypeName(entity.getAccountType() != null ? entity.getAccountType().getAccountTypeName() : null);
-        wrapper.setInitialBalanceAccount(wrapper.getInitialBalanceAccount());
-        wrapper.setInitialBalanceDate(wrapper.getInitialBalanceDate());
+        wrapper.setAccountTypeName(
+                entity.getAccountType() != null ? entity.getAccountType().getAccountTypeName() : null);
+        wrapper.setInitialBalanceAccount(entity.getInitialBalanceAccount());
+        wrapper.setInitialBalanceDate(entity.getInitialBalanceDate());
         return wrapper;
     }
 
@@ -73,8 +79,35 @@ public class CurrentAccountService {
         return wrapperList;
     }
 
+    // Retrieve list of data
     public List<CurrentAccountWrapper> findAll() {
         List<CurrentAccount> currentAccountList = currentAccountRepository.findAll();
         return toWrapperList(currentAccountList);
+    }
+
+    // Retrieve single data
+    public CurrentAccountWrapper getCurrentAccountById(Long currentAccountId) {
+        return toWrapper(currentAccountRepository.findById(currentAccountId).get());
+    }
+
+    // Retrieve list of data with pagination
+    public PaginationList<CurrentAccountWrapper, CurrentAccount> findAllWithPagination(int page,
+            int size) {
+        Page<CurrentAccount> currentAccountPage = currentAccountRepository.findAll(PageRequest.of(page, size));
+        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
+        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
+        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers,
+                currentAccountPage);
+    }
+
+    // Create and Update
+    public CurrentAccountWrapper save(CurrentAccountWrapper wrapper) {
+        CurrentAccount currentAccount = currentAccountRepository.save(toEntity(wrapper));
+        return toWrapper(currentAccount);
+    }
+
+    // Delete
+    public void delete(Long id) {
+        currentAccountRepository.deleteById(id);
     }
 }

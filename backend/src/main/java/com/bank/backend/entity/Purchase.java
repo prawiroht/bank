@@ -14,15 +14,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table (name = "PURCHASES")
+@Table(name = "PURCHASES")
 public class Purchase {
     @Id
-    @Column (name = "PURCHASE_ID")
-    @GeneratedValue (generator = "PURCHASES_GEN", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator (name = "PURCHASES_GEN", sequenceName = "PURCHASES_SEQ", allocationSize = 1, initialValue = 1)
-    private String purchaseId;
-
-    @Column (name = "PURCHASE_NAME")
+    @Column(name = "PURCHASE_ID")
+    @GeneratedValue(generator = "PURCHASES_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "PURCHASES_GEN", sequenceName = "PURCHASES_SEQ", allocationSize = 1, initialValue = 1)
+    private Long purchaseId;
+    private Long alias;
+    @Column(name = "PURCHASE_NAME")
     private String purchaseName;
 
 }
