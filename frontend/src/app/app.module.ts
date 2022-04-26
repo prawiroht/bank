@@ -24,6 +24,7 @@ import { DashboardContainerComponent } from './components/dashboard-container/da
 import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
 import {PasswordModule} from 'primeng/password';
 import {ToastModule} from 'primeng/toast';
+import {CheckboxModule} from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 
 
@@ -56,7 +57,8 @@ import { FormsModule } from '@angular/forms';
     InputTextModule,
     PasswordModule,
     ToastModule,
-    FormsModule
+    FormsModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

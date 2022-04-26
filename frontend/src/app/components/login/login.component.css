@@ -1,6 +1,13 @@
-:host ::ng-deep .container {
-    padding-top: 20px;
-  }
+:host ::ng-deep body{
+height: 100%;
+margin: 0px;
+background-image: linear-gradient(180deg, white,rgb(230, 251, 230));
+}
+
+:host ::ng-deep .container {    
+  padding: 50px;
+  padding-bottom: 90px;
+}
   
   :host ::ng-deep img {
     width: 100%;
@@ -21,10 +28,10 @@
   :host ::ng-deep input[type="password"] {
     width: 100%;
   }
-  
+
   :host ::ng-deep .grid > .col, .grid > [class*=col] {
     color: gray;
-    background-color: darkslateblue;
+    background-color: white;
     border-radius: 20px;
   }
   
@@ -38,7 +45,11 @@
   
   :host ::ng-deep a {
     text-decoration: none;
-    color: aqua;
+    color: gray;
+    background-color:#eeeeee;
+    padding: 5px;    
+    border: #eeeeee;
+    border-radius: 5px;
   }
   
   :host ::ng-deep p {
