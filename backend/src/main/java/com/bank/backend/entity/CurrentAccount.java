@@ -32,9 +32,8 @@ public class CurrentAccount {
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
     private Bank bankId;
-    @ManyToOne
     @Column(name = "ACCOUNT_NUMBER")
-    private Long accountNumber;
+    private String accountNumber;
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID")
     private AccountType accountType;

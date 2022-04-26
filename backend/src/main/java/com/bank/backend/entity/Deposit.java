@@ -1,6 +1,7 @@
 package com.bank.backend.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,10 +38,10 @@ public class Deposit {
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
     @Column(name = "ACCOUNT_NUMBER")
-    private Long accountNumber;
-    @OneToMany(fetch = FetchType.LAZY)
+    private String accountNumber;
+    @OneToMany (fetch = FetchType.LAZY)
     @JoinColumn(name = "PERIOD_ID")
-    private Period period;
+    private List<Period> period;
     @Column(name = "NOMINAL")
     private Long nominal;
     @Column(name = "INTEREST")
