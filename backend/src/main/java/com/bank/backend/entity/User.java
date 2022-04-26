@@ -1,5 +1,7 @@
 package com.bank.backend.entity;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,4 +37,9 @@ public class User {
     private String email;
     @Column(name = "PHONE")
     private String phone;
+    @Column(name = "IS_ACTIVE")
+    private Character isActive;
+    @Column(name = "LAST_LOGIN")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar lastLogin;
 }

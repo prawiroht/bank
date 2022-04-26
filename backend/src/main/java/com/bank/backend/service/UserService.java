@@ -12,6 +12,7 @@ import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.UserWrapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UserService {
+    @Autowired
     UserRepository userRepository;
+    @Autowired
     GroupRepository groupRepository;
 
     // get
     public List<UserWrapper> findAll(){
         return toWrapperList(userRepository.findAll(Sort.by("userId").ascending()));
     }
-    
+
     public UserWrapper getById(Long id){
         if (id == null)
 	        return null;
@@ -67,6 +70,8 @@ public class UserService {
         entity.setAddress(wrapper.getAddress());
         entity.setEmail(wrapper.getEmail());
         entity.setPhone(wrapper.getPhone());
+        entity.setIsActive(wrapper.getIsActive());
+        entity.setLastLogin(wrapper.getLastLogin());
         return entity;
     }
 
@@ -79,6 +84,8 @@ public class UserService {
         wrapper.setAddress(entity.getAddress());
         wrapper.setEmail(entity.getEmail());
         wrapper.setPhone(entity.getPhone());
+        wrapper.setIsActive(entity.getIsActive());
+        wrapper.setLastLogin(entity.getLastLogin());
         List<Group> groupEntities = groupRepository.findGroupByUserId(entity.getUserId());
         List<String> groups = new ArrayList<String>();
         for (Group group : groupEntities){

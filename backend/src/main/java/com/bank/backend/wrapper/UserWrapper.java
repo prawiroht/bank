@@ -1,5 +1,6 @@
 package com.bank.backend.wrapper;
 
+import java.util.Calendar;
 import java.util.List;
 
 import lombok.Data;
@@ -15,5 +16,7 @@ public class UserWrapper {
     private String address;
     private String email;
     private String phone;
+    private Character isActive;
+    private Calendar lastLogin;
     private List<String> groups;
 }
