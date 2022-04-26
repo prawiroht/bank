@@ -14,23 +14,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="USERS")
+@Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(generator = "USER_GEN",strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ")
-    @Column(name="USER_ID")
+    @GeneratedValue(generator = "USER_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ", allocationSize = 1)
+    @Column(name = "USER_ID")
     private Long userId;
-    @Column(name="USERNAME")
+    @Column(name = "USERNAME")
     private String username;
-    @Column(name="PASSWORD")
+    @Column(name = "PASSWORD")
     private String password;
-    @Column(name="NAME")
+    @Column(name = "NAME")
     private String name;
-    @Column(name="ADDRESS")
+    @Column(name = "ADDRESS")
     private String address;
-    @Column(name="EMAIL")
+    @Column(name = "EMAIL")
     private String email;
-    @Column(name="PHONE")
+    @Column(name = "PHONE")
     private String phone;
 }

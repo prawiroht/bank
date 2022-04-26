@@ -13,7 +13,7 @@ public class CurrentAccountWrapper {
     private String bankId;
     private String bankName;
     private Long depositId;
-    private Long accountNumber;
+    private String accountNumber;
     private Long accountTypeId;
     private String accountName;
     private Date initialBalanceDate;

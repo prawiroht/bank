@@ -58,7 +58,7 @@ public class CurrentAccountService {
         wrapper.setBankName(entity.getBank() != null ? entity.getBank().getBankName() : null);
         wrapper.setAccountNumber(wrapper.getAccountNumber());
         wrapper.setAccountTypeId(entity.getAccountType() != null ? entity.getAccountType().getAccountTypeId() : null);
-        wrapper.setAccountName(entity.getAccountType() != null ? entity.getAccountType().getAccountName() : null);
+        wrapper.setAccountName(entity.getAccountType() != null ? entity.getAccountType().getAccountTypeName() : null);
         wrapper.setInitialBalanceAccount(wrapper.getInitialBalanceAccount());
         wrapper.setInitialBalanceDate(wrapper.getInitialBalanceDate());
         return wrapper;

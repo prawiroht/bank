@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "GROUPS")
 public class Group {
     @Id
-    @GeneratedValue(generator = "GROUP_GEN",strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "GROUP_GEN", sequenceName = "GROUP_SEQ")
-    @Column(name="GROUP_ID")
+    @GeneratedValue(generator = "GROUP_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "GROUP_GEN", sequenceName = "GROUP_SEQ", allocationSize = 1)
+    @Column(name = "GROUP_ID")
     private Long groupId;
-    @Column(name="NAME")
+    @Column(name = "NAME")
     private String name;
 }

@@ -23,6 +23,7 @@ public class Period {
     @Id
     @GeneratedValue(generator = "PERIOD_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "PERIOD_GEN", sequenceName = "PERIOD_SEQ", allocationSize = 1)
+    @Column(name = "PERIOD_ID")
     private Long periodId;
     @Column(name = "PERIOD")
     @Temporal(TemporalType.DATE)

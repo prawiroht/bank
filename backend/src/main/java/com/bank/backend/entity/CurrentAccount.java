@@ -31,7 +31,7 @@ public class CurrentAccount {
     private University university;
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
-    private Bank bankId;
+    private Bank bank;
     @Column(name = "ACCOUNT_NUMBER")
     private String accountNumber;
     @ManyToOne

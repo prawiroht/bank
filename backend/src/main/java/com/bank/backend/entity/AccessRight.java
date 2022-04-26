@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "ACCESS_RIGHTS")
 public class AccessRight {
     @Id
-    @GeneratedValue(generator = "ACCESS_GEN",strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "ACCESS_GEN", sequenceName = "ACCESS_SEQ")
-    @Column(name="ACCESS_ID")
+    @GeneratedValue(generator = "ACCESS_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "ACCESS_GEN", sequenceName = "ACCESS_SEQ", allocationSize = 1)
+    @Column(name = "ACCESS_ID")
     private Long accessRightId;
     @ManyToOne
     @JoinColumn(name = "USER_ID")
