@@ -12,8 +12,10 @@ public class DepositWrapper {
     private Long universityId;
     private String depositName;
     private Long bankId;
+    private String bankName;
     private Long accountNumber;
     private Long periodId;
+    private Date period;
     private Long nominal;
     private Long interest;
     private Long earningInterest;
