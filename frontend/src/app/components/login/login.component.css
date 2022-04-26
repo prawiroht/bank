@@ -23,7 +23,7 @@
   }
   
   :host ::ng-deep .grid > .col, .grid > [class*=col] {
-    color: white;
+    color: gray;
     background-color: darkslateblue;
     border-radius: 20px;
   }
@@ -44,7 +44,7 @@
   :host ::ng-deep p {
     margin: 0 auto;
   }
-  
+
   
   @media screen and (max-width: 480px) {
   
