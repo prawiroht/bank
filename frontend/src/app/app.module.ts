@@ -16,6 +16,10 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ApprovalSaldoComponent } from './components/approval-saldo/approval-saldo.component';
 import { ApprovalTransactionComponent } from './components/approval-transaction/approval-transaction.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ContainerComponent } from './components/container/container.component';
+import { ExpenditureComponent } from './components/expenditure/expenditure.component';
+import { MainComponent } from './components/main/main.component';
 
 
 @NgModule({
@@ -25,11 +29,15 @@ import { ApprovalTransactionComponent } from './components/approval-transaction/
     GroupManagementComponent,
     BankComponent,
     FundComponent,
+    DashboardComponent,
     ReceivingComponent,
     PurchaseComponent,
     ApprovalSaldoComponent,
     ApprovalTransactionComponent,
-    LoginComponent
+    LoginComponent,
+    ContainerComponent,
+    ExpenditureComponent,
+    MainComponent
 
   ],
   imports: [
