@@ -11,6 +11,7 @@ public class CurrentAccountWrapper {
     private Long currentAccountId;
     private Long universityId;
     private String bankId;
+    private String bankName;
     private Long depositId;
     private Long accountNumber;
     private Long accountTypeId;
