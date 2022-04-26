@@ -4,7 +4,7 @@ import { AccordionModule } from 'primeng/accordion';     //accordion and accordi
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { LoginComponent } from './components/login/login.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { GroupManagementComponent } from './components/group-management/group-management.component';
 import { BankComponent } from './components/bank/bank.component';
@@ -27,7 +27,9 @@ import { ApprovalTransactionComponent } from './components/approval-transaction/
     ReceivingComponent,
     PurchaseComponent,
     ApprovalSaldoComponent,
-    ApprovalTransactionComponent
+    ApprovalTransactionComponent,
+    LoginComponent
+
   ],
   imports: [
     BrowserModule,
