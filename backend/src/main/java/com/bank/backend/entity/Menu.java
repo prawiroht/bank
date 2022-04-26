@@ -23,8 +23,4 @@ public class Menu {
     private Long menuId;
     @Column(name = "NAME")
     private String name;
-    @Column(name = "ICON")
-    private String icon;
-    @Column(name = "URL")
-    private String url;
 }
