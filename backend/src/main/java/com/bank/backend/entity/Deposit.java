@@ -4,12 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,12 +35,12 @@ public class Deposit {
     private String depositName;
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
-    private String bankId;
+    private Bank bank;
     @Column(name = "ACCOUNT_NUMBER")
     private Long accountNumber;
-    @OneToOne
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERIOD_ID")
-    private Long periodId;
+    private Period period;
     @Column(name = "NOMINAL")
     private Long nominal;
     @Column(name = "INTEREST")
