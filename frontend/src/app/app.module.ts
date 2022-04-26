@@ -16,6 +16,8 @@ import { TableModule } from 'primeng/table';
 
 import { ApprovalSaldoComponent } from './components/approval-saldo/approval-saldo.component';
 import { ApprovalTransactionComponent } from './components/approval-transaction/approval-transaction.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -25,10 +27,12 @@ import { ApprovalTransactionComponent } from './components/approval-transaction/
     GroupManagementComponent,
     BankComponent,
     FundComponent,
+    LoginComponent,
     ReceivingComponent,
     PurchaseComponent,
     ApprovalSaldoComponent,
-    ApprovalTransactionComponent
+    ApprovalTransactionComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
