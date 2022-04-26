@@ -51,15 +51,15 @@ public class Expenditure {
 
     @ManyToOne
     @JoinColumn (name = "PURCHASE_ID")
-    private Long purchaseId;
+    private Purchase purchase;
 
     @ManyToOne
     @JoinColumn (name = "ACCOUNT_ID")
-    private Long accountId;
+    private AccountType accountType;
 
     @ManyToOne
     @JoinColumn (name = "FUND_ID")
-    private Long fundId;
+    private Fund fund;
 
     @Column (name = "DESCRIPTION")
     private String description;
