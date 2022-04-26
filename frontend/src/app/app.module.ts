@@ -22,12 +22,14 @@ import { ExpenditureComponent } from './components/expenditure/expenditure.compo
 import { MainComponent } from './components/main/main.component';
 import { DashboardContainerComponent } from './components/dashboard-container/dashboard-container.component';
 import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
-import {PasswordModule} from 'primeng/password';
-import {ToastModule} from 'primeng/toast';
+import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { GiroComponent } from './components/giro/giro.component';
 import { DepositsComponent } from './components/deposits/deposits.component';
 import { InvestmentComponent } from './components/investment/investment.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { InvestmentComponent } from './components/investment/investment.componen
     InputTextModule,
     PasswordModule,
     ToastModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

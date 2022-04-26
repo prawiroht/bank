@@ -13,12 +13,11 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'approval-saldo', component: ApprovalSaldoComponent },
-  { path: 'user-management', component: UserManagementComponent },
   { path: 'approval-transaction', component: ApprovalTransactionComponent },
-  { path: 'home', component: DashboardComponent},
-  { path: 'main', component: MainComponent},
-  { path: 'expenditure', component: ExpenditureComponent},
-  { path: 'container', component: ContainerComponent},
+  { path: 'home', component: DashboardComponent },
+  { path: 'main', component: MainComponent },
+  { path: 'expenditure', component: ExpenditureComponent },
+  { path: 'container', component: ContainerComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];

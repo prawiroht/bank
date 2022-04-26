@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-management',
@@ -6,15 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent implements OnInit {
-  customers: [] = [];
-
+  page: number = 0;
+  users: any;
   first = 0;
   rows = 10;
   searchVal = '';
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadData(this.page);
   }
 
   next() {
@@ -30,14 +31,19 @@ export class UserManagementComponent implements OnInit {
   }
 
   isLastPage(): boolean {
-    return this.customers ? this.first === (this.customers.length - this.rows) : true;
+    return this.users ? this.first === (this.users.length - this.rows) : true;
   }
 
   isFirstPage(): boolean {
-    return this.customers ? this.first === 0 : true;
+    return this.users ? this.first === 0 : true;
   }
 
-  loadData() {
-
+  loadData(page: number) {
+    this.userService.getUser(page).subscribe(
+      res => {
+        console.log(res.data)
+        this.users = res.data;
+      }
+    )
   }
 }
