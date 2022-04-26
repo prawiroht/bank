@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import com.bank.backend.entity.Bank;
 import com.bank.backend.repository.BankRepository;
+import com.bank.backend.util.PaginationList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,13 +20,15 @@ public class BankService {
     @Autowired
     BankRepository bankRepository;
 
-    List<Bank> findAll() {
+    public List<Bank> findAll() {
         return bankRepository.findAll();
     }
 
-    Page<Bank> findAllPagination(int page, int size){
+    public PaginationList<Bank, Bank> findAllPagination(int page, int size){
         Pageable paging = PageRequest.of(page, size);
-        return bankRepository.findAllPagination(paging);
+        Page<Bank> bankPage = bankRepository.findAllPagination(paging);
+        List<Bank> bankList = bankPage.getContent();
+        return new PaginationList<Bank, Bank>(bankList, bankPage);
     }
 
 }

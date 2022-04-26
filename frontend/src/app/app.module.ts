@@ -22,6 +22,9 @@ import { ExpenditureComponent } from './components/expenditure/expenditure.compo
 import { MainComponent } from './components/main/main.component';
 import { DashboardContainerComponent } from './components/dashboard-container/dashboard-container.component';
 import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
+import {PasswordModule} from 'primeng/password';
+import {ToastModule} from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -50,7 +53,10 @@ import { DashboardExpenditureComponent } from './components/dashboard-expenditur
     AccordionModule,
     ButtonModule,
     TableModule,
-    InputTextModule
+    InputTextModule,
+    PasswordModule,
+    ToastModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
