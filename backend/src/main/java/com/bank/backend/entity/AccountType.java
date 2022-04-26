@@ -15,7 +15,8 @@ public class AccountType {
     @Id
     @GeneratedValue(generator = "ACCOUNT_TYPE_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "ACCOUNT_TYPE_GEN", sequenceName = "ACCOUNT_TYPE_SEQ", allocationSize = 1)
-    private Long AccountTypeId;
-    @Column(name = "ACCOUNT_NAME")
-    private String accountName;
+    @Column(name = "ACCOUNT_TYPE_ID")
+    private Long accountTypeId;
+    @Column(name = "ACCOUNT_TYPE_NAME")
+    private String accountTypeName;
 }
