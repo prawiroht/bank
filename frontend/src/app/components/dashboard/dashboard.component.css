@@ -2,3 +2,54 @@
     color: white;
     font-family:Arial, Helvetica, sans-serif;
 }
+
+.topbar{
+    position: fixed;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #043975;
+    height: 80px;
+    padding: 0px 0px;
+    z-index: 100;
+    box-shadow: 0 0px 6px 0px rgb(0 0 0 / 12%);
+}
+
+.topbar-upper{
+    color: white;
+    width: 100%;
+    margin: 0;
+    height: 30%;
+}
+
+.topbar-lower{
+    color: #043975;
+    top: 0;
+    left: 0;
+    background-color: white;
+    width: 100%;
+    margin: 0;
+    height: 70%;
+}
+
+.sidebar{
+    position: fixed;
+    top: 60px;
+    height: 100%;
+    background-color: rgb(58, 104, 179);
+    width: 20%;
+    left: 0;
+    overflow: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-transition: left 0.3s;
+    -o-transition: left 0.3s;
+    -webkit-transition: left 0.3s;
+    transition: left 0.3s;
+}
+
+.topbar img {
+    height: 50px;
+}

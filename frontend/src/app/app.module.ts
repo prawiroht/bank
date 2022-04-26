@@ -24,6 +24,7 @@ import { DashboardContainerComponent } from './components/dashboard-container/da
 import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { GiroComponent } from './components/giro/giro.component';
 import { DepositsComponent } from './components/deposits/deposits.component';
@@ -66,6 +67,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ToastModule,
     FormsModule,
     HttpClientModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
