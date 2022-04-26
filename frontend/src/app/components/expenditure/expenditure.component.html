@@ -1,1 +1,45 @@
-<p>expenditure works!</p>
+<div class="grid">
+    <div class="col-12 lg:col-4">
+        <h2>&gt; Input Transaction - Expenditures</h2>
+    </div>
+</div>
+
+<div class="grid justify-content-start lg:justify-content-end text-center">
+    <div class="col-12 lg:col-3">
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Transaction" class="p-button-outlined mr-3 button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+    </div>
+</div>
+
+<div class="card">
+    <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
+    </span>
+    <p-table [value]="expenditures" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Bank</th>
+                <th>Account Number</th>
+                <th>Account Name</th>
+                <th>Transaction Date</th>
+                <th>Value</th>
+                <th>Purchase</th>
+                <th>Fund Name</th>
+                <th>Description</th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-expenditure>
+            <tr>
+                <!-- <td>{{customer.name}}</td>
+                <td>{{customer.country.name}}</td>
+                <td>{{customer.company}}</td>
+                <td>{{customer.representative.name}}</td> -->
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
