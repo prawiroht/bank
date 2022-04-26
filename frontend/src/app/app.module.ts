@@ -13,7 +13,7 @@ import { ReceivingComponent } from './components/receiving/receiving.component';
 import { PurchaseComponent } from './components/purchase/purchase.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-
+import { InputTextModule } from 'primeng/inputtext';
 import { ApprovalSaldoComponent } from './components/approval-saldo/approval-saldo.component';
 import { ApprovalTransactionComponent } from './components/approval-transaction/approval-transaction.component';
 
@@ -35,7 +35,8 @@ import { ApprovalTransactionComponent } from './components/approval-transaction/
     AppRoutingModule,
     AccordionModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    InputTextModule
   ],
   providers: [],
   bootstrap: [AppComponent]
