@@ -20,6 +20,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContainerComponent } from './components/container/container.component';
 import { ExpenditureComponent } from './components/expenditure/expenditure.component';
 import { MainComponent } from './components/main/main.component';
+import { DashboardContainerComponent } from './components/dashboard-container/dashboard-container.component';
+import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
 
 
 @NgModule({
@@ -37,8 +39,10 @@ import { MainComponent } from './components/main/main.component';
     LoginComponent,
     ContainerComponent,
     ExpenditureComponent,
-    MainComponent
-
+    MainComponent,
+    LoginComponent,
+    DashboardContainerComponent,
+    DashboardExpenditureComponent
   ],
   imports: [
     BrowserModule,
