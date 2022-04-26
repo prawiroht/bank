@@ -31,12 +31,11 @@ public class CurrentAccount {
     private University university;
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
-    private Bank bankId;
-    @ManyToOne
+    private Bank bank;
     @Column(name = "ACCOUNT_NUMBER")
-    private Long accountNumber;
+    private String accountNumber;
     @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
+    @JoinColumn(name = "ACCOUNT_TYPE_ID")
     private AccountType accountType;
     @Column(name = "INITIAL_BALANCE_DATE")
     @Temporal(TemporalType.DATE)

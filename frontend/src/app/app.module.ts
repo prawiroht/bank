@@ -26,6 +26,9 @@ import {PasswordModule} from 'primeng/password';
 import {ToastModule} from 'primeng/toast';
 import {CheckboxModule} from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { GiroComponent } from './components/giro/giro.component';
+import { DepositsComponent } from './components/deposits/deposits.component';
+import { InvestmentComponent } from './components/investment/investment.component';
 
 
 @NgModule({
@@ -46,7 +49,10 @@ import { FormsModule } from '@angular/forms';
     MainComponent,
     LoginComponent,
     DashboardContainerComponent,
-    DashboardExpenditureComponent
+    DashboardExpenditureComponent,
+    GiroComponent,
+    DepositsComponent,
+    InvestmentComponent
   ],
   imports: [
     BrowserModule,

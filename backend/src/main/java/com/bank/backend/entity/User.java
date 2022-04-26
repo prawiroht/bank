@@ -1,5 +1,7 @@
 package com.bank.backend.entity;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,23 +18,28 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="USERS")
+@Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(generator = "USER_GEN",strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ")
-    @Column(name="USER_ID")
+    @GeneratedValue(generator = "USER_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ", allocationSize = 1)
+    @Column(name = "USER_ID")
     private Long userId;
-    @Column(name="USERNAME")
+    @Column(name = "USERNAME")
     private String username;
-    @Column(name="PASSWORD")
+    @Column(name = "PASSWORD")
     private String password;
-    @Column(name="NAME")
+    @Column(name = "NAME")
     private String name;
-    @Column(name="ADDRESS")
+    @Column(name = "ADDRESS")
     private String address;
-    @Column(name="EMAIL")
+    @Column(name = "EMAIL")
     private String email;
-    @Column(name="PHONE")
+    @Column(name = "PHONE")
     private String phone;
+    @Column(name = "IS_ACTIVE")
+    private Character isActive;
+    @Column(name = "LAST_LOGIN")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar lastLogin;
 }

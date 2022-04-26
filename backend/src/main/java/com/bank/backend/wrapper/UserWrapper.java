@@ -1,8 +1,7 @@
 package com.bank.backend.wrapper;
 
+import java.util.Calendar;
 import java.util.List;
-
-import com.bank.backend.entity.Group;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +16,7 @@ public class UserWrapper {
     private String address;
     private String email;
     private String phone;
-    private List<Group> groups;
+    private Character isActive;
+    private Calendar lastLogin;
+    private List<String> groups;
 }

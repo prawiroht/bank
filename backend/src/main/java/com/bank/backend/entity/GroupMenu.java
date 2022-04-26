@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "GROUP_MENUS")
 public class GroupMenu {
     @Id
-    @GeneratedValue(generator = "GM_GEN",strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "GM_GEN", sequenceName = "GROUP_MENU_SEQ")
-    @Column(name="GROUP_MENU_ID")
+    @GeneratedValue(generator = "GM_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "GM_GEN", sequenceName = "GROUP_MENU_SEQ", allocationSize = 1)
+    @Column(name = "GROUP_MENU_ID")
     private Long groupMenuId;
     @ManyToOne
     @JoinColumn(name = "GROUP_ID")

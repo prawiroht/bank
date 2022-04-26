@@ -1,12 +1,11 @@
 package com.bank.backend.repository;
 
-import com.bank.backend.entity.CurrentAccount;
+import com.bank.backend.entity.Deposit;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, Long> {
-    Page<CurrentAccount> findAll(Pageable pageable);
-
+public interface DepositRepository extends JpaRepository<Deposit, Long> {
+    Page<Deposit> findAll(Pageable page);
 }

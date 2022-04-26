@@ -11,10 +11,11 @@ public class CurrentAccountWrapper {
     private Long currentAccountId;
     private Long universityId;
     private String bankId;
+    private String bankName;
     private Long depositId;
-    private Long accountNumber;
+    private String accountNumber;
     private Long accountTypeId;
-    private String accountName;
+    private String accountTypeName;
     private Date initialBalanceDate;
     private Long initialBalanceAccount;
 }
