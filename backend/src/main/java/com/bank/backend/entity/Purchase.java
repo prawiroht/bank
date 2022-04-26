@@ -20,7 +20,7 @@ public class Purchase {
     @Column (name = "PURCHASE_ID")
     @GeneratedValue (generator = "PURCHASES_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator (name = "PURCHASES_GEN", sequenceName = "PURCHASES_SEQ", allocationSize = 1, initialValue = 1)
-    private Long purchaseId;
+    private String purchaseId;
 
     @Column (name = "PURCHASE_NAME")
     private String purchaseName;

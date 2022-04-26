@@ -15,7 +15,7 @@ public class CurrentAccountWrapper {
     private Long depositId;
     private String accountNumber;
     private Long accountTypeId;
-    private String accountName;
+    private String accountTypeName;
     private Date initialBalanceDate;
     private Long initialBalanceAccount;
 }

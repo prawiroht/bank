@@ -21,7 +21,7 @@ public class Fund {
     @Column(name = "FUND_ID")
     @GeneratedValue(generator = "FUND_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "FUND_GEN", sequenceName = "FUNDS_SEQ", allocationSize = 1)
-    private Long fundId;
+    private String fundId;
     
     @Column(name = "FUND_NAME")
     private String fundName;

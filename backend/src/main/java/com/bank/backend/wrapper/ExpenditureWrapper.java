@@ -17,11 +17,11 @@ public class ExpenditureWrapper {
     private String mutationId;
     private Date transactionDate;
     private Long value;
-    private Long purchaseId;
+    private String purchaseId;
     private String purchaseName;
-    private Long accountId;
-    private String accountName;
-    private Long fundId;
+    private Long accountTypeId;
+    private String accountTypeName;
+    private String fundId;
     private String fundName;
     private String description;
 }
