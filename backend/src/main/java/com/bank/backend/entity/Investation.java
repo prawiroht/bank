@@ -28,7 +28,7 @@ public class Investation {
     private Long investationId;
     @ManyToOne
     @JoinColumn(name = "UNIVERSITY_ID")
-    private Long universityId;
+    private University university;
     @Column(name = "INVESTATION_NAME")
     private String investationName;
     @Column(name = "INITIAL_SAVING")

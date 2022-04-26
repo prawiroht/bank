@@ -1,5 +1,19 @@
 package com.bank.backend.wrapper;
 
-public class CurrentAccountWrapper {
+import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class CurrentAccountWrapper {
+    private Long currentAccountId;
+    private Long universityId;
+    private String bankId;
+    private Long depositId;
+    private Long accountNumber;
+    private Long accountTypeId;
+    private Date initialBalanceDate;
+    private Long initialBalanceAccount;
 }
