@@ -2,8 +2,6 @@ package com.bank.backend.wrapper;
 
 import java.util.List;
 
-import com.bank.backend.entity.Group;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,5 +15,5 @@ public class UserWrapper {
     private String address;
     private String email;
     private String phone;
-    private List<Group> groups;
+    private List<String> groups;
 }

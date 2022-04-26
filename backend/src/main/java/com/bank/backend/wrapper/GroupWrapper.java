@@ -2,8 +2,6 @@ package com.bank.backend.wrapper;
 
 import java.util.List;
 
-import com.bank.backend.entity.Menu;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class GroupWrapper {
     private Long groupId;
     private String name;
-    private List<Menu> menus;
+    private List<String> menus;
 }

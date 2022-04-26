@@ -8,6 +8,4 @@ import lombok.NoArgsConstructor;
 public class MenuWrapper {
     private Long menuId;
     private String name;
-    private String icon;
-    private String url;
 }
