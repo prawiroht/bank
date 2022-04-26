@@ -28,15 +28,16 @@ public class CurrentAccount {
     private Long currentAccountId;
     @ManyToOne
     @JoinColumn(name = "UNIVERSITY_ID")
-    private Long universityId;
+    private University university;
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
-    private Long bankId;
+    private Bank bankId;
+    @ManyToOne
     @Column(name = "ACCOUNT_NUMBER")
-    private String accountNumber;
+    private Long accountNumber;
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID")
-    private Long accountId;
+    private AccountType accountType;
     @Column(name = "INITIAL_BALANCE_DATE")
     @Temporal(TemporalType.DATE)
     private Date initialBalanceDate;
