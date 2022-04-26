@@ -2,6 +2,7 @@ package com.bank.backend.controller;
 
 import com.bank.backend.entity.Bank;
 import com.bank.backend.service.BankService;
+import com.bank.backend.util.DataResponseList;
 import com.bank.backend.util.DataResponsePagination;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class BankController {
     @Autowired
     BankService bankService;
+
+    @GetMapping (path = "/findAll")
+    public DataResponseList<Bank> findAll(){
+        return new DataResponseList<Bank>(bankService.findAll());
+    }
 
     @GetMapping (path = "/findAllPagination")
     public DataResponsePagination<Bank, Bank> findAllPagination(@RequestParam("page") int page,@RequestParam("size") int size) {

@@ -26,7 +26,7 @@ public class BankService {
 
     public PaginationList<Bank, Bank> findAllPagination(int page, int size){
         Pageable paging = PageRequest.of(page, size);
-        Page<Bank> bankPage = bankRepository.findAllPagination(paging);
+        Page<Bank> bankPage = bankRepository.findAll(paging);
         List<Bank> bankList = bankPage.getContent();
         return new PaginationList<Bank, Bank>(bankList, bankPage);
     }
