@@ -23,4 +23,16 @@ export class UserService {
     });
   }
 
+  postUser(req: any): Observable<any> {
+    return this.http.post<any>(url + `user/post`, req, {
+      responseType: 'json',
+    })
+  }
+
+  getByUsername(username: string): Observable<any> {
+    return this.http.get<any>(
+      url + `users/findByUsername?username=${username}`,
+      httpOptions
+    );
+  }
 }

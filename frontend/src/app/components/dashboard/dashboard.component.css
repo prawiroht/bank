@@ -20,22 +20,22 @@
     color: white;
     width: 100%;
     margin: 0;
-    height: 30%;
+    height: 35%;
 }
 
 .topbar-lower{
     color: #043975;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: #f8f9fa;
     width: 100%;
     margin: 0;
-    height: 70%;
+    height: 65%;
 }
 
 .sidebar{
     position: fixed;
-    top: 60px;
+    top: 10%;
     height: 100%;
     background-color: rgb(58, 104, 179);
     width: 20%;
@@ -48,6 +48,8 @@
     -o-transition: left 0.3s;
     -webkit-transition: left 0.3s;
     transition: left 0.3s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
 }
 
 .topbar img {

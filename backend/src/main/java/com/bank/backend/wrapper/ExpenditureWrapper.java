@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ExpenditureWrapper {
     private Long expenditureId;
-    private String bankId;
+    private Long bankId;
+    private String code;
     private String bankName;
     private Long universityId;
     private String universityName;
@@ -17,11 +18,13 @@ public class ExpenditureWrapper {
     private String mutationId;
     private Date transactionDate;
     private Long value;
-    private String purchaseId;
+    private Long purchaseId;
+    private String purchaseAlias;
     private String purchaseName;
     private Long accountTypeId;
     private String accountTypeName;
-    private String fundId;
+    private Long fundId;
+    private String fundAlias;
     private String fundName;
     private String description;
 }

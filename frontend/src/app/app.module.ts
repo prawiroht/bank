@@ -28,6 +28,8 @@ import { GiroComponent } from './components/giro/giro.component';
 import { DepositsComponent } from './components/deposits/deposits.component';
 import { InvestmentComponent } from './components/investment/investment.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApprovalSaldoGiroComponent } from './components/approval-saldo-giro/approval-saldo-giro.component';
@@ -37,7 +39,14 @@ import { ApprovalTransactionPenampunganComponent } from './components/approval-t
 import { ApprovalTransactionUtamaComponent } from './components/approval-transaction-utama/approval-transaction-utama.component';
 import { ApprovalTransactionPengeluaranComponent } from './components/approval-transaction-pengeluaran/approval-transaction-pengeluaran.component';
 import { ApprovalTransactionFileMt940Component } from './components/approval-transaction-file-mt940/approval-transaction-file-mt940.component';
+import { FieldsetModule } from 'primeng/fieldset';
 
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuItem } from 'primeng/api';
+import { PanelModule } from 'primeng/panel';
 
 
 @NgModule({
@@ -80,8 +89,18 @@ import { ApprovalTransactionFileMt940Component } from './components/approval-tra
     FormsModule,
     HttpClientModule,
     CheckboxModule,
+    MessagesModule,
+    MessageModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FieldsetModule,
+    CalendarModule,
+    CardModule,
+    ChartModule,
+    PanelMenuModule,
+    PanelModule,
+    BrowserAnimationsModule,
+    AccordionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
