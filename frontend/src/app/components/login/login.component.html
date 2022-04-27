@@ -1,5 +1,5 @@
 <body>
-    <div class="container">
+    <div class="container" (keyup.enter)="login()">
         <div class="grid justify-content-center">
           <div class="col-12 md:col-6 login">
             <div class="grid login">
@@ -35,6 +35,4 @@
         </div>
       </div>
 </body>
-
-<button pButton pRipple type="button" label="LOGOUT" (click)="logout()"></button>
 <p-toast position="top-center" key="tc"></p-toast>

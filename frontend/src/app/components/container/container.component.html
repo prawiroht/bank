@@ -6,7 +6,7 @@
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
     <div class="col-12 lg:col-3">
-        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Transaction" class="p-button-outlined mr-3 button-nav"></button>
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Transaction" (onClick)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
         <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
@@ -44,5 +44,88 @@
         </ng-template>
     </p-table>
 </div>
+
+<!-- <p-dialog [header]="action == 'Add' ? 'Add Transaction' : 'Edit Transaction'" [(visible)]="display" [modal]="true"
+        [style]="{ width: '50vw', height: '40vw' }" [maximizable]="true" [baseZIndex]="10000" [draggable]="false"
+        [resizable]="false" (onHide)="handleReset($event,'click')">
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <h5>ID</h5>
+                <input type="text" pInputText id="containerId" [(ngModel)]="row.containerId" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.containerId">
+                    ID Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Bank</h5>
+                <input type="text" pInputText id="bankName" [(ngModel)]="row.bankName" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
+                    Bank Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Account Number</h5>
+                <input type="text" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
+                    Account Number Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Account Name</h5>
+                <input type="text" pInputText id="accountName" [(ngModel)]="row.accountName" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Account Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Transaction Time</h5>
+                    <input type="date" pInputText [(ngModel)]="row.transactionTime" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.transactionTime">
+                   Transaction Time Required!
+                </h5>
+            </div>
+            
+            <div class="col-12 md:col-6">
+                <h5>Value</h5>
+                <input type="text" pInputText [(ngModel)]="row.value" id="value">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.value">
+                    Value Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Purchase</h5>
+                <input type="text" pInputText id="purchase" [(ngModel)]="row.purchase" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.purchase">
+                    Purchase Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Fund Name</h5>
+                <input type="text" pInputText id="fundName" [(ngModel)]="row.fundName" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.fundName">
+                    Fund Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Description</h5>
+                <input type="text" pInputText id="fundName" [(ngModel)]="row.description" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.description">
+                    Fund Name Required!
+                </h5>
+            </div>
+            </div>
+    </p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog> -->
+
+
+<!-- <ng-template pTemplate="footer">
+    <button pButton type="button" label="Save" icon="pi pi-check"
+        (click)="handleSaveEmployee($event)" [disabled]="handleValidation()"></button>
+    <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
+        class="mt-2 ml-1 p-button-danger"></button>
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
+        class="mt-2 ml-1 p-button-danger"></button>
+</ng-template> -->
 
 
