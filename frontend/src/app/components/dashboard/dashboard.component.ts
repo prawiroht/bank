@@ -106,8 +106,14 @@ export class DashboardComponent implements OnInit {
             {label: 'Bank'},
             {label: 'Sumber Dana'},
             {label: 'Jenis Penerimaan'},
-            {label: 'Jenis Belanja'}
-        ]
+            {label: 'Jenis Belanja'},
+        ],
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-power-off',
+        command: () => this.logout()
+        
       }
     ];
 }
