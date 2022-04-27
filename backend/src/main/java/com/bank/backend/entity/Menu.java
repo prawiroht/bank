@@ -19,7 +19,7 @@ public class Menu {
     @Id
     @GeneratedValue(generator = "MENU_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "MENU_GEN", sequenceName = "MENU_SEQ", allocationSize = 1)
-    @Column(name = "GROUP_ID")
+    @Column(name = "MENU_ID")
     private Long menuId;
     @Column(name = "NAME")
     private String name;

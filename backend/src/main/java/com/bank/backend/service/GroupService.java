@@ -31,7 +31,7 @@ public class GroupService {
         Pageable paging = PageRequest.of(page, size);
         return toPaginationList(groupRepository.findAll(paging));
     }
-
+    
     public List<GroupWrapper> findAll(){
         return toWrapperList(groupRepository.findAll());
     }
