@@ -46,6 +46,15 @@ public class UserService {
             return null;
         return toWrapper(user.get());
     }
+
+    public UserWrapper getByUsername(String username){
+        if (username != null)
+            return null;
+        Optional<User> user = userRepository.findByUsername(username);
+        if (!user.isPresent())
+            return null;
+        return toWrapper(user.get());
+    }
     
     // post & put
     public UserWrapper save(UserWrapper wrapper){
