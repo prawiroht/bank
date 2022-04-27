@@ -54,7 +54,7 @@ public class Expenditure {
     private Purchase purchase;
 
     @ManyToOne
-    @JoinColumn (name = "ACCOUNT_ID")
+    @JoinColumn (name = "ACCOUNT_TYPE_ID")
     private AccountType accountType;
 
     @ManyToOne
