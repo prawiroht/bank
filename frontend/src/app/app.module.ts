@@ -93,7 +93,7 @@ import { PanelModule } from 'primeng/panel';
     MessageModule,
     DialogModule,
     BrowserAnimationsModule,
-    FieldsetModule
+    FieldsetModule,
     CalendarModule,
     CardModule,
     ChartModule,
