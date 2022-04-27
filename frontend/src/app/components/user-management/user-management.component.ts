@@ -157,7 +157,7 @@ export class UserManagementComponent implements OnInit {
     this.row = { ...row }
     this.userService.deleteUser(row.userId).subscribe(
       res => {
-        this.showSuccess()
+
       }
     )
   }
@@ -168,12 +168,14 @@ export class UserManagementComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
+        this.deleteUser(user)
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+        window.location.reload()
       },
       reject: (type: ConfirmEventType) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
           case ConfirmEventType.CANCEL:
             this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });

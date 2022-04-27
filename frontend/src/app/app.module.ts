@@ -45,11 +45,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { PanelMenuModule } from 'primeng/panelmenu';
-<<<<<<< HEAD
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-=======
-import { MenuItem, MessageService } from 'primeng/api';
->>>>>>> 89676f9beaa0c38e62a5287b35417268d387919b
 import { PanelModule } from 'primeng/panel';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
