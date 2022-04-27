@@ -1,1 +1,55 @@
-<p>deposits works!</p>
+<div class="grid">
+    <div class="col-12 lg:col-4">
+        <h2>&gt; Input Saldo - Deposito</h2>
+    </div>
+</div>
+
+<div class="grid justify-content-start lg:justify-content-end text-center">
+    <div class="col-12 lg:col-3">
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Deposito" class="p-button-outlined mr-3 button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+    </div>
+</div>
+
+<div class="card">
+    <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
+    </span>
+    <p-table [value]="deposito" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>No</th>
+                <th>Kode</th>
+                <th>Nama Bank</th>
+                <th>Rekening</th>
+                <th>Waktu</th>
+                <th>Nominal</th>
+                <th>Bunga</th>
+                <th>Tanggal Buka</th>
+                <th>Jatuh Tempo</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-deposits>
+            <tr>
+                <td>{{deposits.depositId}}</td>
+                <td>{{deposits.code}}</td>
+                <td>{{deposits.bankName}}</td>
+                <td>{{deposits.accountNumber}}</td>
+                <td>{{deposits.period}}</td>
+                <td>{{deposits.nominal}}</td>
+                <td>{{deposits.interest}}</td>
+                <td>{{deposits.startDate}}</td>
+                <td>{{deposits.dueDate}}</td>
+                <td></td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger" style="margin-left: 7px;"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

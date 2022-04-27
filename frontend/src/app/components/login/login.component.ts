@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService:UserService,
     private router:Router,
-    private messageService:MessageService,
-    private app:AppComponent) { }
+    private messageService:MessageService) { }
 
     dataAccess: any;
     dataMenu: any;
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -48,30 +47,12 @@ export class LoginComponent implements OnInit {
     this.userService.getByUsername(this.username).subscribe(
       res => {
         this.userData = res.data;
-        console.log(this.userData, 'ini user data')
+        console.log(this.userData,'iniinin');
         if (res.status) {
-          if (this.userData.password == this.password) {
-            console.log(this.userData.permissions)
-            for (let i in this.userData.permissions) {
-              if (this.userData.permissions[i] == 'LOGIN') {
-                this.successLogin()
-                localStorage.setItem('token', this.userData.userId)
-                localStorage.setItem('name', 'Administrator')
-                for (let i in this.userData.permissions) {
-                  if (this.userData.permissions[i] == 'VIEW') {
-                    localStorage.setItem('isView', 'true');
-                  }
-                  if (res.data.permissions[i] == 'MANAGE') {
-                    localStorage.setItem('isManage', 'true');
-                  }
-                }
-                window.location.reload()
-                return
-              }
-            }
-            this.loginDenied();
-          } else {
-            this.wrongUser();
+          if (this.userData.username==this.username && this.userData.password == this.password) {
+            this.successLogin()
+            localStorage.setItem('token', this.userData.userId)
+            window.location.reload();
           }
         } else {
           this.wrongUser();

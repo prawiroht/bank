@@ -27,4 +27,5 @@ public class ExpenditureWrapper {
     private String fundAlias;
     private String fundName;
     private String description;
+    private String status;
 }
