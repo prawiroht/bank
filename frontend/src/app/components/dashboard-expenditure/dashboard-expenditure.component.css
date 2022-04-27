@@ -1,0 +1,21 @@
+#block_container {
+    /* display: inline-block; */
+    justify-content: center;
+}
+
+#bloc1, #bloc2{
+    display:inline;
+}
+
+#blocA, #blocB{
+    display: inline;
+}
+
+.cards{
+    background-color: lightblue;
+}
+
+.pies{
+    width: 20px;
+}
+

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-approval-saldo',
-  templateUrl: './approval-saldo.component.html',
-  styleUrls: ['./approval-saldo.component.css']
+  selector: 'app-approval-transaction-file-mt940',
+  templateUrl: './approval-transaction-file-mt940.component.html',
+  styleUrls: ['./approval-transaction-file-mt940.component.css']
 })
-export class ApprovalSaldoComponent implements OnInit {
+export class ApprovalTransactionFileMt940Component implements OnInit {
 
   page: number = 0;
   data: any;
@@ -39,11 +39,6 @@ export class ApprovalSaldoComponent implements OnInit {
   }
 
   loadData(page: number) {
-    // this.dataervice.getUser(page).subscribe(
-    //   res => {
-    //     console.log(res.data)
-    //     this.data = res.data;
-    //   }
-    // )
   }
+
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-approval-transaction',
-  templateUrl: './approval-transaction.component.html',
-  styleUrls: ['./approval-transaction.component.css']
+  selector: 'app-approval-saldo-deposito',
+  templateUrl: './approval-saldo-deposito.component.html',
+  styleUrls: ['./approval-saldo-deposito.component.css']
 })
-export class ApprovalTransactionComponent implements OnInit {
+export class ApprovalSaldoDepositoComponent implements OnInit {
 
   page: number = 0;
   data: any;
@@ -39,12 +39,6 @@ export class ApprovalTransactionComponent implements OnInit {
   }
 
   loadData(page: number) {
-    // this.dataervice.getUser(page).subscribe(
-    //   res => {
-    //     console.log(res.data)
-    //     this.data = res.data;
-    //   }
-    // )
   }
 
 }

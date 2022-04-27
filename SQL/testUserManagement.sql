@@ -21,3 +21,11 @@ update GROUP_MENUS
 set IS_ACTIVE = 'Y'
 
 SELECT g.GROUP_ID,g.name FROM GROUPS G JOIN ACCESS_RIGHTS AR ON G.GROUP_ID=AR.GROUP_ID JOIN USERS U ON AR.USER_ID=U.USER_ID WHERE U.USER_ID=1 and ar.IS_ACTIVE='Y';
+
+desc menus;
+
+SELECT m.menu_ID, m.NAME
+        FROM menus m
+        JOIN group_menuS gm ON m.menu_ID = gm.menu_ID
+        JOIN groups g ON gm.group_ID = g.group_ID
+        WHERE g.group_ID = :pGroupId and gm.IS_ACTIVE = 'Y'
