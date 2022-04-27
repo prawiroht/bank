@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.bank.backend.entity.Group;
 import com.bank.backend.entity.User;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.GroupRepository;
 import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
+import com.bank.backend.wrapper.GroupWrapper;
 import com.bank.backend.wrapper.UserWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     GroupRepository groupRepository;
+    @Autowired
+    GroupService groupService;
 
     // get
     public List<UserWrapper> findAll(){
@@ -109,12 +111,12 @@ public class UserService {
         wrapper.setPhone(entity.getPhone());
         wrapper.setIsActive(entity.getIsActive());
         wrapper.setLastLogin(entity.getLastLogin());
-        List<Group> groupEntities = groupRepository.findGroupByUserId(entity.getUserId());
-        List<String> groups = new ArrayList<String>();
-        for (Group group : groupEntities){
-            groups.add(group.getName());
-        }
-        wrapper.setGroups(groups);
+        List<GroupWrapper> groupEntities = groupService.findGroupByUserId(entity.getUserId());
+        // List<String> groups = new ArrayList<String>();
+        // for (Group group : groupEntities){
+        //     groups.add(group.getName());
+        // }
+        wrapper.setGroups(groupEntities);
         return wrapper;
     }
 

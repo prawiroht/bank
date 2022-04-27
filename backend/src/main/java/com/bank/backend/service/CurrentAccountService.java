@@ -8,6 +8,7 @@ import com.bank.backend.entity.AccountType;
 import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.CurrentAccount;
 import com.bank.backend.entity.University;
+import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.CurrentAccountRepository;
@@ -33,10 +34,14 @@ public class CurrentAccountService {
     @Autowired
     AccountTypeRepository accountTypeRepository;
 
+    // util
     private CurrentAccount toEntity(CurrentAccountWrapper wrapper) {
         CurrentAccount entity = new CurrentAccount();
-        if (wrapper.getAccountTypeId() != null) {
-            entity = currentAccountRepository.getById(wrapper.getAccountTypeId());
+        if (wrapper.getCurrentAccountId() != null) {
+            Optional<CurrentAccount> currentAccount = currentAccountRepository.findById(wrapper.getAccountTypeId());
+            if (!currentAccount.isPresent())
+                throw new BusinessException("Current Account not found: " + wrapper.getAccountTypeId() + '.');
+            entity = currentAccount.get();
         }
         Optional<University> optionalUniv = universityRepository.findById(wrapper.getUniversityId());
         University university = optionalUniv.orElse(null);
@@ -100,6 +105,15 @@ public class CurrentAccountService {
                 currentAccountPage);
     }
 
+    // Retrieve list of data with pagination with param all category
+    public PaginationList<CurrentAccountWrapper, CurrentAccount> getAllCategories(String all, int page, int size) {
+        Page<CurrentAccount> currentAccountPage = currentAccountRepository.getByAllCategories(all,
+                PageRequest.of(page, size));
+        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
+        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
+        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers, currentAccountPage);
+    }
+
     // Create and Update
     public CurrentAccountWrapper save(CurrentAccountWrapper wrapper) {
         CurrentAccount currentAccount = currentAccountRepository.save(toEntity(wrapper));
@@ -108,6 +122,11 @@ public class CurrentAccountService {
 
     // Delete
     public void delete(Long id) {
+        if (id == null)
+            throw new BusinessException("Id cannot be null");
+        Optional<CurrentAccount> entity = currentAccountRepository.findById(id);
+        if (!entity.isPresent())
+            throw new BusinessException("Cannot found Current Account with id :" + id + ".");
         currentAccountRepository.deleteById(id);
     }
 }

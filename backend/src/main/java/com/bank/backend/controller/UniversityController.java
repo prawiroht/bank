@@ -25,19 +25,28 @@ public class UniversityController {
     @Autowired
     UniversityService universityService;
 
+    // FIND ALL
     @GetMapping (path = "/findAll")
     public DataResponseList<University> findAll(){
         return new DataResponseList<University>(universityService.findAll());
     }
 
+    // FIND ALL WITH PAGINATION
     @GetMapping (path = "/findAllPagination")
     public DataResponsePagination<University, University> findAllPagination(@RequestParam("page") int page,@RequestParam("size") int size) {
         return new DataResponsePagination<University, University>(universityService.findAllPagination(page, size));
     };
 
+    // FIND BY UNIVERSITY NAME
+    @GetMapping(path = "/findByUniversityName")
+    public DataResponsePagination<University, University> findByUniversityName(@RequestParam("search") String all, @RequestParam("page") int page, @RequestParam("size") int size) {
+        return new DataResponsePagination<University, University>(universityService.findByUniversityName(all, page, size));
+    }
+
+    // GET BY ID
     @RequestMapping(path = "/getById", method = RequestMethod.GET)
 	public DataResponse<University> getByLocationId(@RequestParam("id") Long universityId) {
-		return new DataResponse<University>(universityService.getByLocationId(universityId));
+		return new DataResponse<University>(universityService.getByUniversityId(universityId));
 	}
 
     // POST / ADD
