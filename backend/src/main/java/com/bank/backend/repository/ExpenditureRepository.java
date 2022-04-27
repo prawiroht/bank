@@ -37,7 +37,7 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     "LEFT JOIN PURCHASES p ON e.PURCHASE_ID = p.PURCHASE_ID "+
     "LEFT JOIN ACCOUNT_TYPES at ON e.ACCOUNT_TYPE_ID = at.ACCOUNT_TYPE_ID "+
     "LEFT JOIN FUNDS f ON e.FUND_ID = f.FUND_ID "+
-    "LOWER(b.BANK_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pBankName), '%')) OR "+
+    "WHERE LOWER(b.BANK_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pBankName), '%')) OR "+
     "LOWER(u.UNIVERSITY_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pUniversityName), '%')) OR "+
     "LOWER(e.ACCOUNT_NUMBER) LIKE LOWER(CONCAT(CONCAT('%', :pAccountNumber), '%')) OR "+
     "LOWER(e.MUTATION_ID) LIKE LOWER(CONCAT(CONCAT('%', :pMutationId), '%')) OR "+
