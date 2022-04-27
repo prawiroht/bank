@@ -48,6 +48,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
 
 @NgModule({
   declarations: [
@@ -100,7 +102,8 @@ import { PanelModule } from 'primeng/panel';
     PanelMenuModule,
     PanelModule,
     BrowserAnimationsModule,
-    AccordionModule
+    AccordionModule,
+    ConfirmDialogModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
