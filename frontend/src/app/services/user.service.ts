@@ -31,7 +31,7 @@ export class UserService {
 
   getByUsername(username: string): Observable<any> {
     return this.http.get<any>(
-      url + `users/findByUsername?username=${username}`,
+      url + `user/findByUsername?username=${username}`,
       httpOptions
     );
   }
