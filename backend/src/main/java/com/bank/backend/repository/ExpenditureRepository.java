@@ -27,7 +27,8 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     "LOWER(p.PURCHASE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pPurchaseName), '%')) OR "+
     "LOWER(at.ACCOUNT_TYPE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pAccountTypeName), '%')) OR "+
     "LOWER(f.FUND_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pFundName), '%')) OR "+
-    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%'))", 
+    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%')) "+
+    "LOWER(e.STATUS) LIKE LOWER(CONCAT(CONCAT('%', :pStatus), '%'))", 
     countQuery = "SELECT COUNT(e.EXPENDITURE_ID, e.BANK_ID, b.BANK_NAME, e.UNIVERSITY_ID, u.UNIVERSITY_NAME, e.ACCOUNT_NUMBER, "+ 
     "e.MUTATION_ID, e.TRANSACTION_DATE, e.VALUE, e.PURCHASE_ID, p.PURCHASE_NAME, e.ACCOUNT_TYPE_ID, at.ACCOUNT_TYPE_NAME, "+
     "e.FUND_ID, f.FUND_NAME, e.DESCRIPTION) FROM EXPENDITURES e "+
@@ -43,7 +44,8 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     "LOWER(p.PURCHASE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pPurchaseName), '%')) OR "+
     "LOWER(at.ACCOUNT_TYPE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pAccountTypeName), '%')) OR "+
     "LOWER(f.FUND_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pFundName), '%')) OR "+
-    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%'))", nativeQuery = true
+    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%'))"+
+    "LOWER(e.STATUS) LIKE LOWER(CONCAT(CONCAT('%', :pStatus), '%'))", nativeQuery = true
     )
     Page<Expenditure> findByAllCategoriesWithIndexedQueryParam(
         @Param("pBankName") String bankName,
@@ -53,11 +55,12 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
         @Param("pPurchaseName") String purchaseName,
         @Param("pAccountTypeName") String accountTypeName,
         @Param("pFundName") String fundName,
-        @Param("pDescription") String description, 
+        @Param("pDescription") String description,
+        @Param("pStatus") String status, 
         Pageable page);
     default Page<Expenditure> findByAllCategories (String all, Pageable page){
         return findByAllCategoriesWithIndexedQueryParam(
-            all, all, all, all, all, all, all, all, page);
+            all, all, all, all, all, all, all, all, all, page);
     }
 
 }
