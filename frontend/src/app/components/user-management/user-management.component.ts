@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 import { GroupService } from 'src/app/services/group.service';
+import { RightAccessService } from 'src/app/services/right-access.service';
 import { UserService } from 'src/app/services/user.service';
-
+import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmEventType } from 'primeng/api';
 
 @Component({
   selector: 'app-user-management',
@@ -22,7 +25,7 @@ export class UserManagementComponent implements OnInit {
   searchVal = '';
   displayMaximizable: boolean = false;
   isEdit: boolean = false;
-  isAdd: boolean = true;
+  isAdd: boolean = false;
   row: any = {
   };
   selectedGroups: any[] = [];
@@ -30,7 +33,7 @@ export class UserManagementComponent implements OnInit {
   groups: any[] = [];
 
   checked: boolean = false;
-  constructor(private userService: UserService, private groupService: GroupService) { }
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private userService: UserService, private groupService: GroupService, private accessService: RightAccessService) { }
 
   ngOnInit(): void {
     // this.loadData({lazyEvent: JSON.stringify(event)});
@@ -39,7 +42,7 @@ export class UserManagementComponent implements OnInit {
     this.groupService.getGroup().subscribe(
       res => {
         this.groups = res.data;
-        console.log(this.groups)
+        console.log(this.groups, 'ini this groups')
       }
     )
   }
@@ -109,6 +112,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   openAddDialog() {
+    this.selectedGroups = []
     console.log(this.row, 'ini row waktu buka')
     this.isAdd = true;
     this.displayMaximizable = true;
@@ -116,7 +120,7 @@ export class UserManagementComponent implements OnInit {
 
   handleHideDialog() {
     this.row = {
-      username: ''
+
     }
   }
 
@@ -126,8 +130,61 @@ export class UserManagementComponent implements OnInit {
     console.log(this.row, 'ini post')
     this.userService.postUser(this.row).subscribe(
       res => {
-        console.log(res)
+        console.log(res);
+        for (var i in this.selectedGroups) {
+          this.accessService.putAccess(res.data.userId, this.selectedGroups[i].groupId, 'Y').subscribe()
+        }
       }
     )
+  }
+
+  putUser() {
+    console.log(this.row, 'ini row put')
+    this.userService.putUser(this.row).subscribe(
+      res => {
+        for (var i in this.groups) {
+          this.accessService.putAccess(res.data.userId, this.groups[i].groupId, 'N').subscribe();
+        }
+        for (var i in this.selectedGroups) {
+          this.accessService.putAccess(res.data.userId, this.selectedGroups[i].groupId, 'Y').subscribe();
+        }
+        this.showSuccess()
+      }
+    )
+  }
+
+  deleteUser(row: any) {
+    this.row = { ...row }
+    this.userService.deleteUser(row.userId).subscribe(
+      res => {
+        this.showSuccess()
+      }
+    )
+  }
+
+  deleteDialog(user: any) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      }
+    });
+  }
+
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+    window.location.reload()
   }
 }

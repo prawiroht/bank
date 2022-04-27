@@ -29,6 +29,16 @@ export class UserService {
     })
   }
 
+  putUser(req: any): Observable<any> {
+    return this.http.put<any>(url + `user/update`, req, {
+      responseType: 'json',
+    })
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    return this.http.delete<any>(url + `user/delete?id=${userId}`)
+  }
+
   getByUsername(username: string): Observable<any> {
     return this.http.get<any>(
       url + `users/findByUsername?username=${username}`,

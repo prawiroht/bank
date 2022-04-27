@@ -45,9 +45,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -100,9 +100,10 @@ import { PanelModule } from 'primeng/panel';
     PanelMenuModule,
     PanelModule,
     BrowserAnimationsModule,
-    AccordionModule
+    AccordionModule,
+    ConfirmDialogModule
   ],
-  providers: [],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
