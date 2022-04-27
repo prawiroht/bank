@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'container', component: ContainerComponent, canActivate:[AuthGuardService] },
   { path: 'giro', component: GiroComponent, canActivate:[AuthGuardService] },
   { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate:[AuthGuardService] },
-  { path: 'giro-approval', component: ApprovalSaldoGiroComponent, canActivate:[AuthGuardService] },
+  { path: 'giro-approval', component: ApprovalSaldoGiroComponent, },
   { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent, canActivate:[AuthGuardService] },
   { path: 'dashboard-container', component: DashboardContainerComponent, canActivate:[AuthGuardService]},
   { path: 'dashboard-expenditure', component: DashboardExpenditureComponent, canActivate:[AuthGuardService]},
