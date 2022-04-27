@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   itemInput: MenuItem[]= [];
   itemApproval: MenuItem[]= [];
   itemSetting: MenuItem[]= [];
+  itemHome: MenuItem[]= [];
 
   constructor(private messageService : MessageService, private userService:UserService) { }
   logout(): void {
@@ -22,6 +23,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.itemHome = [
+      {label: 'Dashboard',
+        icon: 'pi pi-pw pi-home'
+    }
+    ]
     this.itemDashboard = [
       {
           label: 'Saldo',
@@ -99,8 +106,14 @@ export class DashboardComponent implements OnInit {
             {label: 'Bank'},
             {label: 'Sumber Dana'},
             {label: 'Jenis Penerimaan'},
-            {label: 'Jenis Belanja'}
-        ]
+            {label: 'Jenis Belanja'},
+        ],
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-power-off',
+        command: () => this.logout()
+        
       }
     ];
 }
