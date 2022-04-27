@@ -21,10 +21,7 @@ public class Purchase {
     @GeneratedValue(generator = "PURCHASES_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "PURCHASES_GEN", sequenceName = "PURCHASES_SEQ", allocationSize = 1, initialValue = 1)
     private Long purchaseId;
-<<<<<<< HEAD
     @Column(name = "ALIAS")
-=======
->>>>>>> abcd347c5cf9241014c7f5f5251d06779ec22518
     private String alias;
     @Column(name = "PURCHASE_NAME")
     private String purchaseName;

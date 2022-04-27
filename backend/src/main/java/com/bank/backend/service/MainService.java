@@ -17,6 +17,7 @@ import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.FundRepository;
 import com.bank.backend.repository.MainRepository;
+import com.bank.backend.repository.PurchaseRepository;
 import com.bank.backend.repository.UniversityRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.MainWrapper;
@@ -38,6 +39,8 @@ public class MainService {
     BankRepository bankRepository;
     @Autowired 
     AccountTypeRepository accountTypeRepository;
+    @Autowired
+    PurchaseRepository purchaseRepository;
     @Autowired
     FundRepository fundRepository;
 
