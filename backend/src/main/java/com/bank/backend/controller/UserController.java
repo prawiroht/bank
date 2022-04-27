@@ -45,8 +45,8 @@ public class UserController {
     public DataResponse<UserWrapper> post(@RequestBody UserWrapper wrapper){
         return new DataResponse<UserWrapper>(userService.save(wrapper));
     }
-    @PutMapping(path = "/put")
-    public DataResponse<UserWrapper> put(@RequestBody UserWrapper wrapper){
+    @PutMapping(path = "/update")
+    public DataResponse<UserWrapper> update(@RequestBody UserWrapper wrapper){
         return new DataResponse<UserWrapper>(userService.save(wrapper));
     }
     // delete
