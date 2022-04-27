@@ -1,7 +1,7 @@
 package com.bank.backend.entity;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +28,7 @@ public class Deposit {
     @Id
     @GeneratedValue(generator = "DEPOSIT_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "DEPOSIT_GEN", sequenceName = "DEPOSIT_SEQ", allocationSize = 1)
+    @Column(name = "DEPOSIT_ID")
     private Long depositId;
     @ManyToOne
     @JoinColumn(name = "UNIVERSITY_ID")
@@ -39,9 +40,9 @@ public class Deposit {
     private Bank bank;
     @Column(name = "ACCOUNT_NUMBER")
     private String accountNumber;
-    @OneToMany (fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "PERIOD_ID")
-    private List<Period> period;
+    private Period period;
     @Column(name = "NOMINAL")
     private Long nominal;
     @Column(name = "INTEREST")
