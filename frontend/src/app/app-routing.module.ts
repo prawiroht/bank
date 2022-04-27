@@ -17,9 +17,9 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'expenditure', component: ExpenditureComponent },
   { path: 'container', component: ContainerComponent },
-  { path: 'balance-approval', component: ApprovalSaldoDepositoComponent },
+  { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent },
   { path: 'giro-approval', component: ApprovalSaldoGiroComponent },
-  { path: 'invest-approval', component: ApprovalSaldoInvestasiComponent },
+  { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
