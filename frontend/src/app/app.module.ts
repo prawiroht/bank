@@ -45,7 +45,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 
 
@@ -102,7 +102,7 @@ import { PanelModule } from 'primeng/panel';
     BrowserAnimationsModule,
     AccordionModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -50,7 +50,7 @@ public class UserService {
     }
 
     public UserWrapper getByUsername(String username){
-        if (username != null)
+        if (username == null)
             return null;
         Optional<User> user = userRepository.findByUsername(username);
         if (!user.isPresent())
@@ -58,7 +58,7 @@ public class UserService {
         return toWrapper(user.get());
     }
     public UserWrapper getByEmail(String email){
-        if (email != null)
+        if (email == null)
             return null;
         Optional<User> user = userRepository.findByEmail(email);
         if (!user.isPresent())

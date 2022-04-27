@@ -128,23 +128,36 @@
 
 //     //post and put
 //     public ExpenditureWrapper save(ExpenditureWrapper wrapper) {
-//         Expenditure entity = toEntity(wrapper);
-//         if (receiving.getReceivingId() != null) {
-//             Receiving existedReceiving = receivingRepository.getById(receiving.getReceivingId());
-//             existedReceiving.setReceivingName(receiving.getReceivingName());
-//             return receivingRepository.save(existedReceiving);
-//         } else {
-//             return receivingRepository.save(receiving);
+//         Expenditure expenditure = new Expenditure();
+//         if (wrapper.getExpenditureId() == null) {
+//             if (wrapper.getAccountTypeId() == null){
+//                 throw new BusinessException("Account Type ID cannot be null");
+//             if (wrapper.getAccountNumber() == null) {
+//                 throw new BusinessException("Account Number cannot be null");
+//             if (wrapper.getBankId() == null) {
+//                 throw new BusinessException("Bank ID cannot be null");
+//             if (wrapper.getFundId() == null){
+//                 throw new BusinessException("Fund ID cannot be null");
+//             if (wrapper.getMutationId() == null) {
+//                 throw new BusinessException("Mutation ID cannot be null");
+//             if (wrapper.getPurchaseId() == null) {
+//                 throw new BusinessException("Purchase ID cannot be null");
+//             if (wrapper.getUniversityId() == null) {
+//                 throw new BusinessException("University ID cannot be null");
+//             } expenditure = expenditureRepository.save(toEntity(wrapper));  
 //         }
+//         expenditure = expenditureRepository.save(toEntity(wrapper)); 
 //     }
+//         return toWrapper(expenditure);
+// }
 
 //     //delete
 //     public void delete(Long id){
 //         if (id == null)
 //             throw new BusinessException("Please insert ID.");
-//         Optional<Receiving> accountType = receivingRepository.findById(id);
-//         if (!accountType.isPresent())
-//             throw new BusinessException("Account Type ID "+ id +" is not found.");
-//         receivingRepository.deleteById(id);
+//         Optional<Expenditure> expenditure = expenditureRepository.findById(id);
+//         if (!expenditure.isPresent())
+//             throw new BusinessException("Expenditure ID "+ id +" is not found.");
+//         expenditureRepository.deleteById(id);
 //     }
 // }
