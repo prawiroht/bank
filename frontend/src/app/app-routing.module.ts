@@ -4,6 +4,8 @@ import { ApprovalSaldoDepositoComponent } from './components/approval-saldo-depo
 import { ApprovalSaldoGiroComponent } from './components/approval-saldo-giro/approval-saldo-giro.component';
 import { ApprovalSaldoInvestasiComponent } from './components/approval-saldo-investasi/approval-saldo-investasi.component';
 import { ContainerComponent } from './components/container/container.component';
+import { DashboardContainerComponent } from './components/dashboard-container/dashboard-container.component';
+import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ExpenditureComponent } from './components/expenditure/expenditure.component';
 import { LoginComponent } from './components/login/login.component';
@@ -20,6 +22,8 @@ const routes: Routes = [
   { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent },
   { path: 'giro-approval', component: ApprovalSaldoGiroComponent },
   { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent },
+  { path: 'dashboard-container', component: DashboardContainerComponent},
+  { path: 'dashboard-expenditure', component: DashboardExpenditureComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
