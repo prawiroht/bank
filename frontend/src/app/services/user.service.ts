@@ -17,10 +17,22 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(page: number): Observable<any> {
-    return this.http.get<any>(url + `user/findAllPagination?page=${page}&size=8`, {
+  getUser(page: any): Observable<any> {
+    return this.http.get<any>(url + `user/findAllPagination?page=${page}&size=4`, {
       responseType: 'json',
     });
   }
 
+  postUser(req: any): Observable<any> {
+    return this.http.post<any>(url + `user/post`, req, {
+      responseType: 'json',
+    })
+  }
+
+  getByUsername(username: string): Observable<any> {
+    return this.http.get<any>(
+      url + `users/findByUsername?username=${username}`,
+      httpOptions
+    );
+  }
 }

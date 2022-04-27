@@ -7,5 +7,4 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
-    Page<Deposit> findAll(Pageable page);
 }
