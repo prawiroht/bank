@@ -11,10 +11,17 @@ export class DashboardComponent implements OnInit {
   itemInput: MenuItem[]= [];
   itemApproval: MenuItem[]= [];
   itemSetting: MenuItem[]= [];
+  itemHome: MenuItem[]= [];
 
   constructor() { }
 
   ngOnInit(): void {
+
+    this.itemHome = [
+      {label: 'Dashboard',
+        icon: 'pi pi-pw pi-home'
+    }
+    ]
     this.itemDashboard = [
       {
           label: 'Saldo',
