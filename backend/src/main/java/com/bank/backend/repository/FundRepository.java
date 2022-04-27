@@ -1,9 +1,9 @@
 package com.bank.backend.repository;
 
-import com.bank.backend.entity.User;
+import com.bank.backend.entity.Fund;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User,Long>{
+public interface FundRepository extends JpaRepository<Fund, Long>{
     
 }
