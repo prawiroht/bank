@@ -2,11 +2,16 @@ package com.bank.backend.controller;
 
 import com.bank.backend.entity.Bank;
 import com.bank.backend.service.BankService;
+import com.bank.backend.util.DataResponse;
 import com.bank.backend.util.DataResponseList;
 import com.bank.backend.util.DataResponsePagination;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +31,27 @@ public class BankController {
     public DataResponsePagination<Bank, Bank> findAllPagination(@RequestParam("page") int page,@RequestParam("size") int size) {
         return new DataResponsePagination<Bank, Bank>(bankService.findAllPagination(page, size));
     };
+
+    @GetMapping (path ="/findByNameContainingAllIgnoreCasePagination")
+    public DataResponsePagination<Bank, Bank> findByNameContainingAllIgnoreCasePagination(@RequestParam("name") String name, @RequestParam("page") int page, @RequestParam("size") int size){
+        return new DataResponsePagination<Bank, Bank>(bankService.findByBankNameContainingAllIgnoreCasePagination(name, page, size));
+    }
+
+    @PostMapping (path = "/post")
+    public DataResponse<Bank> post(@RequestBody Bank bank){
+        return new DataResponse<Bank>(bankService.save(bank));
+    }
+
+    @PutMapping (path = "/put")
+    public DataResponse<Bank> put(@RequestBody Bank bank){
+        return new DataResponse<Bank>(bankService.save(bank));
+    }
+
+    //delete
+    @DeleteMapping (path = "/delete")
+    public DataResponse<Bank> delete(@RequestParam("id") Long id){
+        bankService.delete(id);
+            return new DataResponse<Bank>(true, "Delete Sukses");
+    }
 
 }
