@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import com.bank.backend.entity.Group;
 import com.bank.backend.entity.Menu;
+import com.bank.backend.entity.User;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.GroupRepository;
 import com.bank.backend.repository.MenuRepository;
+import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.GroupWrapper;
 
@@ -26,6 +28,8 @@ public class GroupService {
     GroupRepository groupRepository;
     @Autowired
     MenuRepository menuRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public PaginationList<GroupWrapper,Group> findAllPagination(int page,int size){
         Pageable paging = PageRequest.of(page, size);
@@ -34,6 +38,15 @@ public class GroupService {
     
     public List<GroupWrapper> findAll(){
         return toWrapperList(groupRepository.findAll());
+    }
+
+    public List<GroupWrapper> findGroupByUserId(Long userId){
+        if(userId == null)
+            return null;
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+            return null;
+        return toWrapperList(groupRepository.findGroupByUserId(userId));
     }
 
     public GroupWrapper save(GroupWrapper wrapper){

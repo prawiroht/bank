@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.bank.backend.entity.Menu;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,6 +28,4 @@ public interface MenuRepository extends JpaRepository<Menu,Long>{
         " ORDER BY M.MENU_ID ASC", 
         nativeQuery = true)
     List<Menu> findMenuByUserId(@Param("pUserId") Long userId);
-
-    Page<Menu> findAll(Pageable paging);
 }
