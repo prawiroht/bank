@@ -55,7 +55,14 @@ public class UserService {
             return null;
         return toWrapper(user.get());
     }
-    
+    public UserWrapper getByEmail(String email){
+        if (email != null)
+            return null;
+        Optional<User> user = userRepository.findByEmail(email);
+        if (!user.isPresent())
+            return null;
+        return toWrapper(user.get());
+    }
     // post & put
     public UserWrapper save(UserWrapper wrapper){
         return toWrapper(userRepository.save(toEntity(wrapper)));
