@@ -1,8 +1,10 @@
 package com.bank.backend.controller;
 
+import com.bank.backend.entity.Deposit;
 import com.bank.backend.service.DepositService;
 import com.bank.backend.util.DataResponse;
 import com.bank.backend.util.DataResponseList;
+import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.DepositWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -41,5 +44,12 @@ public class DepositController {
     @PutMapping(path = "/update")
     public DataResponse<DepositWrapper> update(@RequestBody DepositWrapper wrapper) {
         return new DataResponse<DepositWrapper>(depositService.save(wrapper));
+    }
+
+    @GetMapping(path = "/getAllCategories")
+    public DataResponsePagination<DepositWrapper, Deposit> getAllCategories(
+            @RequestParam("all") String all, @RequestParam("page") int page, @RequestParam("size") int size) {
+        return new DataResponsePagination<DepositWrapper, Deposit>(
+                depositService.getAllCategories(all, page, size));
     }
 }
