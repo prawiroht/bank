@@ -23,37 +23,50 @@ public class UniversityService {
     @Autowired
     UniversityRepository universityRepository;
 
+	// FIND ALL
     public List<University> findAll(){
         return universityRepository.findAll();
     }
 
+	// FIND ALL WITH PAGINATION
     public PaginationList<University, University> findAllPagination(int page, int size){
         Pageable paging = PageRequest.of(page, size);
-        Page<University> bankPage = universityRepository.findAll(paging);
-        List<University> universityList = bankPage.getContent();
-        return new PaginationList<University, University>(universityList, bankPage);
+        Page<University> universityPage = universityRepository.findAll(paging);
+        List<University> universityList = universityPage.getContent();
+        return new PaginationList<University, University>(universityList, universityPage);
     }
 
-    public University getByLocationId(Long universityId) {
+	// FIND BY UNIVERSITY NAME
+	public PaginationList<University, University> findByUniversityName(String all, int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		Page<University> universityPage = universityRepository.findByUniversityNameContainingIgnoreCase(all, paging);
+		List<University> universityList = universityPage.getContent();
+		return new PaginationList<University, University>(universityList, universityPage);
+	}
+
+	// GET BY ID
+    public University getByUniversityId(Long universityId) {
 		if (universityId == null)
 			throw new BusinessException("ID cannot be null.");
 		Optional<University> university = universityRepository.findById(universityId);
 		if (!university.isPresent())
-			throw new BusinessException("Location with id " + universityId + " is not found.");
+			throw new BusinessException("University with id " + universityId + " is not found.");
 		return university.get();
 	}
 
+	// ADD (POST) & UPDATE (PUT)
     public University save(University university) {
 		University universitySave = universityRepository.save(university);
 		return universitySave;
 	}
 
+	// DELETE
     public void delete(Long universityId) {
 		if (universityId == null)
 			throw new BusinessException("ID cannot be null.");
 		Optional<University> university = universityRepository.findById(universityId);
 		if (!university.isPresent())
-			throw new BusinessException("Location with ID " + universityId + " is not found");
+			throw new BusinessException("University with ID " + universityId + " is not found");
 		universityRepository.deleteById(universityId);
 	}
 

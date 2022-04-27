@@ -1,4 +1,3 @@
-
 <body>
     <div class="container">
         <div class="grid justify-content-center">
@@ -6,28 +5,27 @@
             <div class="grid login">
               <div class="col-12 image-header bg-img">
                   <img
-                  src="http://localhost:50492/assets/img/login-img.jpeg">
+                  src="https://pict.sindonews.net/dyn/620/pena/news/2022/04/19/178/747781/saktinya-kebijakan-cemumuah-bi-bakal-dongkrak-nilai-transaksi-digital-banking-rp51729-triliun-jel.jpg">
               </div>
-              <div class="col-12 lg:col-5">
+              <div class="col-12 lg:col-4">
                 <!-- <label for="username" class="block">Username</label> -->
                 <input type="text" pInputText [(ngModel)]="username" placeholder="username">
               </div>
-              <div class="col-12 lg:col-5">
+              <div class="col-12 lg:col-4">
                 <!-- <label for="password" class="block">Password</label> -->
                 <p-password type="password" placeholder="password" [(ngModel)]="password" [toggleMask]="true" [feedback]="false" id="password" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
                 </p-password>
               </div>
-              <div class="col-12 lg:col-1 log-b">
-                <p-button label="Submit"></p-button>
+              <div class="col-12 lg:col-4 log-b">
+                <button pButton pRipple type="button" label="LOGIN" (click)="login()"></button>
               </div>
             </div>
-            <!-- <ng-template pTemplate="footer"> -->
             <div class="grid button">
               <div class="col-12 lg:col-6 forgot">
-                <p><a>Forgot Password ?</a></p>
+                <p><a routerLink="">Forgot Password ?</a></p>
               </div>
-              <div class="col-12 lg:col-6 justify-content-end texta keep">
-                <div class="field-checkbox">
+              <div class="col-12 lg:col-6 justify-content-end">
+                <div class="field-checkbox checked">
                     <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary"></p-checkbox>
                     <label for="binary">Keep Me Logged In</label>
                 </div>
@@ -37,3 +35,6 @@
         </div>
       </div>
 </body>
+
+<button pButton pRipple type="button" label="LOGOUT" (click)="logout()"></button>
+<p-toast position="top-center" key="tc"></p-toast>

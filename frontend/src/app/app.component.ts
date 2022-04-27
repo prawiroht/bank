@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+  isLoggedIn = localStorage.getItem('token')
+  show: boolean = this.isLoggedIn ? true : false;
+  whichUser: any;
 }

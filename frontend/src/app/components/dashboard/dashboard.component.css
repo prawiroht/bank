@@ -35,7 +35,7 @@
 
 .sidebar{
     position: fixed;
-    top: 60px;
+    top: 10%;
     height: 100%;
     background-color: rgb(58, 104, 179);
     width: 20%;
