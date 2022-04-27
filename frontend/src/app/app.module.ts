@@ -45,11 +45,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
+<<<<<<< HEAD
 
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
+=======
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { NavbarComponent } from './navbar/navbar.component';
+>>>>>>> 016316f880b3722a2263808425aca601d23fcb85
 
 @NgModule({
   declarations: [
@@ -77,7 +82,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ApprovalTransactionPenampunganComponent,
     ApprovalTransactionUtamaComponent,
     ApprovalTransactionPengeluaranComponent,
-    ApprovalTransactionFileMt940Component
+    ApprovalTransactionFileMt940Component,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +111,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     AccordionModule,
     ConfirmDialogModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

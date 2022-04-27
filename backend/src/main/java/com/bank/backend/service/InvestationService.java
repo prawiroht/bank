@@ -9,10 +9,17 @@ import com.bank.backend.entity.University;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.InvestationRepository;
 import com.bank.backend.repository.UniversityRepository;
+import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.InvestationWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public class InvestationService {
     @Autowired
     InvestationRepository investationRepository;
@@ -39,6 +46,7 @@ public class InvestationService {
         entity.setMarketUnit(wrapper.getMarketUnit());
         entity.setMarketValue(wrapper.getMarketValue());
         entity.setStartDate(wrapper.getStartDate());
+        entity.setStatus(wrapper.getStatus());
         return entity;
     }
 
@@ -54,6 +62,7 @@ public class InvestationService {
         wrapper.setMarketUnit(entity.getMarketUnit());
         wrapper.setMarketValue(entity.getMarketValue());
         wrapper.setStartDate(entity.getStartDate());
+        wrapper.setStatus(entity.getStatus());
         return wrapper;
     }
 
@@ -66,4 +75,36 @@ public class InvestationService {
         return wrapperList;
     }
 
+    // Retrieve single data
+    public InvestationWrapper getInvestationById(Long InvestationId) {
+        return toWrapper(investationRepository.findById(InvestationId).get());
+    }
+
+    // Retrieve all data
+    public List<InvestationWrapper> findAll() {
+        return toWrapperList(investationRepository.findAll());
+    }
+
+    // Retrieve all data with pagination
+    public PaginationList<InvestationWrapper, Investation> findAllWithPaginationList(int page, int size) {
+        Page<Investation> InvestationPage = investationRepository.findAll(PageRequest.of(page, size));
+        List<Investation> InvestationList = InvestationPage.getContent();
+        List<InvestationWrapper> InvestationWrappers = toWrapperList(InvestationList);
+        return new PaginationList<>(InvestationWrappers, InvestationPage);
+    }
+
+    // Create and update data
+    public InvestationWrapper save(InvestationWrapper wrapper) {
+        return toWrapper(investationRepository.save(toEntity(wrapper)));
+    }
+
+    // Delete data
+    public void delete(Long id) {
+        if (id == null)
+            throw new BusinessException("Id cannot be null");
+        Optional<Investation> entity = investationRepository.findById(id);
+        if (!entity.isPresent())
+            throw new BusinessException("Cannot found Investation with id : " + id + ".");
+        investationRepository.deleteById(id);
+    }
 }

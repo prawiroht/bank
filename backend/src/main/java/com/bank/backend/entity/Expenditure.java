@@ -64,4 +64,7 @@ public class Expenditure {
     @Column (name = "DESCRIPTION")
     private String description;
 
+    @Column (name = "STATUS")
+    private String status;
+
 }

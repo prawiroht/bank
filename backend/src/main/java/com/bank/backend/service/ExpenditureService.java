@@ -78,6 +78,7 @@ public class ExpenditureService {
         System.out.println(fund);
         entity.setFund(fund);
         entity.setDescription(wrapper.getDescription());
+        entity.setStatus(wrapper.getStatus());
         return entity;
     }
 
@@ -102,6 +103,7 @@ public class ExpenditureService {
         wrapper.setFundAlias(entity.getFund() != null ? entity.getFund().getAlias() : null);
         wrapper.setFundName(entity.getFund() != null ? entity.getFund().getFundName() : null);
         wrapper.setDescription(entity.getDescription());
+        wrapper.setStatus(entity.getStatus());
         return wrapper;
     }
 

@@ -59,6 +59,7 @@ public class DepositService {
         entity.setEarningInterest(wrapper.getEarningInterest());
         entity.setStartDate(wrapper.getStartDate());
         entity.setDueDate(wrapper.getDueDate());
+        entity.setStatus(wrapper.getStatus());
         return entity;
     }
 
@@ -78,6 +79,7 @@ public class DepositService {
         wrapper.setEarningInterest(entity.getEarningInterest());
         wrapper.setStartDate(entity.getStartDate());
         wrapper.setDueDate(entity.getDueDate());
+        wrapper.setStatus(entity.getStatus());
         return wrapper;
     }
 
@@ -121,5 +123,13 @@ public class DepositService {
         if (!entity.isPresent())
             throw new BusinessException("Cannot found Deposit with id : " + id + ".");
         depositRepository.deleteById(id);
+    }
+
+    // Retrieve list of data with pagination with param all category
+    public PaginationList<DepositWrapper, Deposit> getAllCategories(String all, int page, int size) {
+        Page<Deposit> depositPage = depositRepository.getByAllCategories(all, PageRequest.of(page, size));
+        List<Deposit> depositList = depositPage.getContent();
+        List<DepositWrapper> depositWrappers = toWrapperList(depositList);
+        return new PaginationList<DepositWrapper, Deposit>(depositWrappers, depositPage);
     }
 }

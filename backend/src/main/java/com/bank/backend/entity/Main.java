@@ -26,7 +26,7 @@ public class Main {
     @Id
     @Column(name = "MAIN_ID")
     @GeneratedValue (generator = "MAIN_GEN", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator (name = "MAIN_GEN", sequenceName = "MAIN_SEQ", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator (name = "MAIN_GEN", sequenceName = "MAIN_SEQ", allocationSize = 1, initialValue = 2)
     private Long mainId;
 
     @ManyToOne

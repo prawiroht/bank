@@ -55,6 +55,7 @@ public class CurrentAccountService {
         entity.setAccountType(accountType);
         entity.setInitialBalanceAccount(wrapper.getInitialBalanceAccount());
         entity.setInitialBalanceDate(wrapper.getInitialBalanceDate());
+        entity.setStatus(wrapper.getStatus());
         return entity;
     }
 
@@ -72,6 +73,7 @@ public class CurrentAccountService {
                 entity.getAccountType() != null ? entity.getAccountType().getAccountTypeName() : null);
         wrapper.setInitialBalanceAccount(entity.getInitialBalanceAccount());
         wrapper.setInitialBalanceDate(entity.getInitialBalanceDate());
+        wrapper.setStatus(entity.getStatus());
         return wrapper;
     }
 
