@@ -5,6 +5,7 @@ import { ApprovalTransactionComponent } from './components/approval-transaction/
 import { ContainerComponent } from './components/container/container.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ExpenditureComponent } from './components/expenditure/expenditure.component';
+import { GiroComponent } from './components/giro/giro.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'expenditure', component: ExpenditureComponent },
   { path: 'container', component: ContainerComponent },
+  { path: 'giro', component: GiroComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
