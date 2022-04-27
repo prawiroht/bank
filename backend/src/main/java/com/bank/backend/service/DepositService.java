@@ -17,6 +17,7 @@ import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.DepositWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -121,5 +122,13 @@ public class DepositService {
         if (!entity.isPresent())
             throw new BusinessException("Cannot found Deposit with id : " + id + ".");
         depositRepository.deleteById(id);
+    }
+
+    // Retrieve list of data with pagination with param all category
+    public PaginationList<DepositWrapper, Deposit> getAllCategories(String all, int page, int size) {
+        Page<Deposit> depositPage = depositRepository.getByAllCategories(all, PageRequest.of(page, size));
+        List<Deposit> depositList = depositPage.getContent();
+        List<DepositWrapper> depositWrappers = toWrapperList(depositList);
+        return new PaginationList<DepositWrapper, Deposit>(depositWrappers, depositPage);
     }
 }
