@@ -18,7 +18,6 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-<<<<<<< HEAD
   { path: 'user-management', component: UserManagementComponent, canActivate:[AuthGuardService] },
   { path: 'home', component: DashboardComponent, canActivate:[AuthGuardService] },
   { path: 'main', component: MainComponent },
@@ -26,7 +25,6 @@ const routes: Routes = [
   { path: 'container', component: ContainerComponent },
   { path: 'giro', component: GiroComponent, canActivate:[AuthGuardService] },
   { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate:[AuthGuardService] },
-=======
   { path: 'user-management', component: UserManagementComponent },
   { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
@@ -36,7 +34,6 @@ const routes: Routes = [
   { path: 'deposits', component: DepositsComponent, canActivate: [AuthGuardService] },
   { path: 'investment', component: InvestmentComponent, canActivate: [AuthGuardService] },
   { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate: [AuthGuardService] },
->>>>>>> 016316f880b3722a2263808425aca601d23fcb85
   { path: 'giro-approval', component: ApprovalSaldoGiroComponent, },
   { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent, canActivate: [AuthGuardService] },
   { path: 'dashboard-container', component: DashboardContainerComponent, canActivate: [AuthGuardService] },

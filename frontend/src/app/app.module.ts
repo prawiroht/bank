@@ -47,14 +47,9 @@ import { ChartModule } from 'primeng/chart';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
-<<<<<<< HEAD
 
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-
-=======
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NavbarComponent } from './navbar/navbar.component';
->>>>>>> 016316f880b3722a2263808425aca601d23fcb85
 
 @NgModule({
   declarations: [
