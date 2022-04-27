@@ -27,6 +27,10 @@ public class BankService {
         return bankRepository.findAll();
     }
 
+    public Bank findByBankId(Long id){
+        return bankRepository.findById(id).get();
+    }
+
     public PaginationList<Bank, Bank> findAllPagination(int page, int size){
         Pageable paging = PageRequest.of(page, size);
         Page<Bank> bankPage = bankRepository.findAll(paging);
@@ -66,9 +70,9 @@ public class BankService {
     public void delete(Long id){
         if (id == null)
 	        throw new BusinessException("Please insert ID.");
-		Optional<Bank> entity = bankRepository.findById(id);
-		if (!entity.isPresent())
-			throw new BusinessException("Bank "+ id +" is not found.");
+		Optional<Bank> bank = bankRepository.findById(id);
+		if (!bank.isPresent())
+			throw new BusinessException("Bank ID "+ id +" is not found.");
 		bankRepository.deleteById(id);
     }
 
