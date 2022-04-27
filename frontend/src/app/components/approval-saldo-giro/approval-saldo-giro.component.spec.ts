@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ApprovalSaldoComponent } from './approval-saldo.component';
+import { ApprovalSaldoGiroComponent } from './approval-saldo-giro.component';
 
-describe('ApprovalSaldoComponent', () => {
-  let component: ApprovalSaldoComponent;
-  let fixture: ComponentFixture<ApprovalSaldoComponent>;
+describe('ApprovalSaldoGiroComponent', () => {
+  let component: ApprovalSaldoGiroComponent;
+  let fixture: ComponentFixture<ApprovalSaldoGiroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ApprovalSaldoComponent ]
+      declarations: [ ApprovalSaldoGiroComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ApprovalSaldoComponent);
+    fixture = TestBed.createComponent(ApprovalSaldoGiroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -40,13 +40,27 @@ public class UserController {
             return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
         return new DataResponse<UserWrapper>(hasil);
     }
+    @GetMapping(path = "/findByUsername")
+    public DataResponse<UserWrapper> findByUsername(@RequestParam String username){
+        UserWrapper hasil = userService.getByUsername(username);
+        if(hasil == null)
+            return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
+        return new DataResponse<UserWrapper>(hasil);
+    }
+    @GetMapping(path = "/findByEmail")
+    public DataResponse<UserWrapper> findByEmail(@RequestParam String email){
+        UserWrapper hasil = userService.getByEmail(email);
+        if(hasil == null)
+            return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
+        return new DataResponse<UserWrapper>(hasil);
+    }
     // post&put
     @PostMapping(path = "/post")
     public DataResponse<UserWrapper> post(@RequestBody UserWrapper wrapper){
         return new DataResponse<UserWrapper>(userService.save(wrapper));
     }
-    @PutMapping(path = "/put")
-    public DataResponse<UserWrapper> put(@RequestBody UserWrapper wrapper){
+    @PutMapping(path = "/update")
+    public DataResponse<UserWrapper> update(@RequestBody UserWrapper wrapper){
         return new DataResponse<UserWrapper>(userService.save(wrapper));
     }
     // delete

@@ -46,7 +46,23 @@ public class UserService {
             return null;
         return toWrapper(user.get());
     }
-    
+
+    public UserWrapper getByUsername(String username){
+        if (username != null)
+            return null;
+        Optional<User> user = userRepository.findByUsername(username);
+        if (!user.isPresent())
+            return null;
+        return toWrapper(user.get());
+    }
+    public UserWrapper getByEmail(String email){
+        if (email != null)
+            return null;
+        Optional<User> user = userRepository.findByEmail(email);
+        if (!user.isPresent())
+            return null;
+        return toWrapper(user.get());
+    }
     // post & put
     public UserWrapper save(UserWrapper wrapper){
         return toWrapper(userRepository.save(toEntity(wrapper)));
@@ -94,11 +110,11 @@ public class UserService {
         wrapper.setIsActive(entity.getIsActive());
         wrapper.setLastLogin(entity.getLastLogin());
         List<Group> groupEntities = groupRepository.findGroupByUserId(entity.getUserId());
-        List<String> groups = new ArrayList<String>();
-        for (Group group : groupEntities){
-            groups.add(group.getName());
-        }
-        wrapper.setGroups(groups);
+        // List<String> groups = new ArrayList<String>();
+        // for (Group group : groupEntities){
+        //     groups.add(group.getName());
+        // }
+        wrapper.setGroups(groupEntities);
         return wrapper;
     }
 
