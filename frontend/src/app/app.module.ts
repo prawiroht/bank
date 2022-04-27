@@ -14,8 +14,6 @@ import { PurchaseComponent } from './components/purchase/purchase.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-import { ApprovalSaldoComponent } from './components/approval-saldo/approval-saldo.component';
-import { ApprovalTransactionComponent } from './components/approval-transaction/approval-transaction.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContainerComponent } from './components/container/container.component';
 import { ExpenditureComponent } from './components/expenditure/expenditure.component';
@@ -30,6 +28,13 @@ import { GiroComponent } from './components/giro/giro.component';
 import { DepositsComponent } from './components/deposits/deposits.component';
 import { InvestmentComponent } from './components/investment/investment.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ApprovalSaldoGiroComponent } from './components/approval-saldo-giro/approval-saldo-giro.component';
+import { ApprovalSaldoDepositoComponent } from './components/approval-saldo-deposito/approval-saldo-deposito.component';
+import { ApprovalSaldoInvestasiComponent } from './components/approval-saldo-investasi/approval-saldo-investasi.component';
+import { ApprovalTransactionPenampunganComponent } from './components/approval-transaction-penampungan/approval-transaction-penampungan.component';
+import { ApprovalTransactionUtamaComponent } from './components/approval-transaction-utama/approval-transaction-utama.component';
+import { ApprovalTransactionPengeluaranComponent } from './components/approval-transaction-pengeluaran/approval-transaction-pengeluaran.component';
+import { ApprovalTransactionFileMt940Component } from './components/approval-transaction-file-mt940/approval-transaction-file-mt940.component';
 
 
 
@@ -43,8 +48,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     ReceivingComponent,
     PurchaseComponent,
-    ApprovalSaldoComponent,
-    ApprovalTransactionComponent,
     LoginComponent,
     ContainerComponent,
     ExpenditureComponent,
@@ -54,7 +57,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     DashboardExpenditureComponent,
     GiroComponent,
     DepositsComponent,
-    InvestmentComponent
+    InvestmentComponent,
+    ApprovalSaldoGiroComponent,
+    ApprovalSaldoDepositoComponent,
+    ApprovalSaldoInvestasiComponent,
+    ApprovalTransactionPenampunganComponent,
+    ApprovalTransactionUtamaComponent,
+    ApprovalTransactionPengeluaranComponent,
+    ApprovalTransactionFileMt940Component
   ],
   imports: [
     BrowserModule,
