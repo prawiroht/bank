@@ -8,16 +8,17 @@ import { ExpenditureComponent } from './components/expenditure/expenditure.compo
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'user-management', component: UserManagementComponent },
-  { path: 'approval-saldo', component: ApprovalSaldoComponent },
-  { path: 'approval-transaction', component: ApprovalTransactionComponent },
-  { path: 'home', component: DashboardComponent },
-  { path: 'main', component: MainComponent },
-  { path: 'expenditure', component: ExpenditureComponent },
-  { path: 'container', component: ContainerComponent },
+  { path: 'home', component: DashboardComponent, canActivate:[AuthGuardService] },
+  { path: 'user-management', component: UserManagementComponent, canActivate:[AuthGuardService] },
+  { path: 'approval-saldo', component: ApprovalSaldoComponent, canActivate:[AuthGuardService] },
+  { path: 'approval-transaction', component: ApprovalTransactionComponent, canActivate:[AuthGuardService] },
+  { path: 'main', component: MainComponent, canActivate:[AuthGuardService] },
+  { path: 'expenditure', component: ExpenditureComponent, canActivate:[AuthGuardService] },
+  { path: 'container', component: ContainerComponent, canActivate:[AuthGuardService] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];

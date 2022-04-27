@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private messageService : MessageService, private userService:UserService) { }
+  logout(): void {
+    this.messageService.add({ key: 'tc', severity: 'info', summary: 'Goodbye', detail: 'Thank you, see you later' });
+    localStorage.clear();
+    window.location.reload()
+  }
 
   ngOnInit(): void {
   }
+  
 
 }

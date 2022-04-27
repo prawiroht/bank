@@ -30,6 +30,9 @@ import { GiroComponent } from './components/giro/giro.component';
 import { DepositsComponent } from './components/deposits/deposits.component';
 import { InvestmentComponent } from './components/investment/investment.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -67,7 +70,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ToastModule,
     FormsModule,
     HttpClientModule,
-    CheckboxModule
+    CheckboxModule,
+    MessagesModule,
+    MessageModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
