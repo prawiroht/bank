@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ApprovalSaldoDepositoComponent } from './components/approval-saldo-deposito/approval-saldo-deposito.component';
+import { ApprovalSaldoGiroComponent } from './components/approval-saldo-giro/approval-saldo-giro.component';
+import { ApprovalSaldoInvestasiComponent } from './components/approval-saldo-investasi/approval-saldo-investasi.component';
 import { ContainerComponent } from './components/container/container.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ExpenditureComponent } from './components/expenditure/expenditure.component';
@@ -14,6 +17,9 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'expenditure', component: ExpenditureComponent },
   { path: 'container', component: ContainerComponent },
+  { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent },
+  { path: 'giro-approval', component: ApprovalSaldoGiroComponent },
+  { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];

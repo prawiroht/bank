@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class CurrentAccount {
     @Id
     @GeneratedValue(generator = "CURRENT_ACCOUNT_GEN", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "CURRENT_ACCOUNT_GEN", sequenceName = "CURRENT_ACCOUNT_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "CURRENT_ACCOUNT_GEN", sequenceName = "CURACC_SEQ", allocationSize = 1)
     @Column(name = "CURRENT_ACCOUNT_ID")
     private Long currentAccountId;
     @ManyToOne
