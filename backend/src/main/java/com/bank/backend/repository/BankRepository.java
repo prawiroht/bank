@@ -18,6 +18,4 @@ public interface BankRepository extends JpaRepository<Bank, Long> {
     default Page<Bank> findByAllCategories (String all, Pageable page){
         return findByCodeContainingOrBankNameContainingAllIgnoreCase(all, all, page);
     }
-    
-    Page<Bank> findByBankName(String bankName, Pageable page);
 }

@@ -39,12 +39,14 @@ import { ApprovalTransactionPenampunganComponent } from './components/approval-t
 import { ApprovalTransactionUtamaComponent } from './components/approval-transaction-utama/approval-transaction-utama.component';
 import { ApprovalTransactionPengeluaranComponent } from './components/approval-transaction-pengeluaran/approval-transaction-pengeluaran.component';
 import { ApprovalTransactionFileMt940Component } from './components/approval-transaction-file-mt940/approval-transaction-file-mt940.component';
+import { FieldsetModule } from 'primeng/fieldset';
+
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
-import {PanelMenuModule} from 'primeng/panelmenu';
-import {MenuItem} from 'primeng/api';
-import {PanelModule} from 'primeng/panel';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuItem } from 'primeng/api';
+import { PanelModule } from 'primeng/panel';
 
 
 @NgModule({
@@ -91,6 +93,7 @@ import {PanelModule} from 'primeng/panel';
     MessageModule,
     DialogModule,
     BrowserAnimationsModule,
+    FieldsetModule,
     CalendarModule,
     CardModule,
     ChartModule,

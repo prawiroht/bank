@@ -27,12 +27,17 @@ public class BankController {
         return new DataResponseList<Bank>(bankService.findAll());
     }
 
+    @GetMapping (path = "/findByBankId")
+    public DataResponse<Bank> findById(Long id){
+        return new DataResponse<Bank>(bankService.findByBankId(id));
+    }
+
     @GetMapping (path = "/findAllPagination")
     public DataResponsePagination<Bank, Bank> findAllPagination(@RequestParam("page") int page,@RequestParam("size") int size) {
         return new DataResponsePagination<Bank, Bank>(bankService.findAllPagination(page, size));
     };
 
-    @GetMapping (path ="/findByNameContainingAllIgnoreCasePagination")
+    @GetMapping (path ="/findByAllCategories")
     public DataResponsePagination<Bank, Bank> findByAllCategories(@RequestParam("all") String all, @RequestParam("page") int page, @RequestParam("size") int size){
         return new DataResponsePagination<Bank, Bank>(bankService.findAllCategories(all, page, size));
     }

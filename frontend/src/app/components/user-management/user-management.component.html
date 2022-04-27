@@ -6,52 +6,12 @@
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
   <div class="col-12 lg:col-3">
-    <button pButton icon="pi pi-plus" pRipple type="button" label="Add User"
+    <button (click)="openAddDialog()" pButton icon="pi pi-plus" pRipple type="button" label="Add User"
       class="p-button-outlined mr-3 button-nav"></button>
     <button pButton icon="pi pi-upload" pRipple type="button" label="Export"
       class="p-button-outlined p-button-success button-nav"></button>
   </div>
 </div>
-
-<!-- <div class="card">
-    <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
-    </span>
-    <p-table [value]="users" [lazy]="true" (onLazyLoad)="loadData()" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="page" responsiveLayout="scroll"
-        >
-        <ng-template pTemplate="header">
-            <tr>
-                <th>No</th>
-                <th>Username</th>
-                <th>Fullname</th>
-                <th>Email</th>
-                <th>Group</th>
-                <th>Status</th>
-                <th>Last Login</th>
-                <th>Action</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-user let-i="rowIndex">
-            <tr>
-                <td>{{i+1}}</td>
-                <td>{{user.username}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.email}}</td>
-                <td>
-                    <ul *ngFor="let j of user.groups"><li>{{j}}</li></ul>
-                </td>
-                <td>{{user.status}}</td>
-                <td>{{user.lastLogin}}</td>
-                <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success"></button>
-                    <button pButton pRipple type="button" icon="pi pi-key" class="p-button-outlined mx-2"></button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger"></button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div> -->
 
 <p-table [value]="users" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll" dataKey="id"
   [selection]="selectedUsers" (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll"
@@ -78,20 +38,6 @@
       </th>
       <th>Action</th>
     </tr>
-    <tr>
-      <!-- <th style="width: 3rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th>
-                <p-columnFilter type="text" field="name"></p-columnFilter>
-            </th>
-            <th>
-                <p-columnFilter type="text" field="email"></p-columnFilter>
-            </th>
-            <th>
-                <p-columnFilter type="text" field="company"></p-columnFilter>
-            </th> -->
-    </tr>
   </ng-template>
   <ng-template pTemplate="body" let-user let-i="rowIndex">
     <tr>
@@ -103,7 +49,7 @@
       <td>{{user.address}}</td>
       <td>
         <ul *ngFor="let j of user.groups">
-          <li>{{j}}</li>
+          <li>{{j.name}}</li>
         </ul>
       </td>
       <td>{{user.status}}</td>
@@ -119,8 +65,20 @@
 </p-table>
 
 <p-dialog header="Change User Data" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
-  [maximizable]="true" [draggable]="false" [resizable]="false">
+  [maximizable]="true" [draggable]="false" [resizable]="false" (onHide)="isEdit=false; isAdd=false; handleHideDialog()">
   <div class="grid">
+    <div class="col-6" *ngIf="isAdd">
+        <span class="p-float-label">
+          <small>Username</small>
+          <input type="text" pInputText [(ngModel)]="row.username" style="width: 100%;">
+        </span>
+      </div>
+      <div class="col-6" *ngIf="isAdd">
+        <span class="p-float-label">
+          <small>Password</small>
+          <input type="text" pInputText [(ngModel)]="row.password" style="width: 100%;">
+        </span>
+      </div>
     <div class="col-6">
       <span class="p-float-label">
         <small>Fullname</small>
@@ -147,12 +105,17 @@
     </div>
   </div>
   <div class="col-12">
+    <p-fieldset legend="Group">
     <div *ngFor="let group of groups" class="field-checkbox">
-        <p-checkbox name="group2" value="group" [value]="group"  [(ngModel)]="selectedCategories" [inputId]="group.key" [disabled]="group.key === 'R'"></p-checkbox>
+        <p-checkbox name="group" value="group" [value]="group" [(ngModel)]="selectedGroups" [inputId]="group.key" [disabled]="group.name === 'Super Admin'"></p-checkbox>
         <label [for]="group.key">{{group.name}}</label>
     </div>
+</p-fieldset>
   </div>
   <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" (click)="displayMaximizable=false" label="Ok" styleClass="p-button-text"></p-button>
+    <button (click)="openAddDialog()" (click)="displayMaximizable=false" *ngIf="isEdit" pButton icon="pi pi-check" pRipple type="button" label="Submit"
+    class="p-button-outlined mr-3 button-nav"></button>
+    <button (click)="postUser()" (click)="displayMaximizable=false" *ngIf="isAdd" pButton icon="pi pi-check" pRipple type="button" label="Submit"
+    class="p-button-outlined mr-3 button-nav"></button>
   </ng-template>
 </p-dialog>

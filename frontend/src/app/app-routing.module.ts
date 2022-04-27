@@ -8,6 +8,7 @@ import { DashboardContainerComponent } from './components/dashboard-container/da
 import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ExpenditureComponent } from './components/expenditure/expenditure.component';
+import { GiroComponent } from './components/giro/giro.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
@@ -15,16 +16,17 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: DashboardComponent, canActivate:[AuthGuardService] },
-  { path: 'user-management', component: UserManagementComponent, canActivate:[AuthGuardService] },
-  { path: 'main', component: MainComponent, canActivate:[AuthGuardService] },
-  { path: 'expenditure', component: ExpenditureComponent, canActivate:[AuthGuardService] },
-  { path: 'container', component: ContainerComponent, canActivate:[AuthGuardService] },
-  { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate:[AuthGuardService] },
-  { path: 'giro-approval', component: ApprovalSaldoGiroComponent, canActivate:[AuthGuardService] },
-  { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent, canActivate:[AuthGuardService] },
-  { path: 'dashboard-container', component: DashboardContainerComponent, canActivate:[AuthGuardService]},
-  { path: 'dashboard-expenditure', component: DashboardExpenditureComponent, canActivate:[AuthGuardService]},
+  { path: 'user-management', component: UserManagementComponent },
+  { path: 'home', component: DashboardComponent },
+  { path: 'main', component: MainComponent },
+  { path: 'expenditure', component: ExpenditureComponent },
+  { path: 'container', component: ContainerComponent },
+  { path: 'giro', component: GiroComponent },
+  { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent },
+  { path: 'giro-approval', component: ApprovalSaldoGiroComponent },
+  { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent },
+  { path: 'dashboard-container', component: DashboardContainerComponent},
+  { path: 'dashboard-expenditure', component: DashboardExpenditureComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
