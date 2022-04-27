@@ -17,7 +17,6 @@ import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.DepositWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -60,6 +59,7 @@ public class DepositService {
         entity.setEarningInterest(wrapper.getEarningInterest());
         entity.setStartDate(wrapper.getStartDate());
         entity.setDueDate(wrapper.getDueDate());
+        entity.setStatus(wrapper.getStatus());
         return entity;
     }
 
@@ -79,6 +79,7 @@ public class DepositService {
         wrapper.setEarningInterest(entity.getEarningInterest());
         wrapper.setStartDate(entity.getStartDate());
         wrapper.setDueDate(entity.getDueDate());
+        wrapper.setStatus(entity.getStatus());
         return wrapper;
     }
 

@@ -52,4 +52,6 @@ public class Deposit {
     @Column(name = "DUE_DATE")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
+    @Column(name = "STATUS")
+    private String status;
 }
