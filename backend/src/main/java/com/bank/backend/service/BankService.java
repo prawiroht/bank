@@ -43,9 +43,9 @@ public class BankService {
         return bank.get();
     }
 
-    public PaginationList<Bank, Bank> findByBankNameContainingAllIgnoreCasePagination(String name, int page, int size){
+    public PaginationList<Bank, Bank> findAllCategories(String all, int page, int size){
         Pageable paging  = PageRequest.of(page, size);
-        Page<Bank> bankPage = bankRepository.findByBankNameContainingAllIgnoreCasePagination(name, paging);
+        Page<Bank> bankPage = bankRepository.findByAllCategories(all, paging);
         List<Bank> bankList = bankPage.getContent();
         return new PaginationList<Bank, Bank>(bankList, bankPage);
     }

@@ -47,6 +47,13 @@ public class UserController {
             return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
         return new DataResponse<UserWrapper>(hasil);
     }
+    @GetMapping(path = "/findByEmail")
+    public DataResponse<UserWrapper> findByEmail(@RequestParam String email){
+        UserWrapper hasil = userService.getByEmail(email);
+        if(hasil == null)
+            return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
+        return new DataResponse<UserWrapper>(hasil);
+    }
     // post&put
     @PostMapping(path = "/post")
     public DataResponse<UserWrapper> post(@RequestBody UserWrapper wrapper){

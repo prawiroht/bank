@@ -33,8 +33,8 @@ public class BankController {
     };
 
     @GetMapping (path ="/findByNameContainingAllIgnoreCasePagination")
-    public DataResponsePagination<Bank, Bank> findByNameContainingAllIgnoreCasePagination(@RequestParam("name") String name, @RequestParam("page") int page, @RequestParam("size") int size){
-        return new DataResponsePagination<Bank, Bank>(bankService.findByBankNameContainingAllIgnoreCasePagination(name, page, size));
+    public DataResponsePagination<Bank, Bank> findByAllCategories(@RequestParam("all") String all, @RequestParam("page") int page, @RequestParam("size") int size){
+        return new DataResponsePagination<Bank, Bank>(bankService.findAllCategories(all, page, size));
     }
 
     @PostMapping (path = "/post")
