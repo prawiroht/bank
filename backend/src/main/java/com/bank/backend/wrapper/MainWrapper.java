@@ -11,17 +11,20 @@ public class MainWrapper {
     private Long mainId;
     private Long universityId;
     private String universityName;
-    private String bankId;
+    private Long bankId;
+    private String code;
     private String bankName;
     private String accountNumber;
     private String mutationId;
     private Date transactionDate;
     private Long value;
     private Long purchaseId;
+    private String alias;
     private String purchaseName;
     private Long accountTypeId;
     private String accountTypeName;
     private Long fundId;
+    private String alias1;
     private String fundName;
     private String description;
 }
