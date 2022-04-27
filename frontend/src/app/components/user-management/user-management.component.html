@@ -1,23 +1,25 @@
 <div class="grid">
-    <div class="col-12 lg:col-4">
-        <h2>&gt; User Access - User Management</h2>
-    </div>
+  <div class="col-12 lg:col-4">
+    <h2>&gt; User Access - User Management</h2>
+  </div>
 </div>
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
-    <div class="col-12 lg:col-3">
-        <button pButton icon="pi pi-plus" pRipple type="button" label="Add User" class="p-button-outlined mr-3 button-nav"></button>
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
-    </div>
+  <div class="col-12 lg:col-3">
+    <button pButton icon="pi pi-plus" pRipple type="button" label="Add User"
+      class="p-button-outlined mr-3 button-nav"></button>
+    <button pButton icon="pi pi-upload" pRipple type="button" label="Export"
+      class="p-button-outlined p-button-success button-nav"></button>
+  </div>
 </div>
 
-<div class="card">
+<!-- <div class="card">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData(page)" />
+        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
     </span>
-    <p-table [value]="users" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+    <p-table [value]="users" [lazy]="true" (onLazyLoad)="loadData()" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="page" responsiveLayout="scroll"
+        >
         <ng-template pTemplate="header">
             <tr>
                 <th>No</th>
@@ -30,20 +32,127 @@
                 <th>Action</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-user>
+        <ng-template pTemplate="body" let-user let-i="rowIndex">
             <tr>
+                <td>{{i+1}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>
-                    <ul *ngFor="let i of user.group"><li>{{user.group[i]}}</li></ul>
+                    <ul *ngFor="let j of user.groups"><li>{{j}}</li></ul>
                 </td>
                 <td>{{user.status}}</td>
                 <td>{{user.lastLogin}}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success"></button>
+                    <button pButton pRipple type="button" icon="pi pi-key" class="p-button-outlined mx-2"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger"></button>
                 </td>
             </tr>
         </ng-template>
     </p-table>
-</div>
+</div> -->
+
+<p-table [value]="users" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll" dataKey="id"
+  [selection]="selectedUsers" (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll"
+  (selectAllChange)="onSelectAllChange($event)" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
+  [loading]="loading" [globalFilterFields]="['name','email', 'phone', 'username']">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>No</th>
+      <th pSortableColumn="name">Username <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="email">Name <p-sortIcon field="email"></p-sortIcon>
+      </th>
+      <th pSortableColumn="company">Email <p-sortIcon field="company"></p-sortIcon>
+      </th>
+      <th pSortableColumn="company">Phone <p-sortIcon field="company"></p-sortIcon>
+      </th>
+      <th pSortableColumn="company">Address <p-sortIcon field="company"></p-sortIcon>
+      </th>
+      <th pSortableColumn="name">Group <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="email">Status <p-sortIcon field="email"></p-sortIcon>
+      </th>
+      <th pSortableColumn="company">Last Login <p-sortIcon field="company"></p-sortIcon>
+      </th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <!-- <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="name"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="email"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="company"></p-columnFilter>
+            </th> -->
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user let-i="rowIndex">
+    <tr>
+      <td>{{i+1}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.phone}}</td>
+      <td>{{user.address}}</td>
+      <td>
+        <ul *ngFor="let j of user.groups">
+          <li>{{j}}</li>
+        </ul>
+      </td>
+      <td>{{user.status}}</td>
+      <td>{{user.lastLogin}}</td>
+      <td>
+        <button pButton pRipple (click)="showEditDialog(user)" type="button" icon="pi pi-pencil"
+          class="p-button-outlined p-button-success"></button>
+        <button pButton pRipple type="button" icon="pi pi-key" class="p-button-outlined mx-2"></button>
+        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Change User Data" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [draggable]="false" [resizable]="false">
+  <div class="grid">
+    <div class="col-6">
+      <span class="p-float-label">
+        <small>Fullname</small>
+        <input type="text" pInputText [(ngModel)]="row.name" style="width: 100%;">
+      </span>
+    </div>
+    <div class="col-6">
+      <span class="p-float-label">
+        <small>Email</small>
+        <input type="text" pInputText [(ngModel)]="row.email" style="width: 100%;">
+      </span>
+    </div>
+    <div class="col-6">
+      <span class="p-float-label">
+        <small>Phone</small>
+        <input type="text" pInputText [(ngModel)]="row.phone" style="width: 100%;">
+      </span>
+    </div>
+    <div class="col-6">
+      <span class="p-float-label">
+        <small>Address</small>
+        <input type="text" pInputText [(ngModel)]="row.address" style="width: 100%;">
+      </span>
+    </div>
+  </div>
+  <div class="col-12">
+    <div *ngFor="let group of groups" class="field-checkbox">
+        <p-checkbox name="group2" value="group" [value]="group"  [(ngModel)]="selectedCategories" [inputId]="group.key" [disabled]="group.key === 'R'"></p-checkbox>
+        <label [for]="group.key">{{group.name}}</label>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayMaximizable=false" label="Ok" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
