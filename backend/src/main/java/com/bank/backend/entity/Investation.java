@@ -46,4 +46,6 @@ public class Investation {
     @Column(name = "START_DATE")
     @Temporal(TemporalType.DATE)
     private Date startDate;
+    @Column(name = "STATUS")
+    private String status;
 }

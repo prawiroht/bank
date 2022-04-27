@@ -19,4 +19,5 @@ public class CurrentAccountWrapper {
     private String accountTypeName;
     private Date initialBalanceDate;
     private Long initialBalanceAccount;
+    private String status;
 }

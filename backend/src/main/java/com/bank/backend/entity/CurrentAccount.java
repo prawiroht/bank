@@ -43,5 +43,6 @@ public class CurrentAccount {
     private Date initialBalanceDate;
     @Column(name = "INITIAL_BALANCE_ACCOUNT")
     private Long initialBalanceAccount;
-
+    @Column(name = "STATUS")
+    private String status;
 }

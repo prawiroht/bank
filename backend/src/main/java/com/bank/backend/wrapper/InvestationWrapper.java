@@ -18,4 +18,5 @@ public class InvestationWrapper {
     private Long marketUnit;
     private Long marketValue;
     private Date startDate;
+    private String status;
 }

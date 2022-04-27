@@ -46,6 +46,7 @@ public class InvestationService {
         entity.setMarketUnit(wrapper.getMarketUnit());
         entity.setMarketValue(wrapper.getMarketValue());
         entity.setStartDate(wrapper.getStartDate());
+        entity.setStatus(wrapper.getStatus());
         return entity;
     }
 
@@ -61,6 +62,7 @@ public class InvestationService {
         wrapper.setMarketUnit(entity.getMarketUnit());
         wrapper.setMarketValue(entity.getMarketValue());
         wrapper.setStartDate(entity.getStartDate());
+        wrapper.setStatus(entity.getStatus());
         return wrapper;
     }
 
