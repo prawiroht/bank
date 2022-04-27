@@ -110,11 +110,11 @@ public class UserService {
         wrapper.setIsActive(entity.getIsActive());
         wrapper.setLastLogin(entity.getLastLogin());
         List<Group> groupEntities = groupRepository.findGroupByUserId(entity.getUserId());
-        List<String> groups = new ArrayList<String>();
-        for (Group group : groupEntities){
-            groups.add(group.getName());
-        }
-        wrapper.setGroups(groups);
+        // List<String> groups = new ArrayList<String>();
+        // for (Group group : groupEntities){
+        //     groups.add(group.getName());
+        // }
+        wrapper.setGroups(groupEntities);
         return wrapper;
     }
 
