@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
+import { GroupService } from 'src/app/services/group.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -20,20 +21,27 @@ export class UserManagementComponent implements OnInit {
   cols: any[] = [];
   searchVal = '';
   displayMaximizable: boolean = false;
+  isEdit: boolean = false;
+  isAdd: boolean = true;
   row: any = {
-
   };
-  selectedCategories: any[] = [];
+  selectedGroups: any[] = [];
 
   groups: any[] = [];
 
   checked: boolean = false;
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private groupService: GroupService) { }
 
   ngOnInit(): void {
     // this.loadData({lazyEvent: JSON.stringify(event)});
-    this.selectedCategories = this.groups;
-    console.log(this.selectedCategories, 'ini cat')
+    // this.selectedCategories = this.groups;
+    // console.log(this.selectedCategories, 'ini cat')
+    this.groupService.getGroup().subscribe(
+      res => {
+        this.groups = res.data;
+        console.log(this.groups)
+      }
+    )
   }
 
   next() {
@@ -92,7 +100,34 @@ export class UserManagementComponent implements OnInit {
   }
 
   showEditDialog(row: any) {
-    this.displayMaximizable = true;
+    this.isEdit = true;
     this.row = { ...row };
+    console.log(this.row, ' in row')
+    this.selectedGroups = this.row.groups
+    console.log(this.selectedGroups)
+    this.displayMaximizable = true;
+  }
+
+  openAddDialog() {
+    console.log(this.row, 'ini row waktu buka')
+    this.isAdd = true;
+    this.displayMaximizable = true;
+  }
+
+  handleHideDialog() {
+    this.row = {
+      username: ''
+    }
+  }
+
+  postUser() {
+    this.row.isActive = 'N';
+    console.log(this.selectedGroups, 'ini di post')
+    console.log(this.row, 'ini post')
+    this.userService.postUser(this.row).subscribe(
+      res => {
+        console.log(res)
+      }
+    )
   }
 }

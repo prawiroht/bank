@@ -13,20 +13,14 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class GroupService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(page: any): Observable<any> {
-    return this.http.get<any>(url + `user/findAllPagination?page=${page}&size=4`, {
+  getGroup(): Observable<any> {
+    return this.http.get<any>(url + `group/findAll`, {
       responseType: 'json',
     });
-  }
-
-  postUser(req: any): Observable<any> {
-    return this.http.post<any>(url + `user/post`, req, {
-      responseType: 'json',
-    })
   }
 
 }

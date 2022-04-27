@@ -37,6 +37,7 @@ import { ApprovalTransactionPenampunganComponent } from './components/approval-t
 import { ApprovalTransactionUtamaComponent } from './components/approval-transaction-utama/approval-transaction-utama.component';
 import { ApprovalTransactionPengeluaranComponent } from './components/approval-transaction-pengeluaran/approval-transaction-pengeluaran.component';
 import { ApprovalTransactionFileMt940Component } from './components/approval-transaction-file-mt940/approval-transaction-file-mt940.component';
+import { FieldsetModule } from 'primeng/fieldset';
 
 
 
@@ -81,7 +82,8 @@ import { ApprovalTransactionFileMt940Component } from './components/approval-tra
     HttpClientModule,
     CheckboxModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FieldsetModule
   ],
   providers: [],
   bootstrap: [AppComponent]
