@@ -21,7 +21,7 @@
       <tr>
         <th>No</th>
         <th>Name</th>
-        <th>Desctiption</th>
+        <th>Description</th>
         <th>Permissions</th>
         <th>Action</th>
       </tr>
@@ -48,48 +48,24 @@
   <p-dialog header="Change User Data" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
     [maximizable]="true" [draggable]="false" [resizable]="false" (onHide)="isEdit=false; isAdd=false; handleHideDialog()">
     <div class="grid">
-      <div class="col-6" *ngIf="isAdd">
+      <div class="col-6">
           <span class="p-float-label">
             <small>Group Name</small>
             <input type="text" pInputText [(ngModel)]="row.name" style="width: 100%;">
           </span>
         </div>
-        <div class="col-6" *ngIf="isAdd">
+        <div class="col-6">
           <span class="p-float-label">
             <small>Description</small>
-            <input type="text" pInputText [(ngModel)]="row.password" style="width: 100%;">
+            <textarea rows="1" style="width: 100%; min-height: 100%;" [(ngModel)]="row.description" pInputTextarea [autoResize]="true"></textarea>
           </span>
         </div>
-      <div class="col-6">
-        <span class="p-float-label">
-          <small>Fullname</small>
-          <input type="text" pInputText [(ngModel)]="row.name" style="width: 100%;">
-        </span>
-      </div>
-      <div class="col-6">
-        <span class="p-float-label">
-          <small>Email</small>
-          <input type="text" pInputText [(ngModel)]="row.email" style="width: 100%;">
-        </span>
-      </div>
-      <div class="col-6">
-        <span class="p-float-label">
-          <small>Phone</small>
-          <input type="text" pInputText [(ngModel)]="row.phone" style="width: 100%;">
-        </span>
-      </div>
-      <div class="col-6">
-        <span class="p-float-label">
-          <small>Address</small>
-          <input type="text" pInputText [(ngModel)]="row.address" style="width: 100%;">
-        </span>
-      </div>
     </div>
     <div class="col-12">
-      <p-fieldset legend="Group">
-      <div *ngFor="let group of groups" class="field-checkbox">
-          <p-checkbox name="group" value="group" [value]="group" [(ngModel)]="selectedGroups" [inputId]="group.key" [disabled]="group.name === 'Super Admin'"></p-checkbox>
-          <label [for]="group.key">{{group.name}}</label>
+      <p-fieldset legend="Permissions">
+      <div *ngFor="let permission of permissions" class="field-checkbox">
+          <p-checkbox name="permission" value="permission" [value]="permission" [(ngModel)]="selectedPermissions" [inputId]="permission.key" [disabled]="permission.name === 'Super Admin'"></p-checkbox>
+          <label [for]="permission.key">{{permission.name}}</label>
       </div>
   </p-fieldset>
     </div>
