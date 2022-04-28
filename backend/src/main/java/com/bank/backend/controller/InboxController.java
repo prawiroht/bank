@@ -68,7 +68,7 @@ public class InboxController {
             String errorMessage;
             if(e.getMessage().contains("User"))
                 errorMessage = "User tidak ditemukan: "+ wrapper.getUserId();
-            if(e.getMessage().contains("Transaction"))
+            else if(e.getMessage().contains("Transaction"))
                 errorMessage = "Transaksi tidak ditemukan: "+ wrapper.getUserId();
             else 
                 errorMessage = e.getMessage();
@@ -85,6 +85,8 @@ public class InboxController {
                 errorMessage = "Pesan inbox tidak ditemukan: "+ wrapper.getInboxId();
             else if(e.getMessage().contains("User"))
                 errorMessage = "User tidak ditemukan: "+ wrapper.getUserId();
+            else if(e.getMessage().contains("Transaction"))
+                errorMessage = "Transaksi tidak ditemukan: "+ wrapper.getUserId();
             else 
                 errorMessage = e.getMessage();
             return new DataResponse<InboxWrapper>(false,errorMessage);
