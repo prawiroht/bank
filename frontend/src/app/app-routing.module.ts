@@ -18,6 +18,7 @@ import { GroupManagementComponent } from './components/group-management/group-ma
 import { InvestmentComponent } from './components/investment/investment.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
+import { SaldoComponent } from './components/saldo/saldo.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -25,33 +26,25 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
-  { path: 'main', component: MainComponent },
+  { path: 'main', component: MainComponent, canActivate:[AuthGuardService] },
   { path: 'expenditure', component: ExpenditureComponent, canActivate: [AuthGuardService] },
-  { path: 'container', component: ContainerComponent },
-  { path: 'user-management', component: UserManagementComponent },
-  { path: 'group-management', component: GroupManagementComponent },
-  { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
-  { path: 'main', component: MainComponent },
-  { path: 'expenditure', component: ExpenditureComponent, canActivate: [AuthGuardService] },
-  { path: 'container', component: ContainerComponent },
-  { path: 'giro', component: GiroComponent, canActivate: [AuthGuardService] },
-  { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate: [AuthGuardService] },
-  { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
-  { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
-  { path: 'expenditure', component: ExpenditureComponent, canActivate: [AuthGuardService] },
+  { path: 'container', component: ContainerComponent, canActivate: [AuthGuardService] },
+  { path: 'group-management', component: GroupManagementComponent, canActivate: [AuthGuardService] },
   { path: 'container', component: ContainerComponent, canActivate: [AuthGuardService] },
   { path: 'giro', component: GiroComponent, canActivate: [AuthGuardService] },
   { path: 'deposits', component: DepositsComponent, canActivate: [AuthGuardService] },
   { path: 'investment', component: InvestmentComponent, canActivate: [AuthGuardService] },
   { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate: [AuthGuardService] },
-  { path: 'giro-approval', component: ApprovalSaldoGiroComponent, },
-  { path: 'investment-approval', component: ApprovalSaldoInvestasiComponent, },
-  { path: 'main-approval', component: ApprovalTransactionUtamaComponent, },
-  { path: 'file-mt940-approval', component: ApprovalTransactionFileMt940Component, },
-  { path: 'container-approval', component: ApprovalTransactionPenampunganComponent },
-  { path: 'expenditure-approval', component: ApprovalTransactionPengeluaranComponent },
+  { path: 'giro-approval', component: ApprovalSaldoGiroComponent, canActivate: [AuthGuardService]},
+  { path: 'investment-approval', component: ApprovalSaldoInvestasiComponent, canActivate: [AuthGuardService]},
+  { path: 'main-approval', component: ApprovalTransactionUtamaComponent, canActivate: [AuthGuardService]},
+  { path: 'file-mt940-approval', component: ApprovalTransactionFileMt940Component, canActivate: [AuthGuardService]},
+  { path: 'container-approval', component: ApprovalTransactionPenampunganComponent, canActivate: [AuthGuardService]},
+  { path: 'expenditure-approval', component: ApprovalTransactionPengeluaranComponent, canActivate: [AuthGuardService]},
   { path: 'dashboard-container', component: DashboardContainerComponent, canActivate: [AuthGuardService] },
   { path: 'dashboard-expenditure', component: DashboardExpenditureComponent, canActivate: [AuthGuardService] },
+  { path: 'saldo', component: SaldoComponent, canActivate: [AuthGuardService] },
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];

@@ -4,7 +4,7 @@ background-image: linear-gradient(180deg, white, rgb(233, 255, 233));
 
 :host ::ng-deep .container {    
   padding: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 35px;
   box-sizing: border-box;
 }
   
@@ -60,7 +60,10 @@ background-image: linear-gradient(180deg, white, rgb(233, 255, 233));
     margin: 0 auto;
   }
 
-  
+  :host ::ng-deep .grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
   @media screen and (max-width: 480px) {
   
   }
