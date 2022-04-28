@@ -24,6 +24,7 @@
                 <th>Bank</th>
                 <th>Account Number</th>
                 <th>Account Type</th>
+                <th>Mutation ID</th>
                 <th>Transaction Date</th>
                 <th>Value</th>
                 <th>Purchase</th>
@@ -40,6 +41,7 @@
                 <td>{{main.bankName}}</td>
                 <td>{{main.accountNumber}}</td>
                 <td>{{main.accountTypeName}}</td>
+                <td>{{main.mutationId}}</td>
                 <td>{{main.transactionDate}}</td>
                 <td>{{main.value}}</td>
                 <td>{{main.purchaseName}}</td>
@@ -76,7 +78,7 @@
             </div>
             <div class="col-12 md:col-6">
                 <h5>Account Number</h5>
-                <input type="text" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
                     Account Number Required!
                 </h5>
@@ -94,6 +96,19 @@
                     Account Type Name Required!
                 </h5>
             </div>
+            <div class="col-12 md:col-6">
+                <h5>Mutation ID</h5>
+                <br>
+                <div *ngFor="let mutation of mutations" class="field-checkbox" style="display:inline-block">
+                    <p-radioButton [inputId]="mutation.value" name="mutation" [value]="mutation" [(ngModel)]="selectedMutation" ></p-radioButton>
+                    <label style="display:inline">{{mutation.label}} &nbsp;</label>
+                </div>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Mutation ID Required!
+                </h5>
+            </div>
+
+
             <div class="col-12 md:col-6">
                 <h5>Transaction Date</h5>
                     <input type="date" pInputText [(ngModel)]="row.transactionDate" inputId="time">
