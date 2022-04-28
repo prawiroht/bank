@@ -81,19 +81,19 @@ export class DashboardComponent implements OnInit {
         label: 'Approval Saldo',
         icon: 'pi pi-pw pi-envelope',
         items: [
-          { label: 'Giro' },
-          { label: 'Deposito' },
-          { label: 'Investasi' }
+          { label: 'Giro',  routerLink: '/giro-approval'},
+          { label: 'Deposito',  routerLink: '/deposit-approval'},
+          { label: 'Investasi', routerLink: '/investment-approval'}
         ]
       },
       {
         label: 'Approval Transaction',
         icon: 'pi pi-fw pi-envelope',
         items: [
-          { label: 'Penampungan' },
-          { label: 'Utama' },
-          { label: 'Pengeluaran' },
-          { label: 'File MT940' }
+          { label: 'Penampungan', routerLink: '/container-approval' },
+          { label: 'Utama',  routerLink: '/main-approval'},
+          { label: 'Pengeluaran', routerLink: '/expenditure-approval' },
+          { label: 'File MT940', routerLink: '/file-mt940-approval'}
         ]
       }
     ];

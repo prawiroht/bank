@@ -27,4 +27,8 @@ export class ExpenditureService {
     return this.http
       .get<any>(API_URL + 'expenditure/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
   }
+
+  getRequestedExpenditure():Observable<any>{
+    return this.http.get<any>(API_URL + 'expenditure/findByRequestStatus?page=0&size=100' , httpOptions);
+  }
 }
