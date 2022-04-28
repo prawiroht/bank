@@ -9,14 +9,18 @@ import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.Expenditure;
 import com.bank.backend.entity.Fund;
 import com.bank.backend.entity.Purchase;
+import com.bank.backend.entity.Status;
 import com.bank.backend.entity.University;
+import com.bank.backend.entity.User;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.ExpenditureRepository;
 import com.bank.backend.repository.FundRepository;
 import com.bank.backend.repository.PurchaseRepository;
+import com.bank.backend.repository.StatusRepository;
 import com.bank.backend.repository.UniversityRepository;
+import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.ExpenditureWrapper;
 
@@ -48,6 +52,12 @@ public class ExpenditureService {
     @Autowired
     AccountTypeRepository accountTypeRepository;
 
+    @Autowired
+    StatusRepository statusRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     //util
     private Expenditure toEntity(ExpenditureWrapper wrapper){
         Expenditure entity = new Expenditure();
@@ -78,7 +88,12 @@ public class ExpenditureService {
         System.out.println(fund);
         entity.setFund(fund);
         entity.setDescription(wrapper.getDescription());
-        entity.setStatus(wrapper.getStatus());
+        Optional<Status> optStatus = statusRepository.findById(wrapper.getStatusId());
+        Status status = optStatus.orElse(null);
+        entity.setStatus(status);
+        Optional<User> optUser = userRepository.findById(wrapper.getUserId());
+        User user = optUser.orElse(null);
+        entity.setUser(user);
         return entity;
     }
 
@@ -103,7 +118,10 @@ public class ExpenditureService {
         wrapper.setFundAlias(entity.getFund() != null ? entity.getFund().getAlias() : null);
         wrapper.setFundName(entity.getFund() != null ? entity.getFund().getFundName() : null);
         wrapper.setDescription(entity.getDescription());
-        wrapper.setStatus(entity.getStatus());
+        wrapper.setStatusId(entity.getStatus() != null ? entity.getStatus().getStatusId() : null);
+        wrapper.setStatusName(entity.getStatus() != null ? entity.getStatus().getStatusName() : null);
+        wrapper.setUserId(entity.getUser() != null ? entity.getUser().getUserId() : null);
+        wrapper.setUserName(entity.getUser() != null ? entity.getUser().getUsername() : null);
         return wrapper;
     }
 

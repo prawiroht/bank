@@ -2,7 +2,6 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.bank.backend.entity.Group;
 import com.bank.backend.entity.Menu;
@@ -41,11 +40,9 @@ public class GroupService {
     }
 
     public List<GroupWrapper> findGroupByUserId(Long userId){
-        if(userId == null)
-            return null;
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            return null;
+        User user = userRepository.getById(userId);
+        if(user == null)
+            throw new BusinessException("User tidak ditemukan: "+userId);
         return toWrapperList(groupRepository.findGroupByUserId(userId));
     }
 
@@ -54,21 +51,13 @@ public class GroupService {
     }
 
     public void delete(Long id){
-        if (id == null)
-	        throw new BusinessException("ID cannot be null.");
-		Optional<Group> entity = groupRepository.findById(id);
-		if (!entity.isPresent())
-			throw new BusinessException("Group not found: " + id + '.');
 		groupRepository.deleteById(id);
     }
     // util
     private Group toEntity(GroupWrapper wrapper){
         Group entity = new Group();
         if(wrapper.getGroupId() != null){
-            Optional<Group> group = groupRepository.findById(wrapper.getGroupId());
-            if (!group.isPresent())
-                throw new BusinessException("Group not found: " + wrapper.getGroupId() + '.');
-            entity=group.get();
+            entity=groupRepository.getById(wrapper.getGroupId());
         }
         entity.setName(wrapper.getName());
         return entity;
