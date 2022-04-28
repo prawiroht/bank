@@ -2,12 +2,8 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.Deposit;
-import com.bank.backend.entity.Period;
-import com.bank.backend.entity.University;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.DepositRepository;
