@@ -1,12 +1,10 @@
 package com.bank.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.bank.backend.entity.Fund;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.FundRepository;
 import com.bank.backend.util.PaginationList;
 import org.springframework.data.domain.Page;
@@ -35,12 +33,8 @@ public class FundService {
     }
 
     public Fund findById(Long id){
-        if (id == null)
-            throw new BusinessException("Please insert ID");
-        Optional<Fund> fund = fundRepository.findById(id);
-        if (!fund.isPresent())
-            throw new BusinessException("ID "+ id +" is not found.");
-        return fund.get();
+            Fund fund = fundRepository.findById(id).get();
+            return fund;
     }
 
     public PaginationList<Fund, Fund> findAllCategories(String all, int page, int size){
@@ -64,11 +58,6 @@ public class FundService {
 
     //delete
     public void delete(Long id){
-        if (id == null)
-	        throw new BusinessException("Please insert ID.");
-		Optional<Fund> entity = fundRepository.findById(id);
-		if (!entity.isPresent())
-			throw new BusinessException("Bank "+ id +" is not found.");
 		fundRepository.deleteById(id);
     }
 }

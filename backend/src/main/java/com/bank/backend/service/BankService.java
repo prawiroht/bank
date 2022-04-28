@@ -50,6 +50,7 @@ public class BankService {
 			Bank existedBank = bankRepository.getById(bank.getBankId());
 			existedBank.setBankName(bank.getBankName());
             existedBank.setCode(bank.getCode());
+            existedBank.setImage(bank.getImage());
 			return bankRepository.save(existedBank);
 		} else {
 			return bankRepository.save(bank);

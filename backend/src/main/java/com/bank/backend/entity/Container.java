@@ -1,7 +1,7 @@
 package com.bank.backend.entity;
 
 import java.util.Date;
-import java.util.List;
+// import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+// import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -61,11 +61,19 @@ public class Container {
     @JoinColumn(name = "ACCOUNT_TYPE_ID")
     private AccountType accountType;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "FUND_ID")
-    private List<Fund> fund;
+    private Fund fund;
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "STATUS_ID")
+    private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
 }

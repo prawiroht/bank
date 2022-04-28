@@ -31,7 +31,14 @@ SELECT m.menu_ID, m.NAME
         JOIN groups g ON gm.group_ID = g.group_ID
         WHERE g.group_ID = :pGroupId and gm.IS_ACTIVE = 'Y'
 
-alter table GROUPs
-add DESCRIPTION varchar2(255)
+alter table INBOX
+add CONSTRAINT INBOX_TRANSACTION_ID_FK FOREIGN KEY (TRANSACTION_ID)
+REFERENCES TRANSACTIONS(TRANSACTION_ID)
+ON DELETE CASCADE
 
 DESC GROUPS
+
+desc inbox
+
+insert into TRANSACTIONS values (TRANSACTION_SEQ.NEXTVAL,'[Transaksi] Penampungan')
+
