@@ -11,12 +11,17 @@ public class InvestationWrapper {
     private Long investationId;
     private Long universityId;
     private String investationName;
-    private Long initialSaving;
+    private Long initialNAB;
     private Long initialUnit;
     private Long initialValue;
-    private Long marketSaving;
+    private Long marketNAB;
     private Long marketUnit;
     private Long marketValue;
     private Date startDate;
-    private String status;
+    private Long bankId;
+    private String bankName;
+    private Long statusId;
+    private String statusName;
+    private Long userId;
+    private String userName;
 }

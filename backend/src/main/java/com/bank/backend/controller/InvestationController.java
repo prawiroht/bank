@@ -1,7 +1,5 @@
 package com.bank.backend.controller;
 
-import javax.persistence.Table;
-
 import com.bank.backend.entity.Investation;
 import com.bank.backend.service.InvestationService;
 import com.bank.backend.util.DataResponse;
@@ -48,12 +46,11 @@ public class InvestationController {
         return new DataResponse<InvestationWrapper>(investationService.save(wrapper));
     }
 
-    // @GetMapping(path = "/getAllCategories")
-    // public DataResponsePagination<InvestationWrapper, Investation>
-    // getByAllCategories(
-    // @RequestParam("all") String all,
-    // @RequestParam("page") int page, @RequestParam("size") int size) {
-    // return new DataResponsePagination<InvestationWrapper, Investation>(
-    // InvestationService.getAllCategories(all, page, size));
-    // }
+    @GetMapping(path = "/getAllCategories")
+    public DataResponsePagination<InvestationWrapper, Investation> getByAllCategories(
+            @RequestParam("all") String all,
+            @RequestParam("page") int page, @RequestParam("size") int size) {
+        return new DataResponsePagination<InvestationWrapper, Investation>(
+                investationService.findAllCategoriesWithPagination(all, page, size));
+    }
 }
