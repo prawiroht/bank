@@ -1,5 +1,13 @@
 package com.bank.backend.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.bank.backend.entity.Container;
 // import com.bank.backend.entity.Status;
 // import com.bank.backend.repository.ContainerRepository;
@@ -19,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 @CrossOrigin
 @RestController
@@ -120,8 +131,34 @@ public class ContainerController {
             return new DataResponse<ContainerWrapper>(true, "Delete Success");
         } catch (Exception e) {
             return new DataResponse<ContainerWrapper>(false, "Container dengan id " + containerId + " tidak ditemukan");
+        }   
+    }
+
+    // EXPORT CSV
+    @GetMapping(path = "/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List<ContainerWrapper> listContainer = containerService.findAll();
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Container ID", "University ID", "Bank ID", "Account Number", "Mutation ID", "Transaction Date", "Value", "Purchase ID", "Account Type ID", "Fund ID", "Description", "Status ID", "User ID"};
+        String[] nameMapping = {"containerId", "universityId", "bankId", "accountNumber", "mutationId", "transactionDate", "value", "purchaseId", "accountTypeId", "fundId", "description", "statusId", "userId"};
+
+        csvWriter.writeHeader(csvHeader);
+         
+        for (ContainerWrapper container : listContainer) {
+            csvWriter.write(container, nameMapping);
         }
-        
+         
+        csvWriter.close();
+
     }
 
 }

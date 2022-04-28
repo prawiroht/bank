@@ -15,19 +15,16 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class MainService {
+export class ContainerService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http : HttpClient) { }
 
-  getMain(): Observable<any> {
-    return this.http.get<any>(API_URL + 'main/findAll', httpOptions);
+  getContainer(): Observable<any>{
+    return this.http.get<any>(API_URL + 'container/findAll', httpOptions)
   }
 
-  getMainByAllCategories(keyword: string): Observable<any> {
+  getContainerByAllCategories(keyword: string): Observable<any> {
     return this.http
-      .get<any>(API_URL + 'main/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
+      .get<any>(API_URL + 'container/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
   }
-
-
-  
 }

@@ -191,4 +191,8 @@ public class ContainerService {
 		containerRepository.deleteById(containerId);
     }
 
+    // public List<Container> listAll() {
+    //     return containerRepository.findAll();
+    // }
+
 }

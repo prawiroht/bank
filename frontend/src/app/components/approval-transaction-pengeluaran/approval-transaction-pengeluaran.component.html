@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="col-12 lg:col-4">
-        <h2>&gt; Approval Pengeluaran</h2>
+        <h2>&gt;Expenditure Approval</h2>
     </div>
 </div>
 
@@ -19,27 +19,33 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
-                <th>No</th>
-                <th>Nama Bank</th>
-                <th>Produk</th>
-                <th>Nilai Awal</th>
-                <th>Nilai Akhir</th>
-                <th>Potensi Hasil</th>
-                <th>Tanggal Buka</th>
-                <th>Jatuh Tempo</th>
+                <th>ID</th>
+                <th>Bank</th>
+                <th>Account Number</th>
+                <th>Account Type</th>
+                <th>Mutation ID</th>
+                <th>Transaction Date</th>
+                <th>Value</th>
+                <th>Purchase</th>
+                <th>Fund Name</th>
+                <th>Description</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-point>
             <tr>
+                <td>{{point.expenditureId}}</td>
                 <td>{{point.bankName}}</td>
-                <td>{{point.product}}</td>
-                <td>{{point.initialValue}}</td>
-                <td>{{point.value}</td>
-                <td>{{point.revenue}}</td>
-                <td>{{point.openDate}}</td>
-                <td>{{point.dueDate}}</td>
+                <td>{{point.accountNumber}}</td>
+                <td>{{point.accountTypeName}}</td>
+                <td>{{point.mutationId}}</td>
+                <td>{{point.transactionDate}}</td>
+                <td>{{point.value}}</td>
+                <td>{{point.purchaseName}}</td>
+                <td>{{point.fundName}}</td>
+                <td>{{point.description}}</td>
+                <td>{{point.statusName}}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-check" class="p-button-outlined p-button-success"></button>
                     <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-success"></button>

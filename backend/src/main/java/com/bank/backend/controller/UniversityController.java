@@ -1,5 +1,13 @@
 package com.bank.backend.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.bank.backend.entity.University;
 import com.bank.backend.service.UniversityService;
 import com.bank.backend.util.DataResponse;
@@ -18,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 @CrossOrigin
 @RestController
@@ -80,8 +91,34 @@ public class UniversityController {
             return new DataResponse<University>(true, "Delete sukses");
         } catch (Exception e) {
             return new DataResponse<University>(false, "Universitas dengan id " + universityId + " tidak ditemukan");
-        }
-		
+        }	
 	}
+
+    // Coba CSV
+    @GetMapping(path = "/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List<University> listUniversity = universityService.listAll();
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"University ID", "University Name"};
+        String[] nameMapping = {"universityId", "universityName"};
+
+        csvWriter.writeHeader(csvHeader);
+         
+        for (University university : listUniversity) {
+            csvWriter.write(university, nameMapping);
+        }
+         
+        csvWriter.close();
+
+    }
 
 }
