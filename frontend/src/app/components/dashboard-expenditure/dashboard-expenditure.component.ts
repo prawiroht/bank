@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BankService } from 'src/app/services/bank.service';
 
 @Component({
   selector: 'app-dashboard-expenditure',
@@ -20,7 +21,7 @@ export class DashboardExpenditureComponent implements OnInit {
   // config: AppConfig;
 
 
-  constructor() { }
+  constructor(private bankService: BankService) { }
 
   ngOnInit(): void {
     this.basicData = {
@@ -43,10 +44,18 @@ export class DashboardExpenditureComponent implements OnInit {
           }
       ]
   };
+  this.getBank();
   }
 
 Search(){
   console.log(this.keyword);
 }
+
+getBank(){
+  this.bankService.getBank().subscribe((res) => {
+    this.banks = res.data;
+    console.log(this.banks);
+    console.log(this.banks.bankName);
+})}
 
 }
