@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ApprovalSaldoDepositoComponent } from './components/approval-saldo-deposito/approval-saldo-deposito.component';
 import { ApprovalSaldoGiroComponent } from './components/approval-saldo-giro/approval-saldo-giro.component';
 import { ApprovalSaldoInvestasiComponent } from './components/approval-saldo-investasi/approval-saldo-investasi.component';
+import { ApprovalTransactionFileMt940Component } from './components/approval-transaction-file-mt940/approval-transaction-file-mt940.component';
+import { ApprovalTransactionPenampunganComponent } from './components/approval-transaction-penampungan/approval-transaction-penampungan.component';
+import { ApprovalTransactionPengeluaranComponent } from './components/approval-transaction-pengeluaran/approval-transaction-pengeluaran.component';
+import { ApprovalTransactionUtamaComponent } from './components/approval-transaction-utama/approval-transaction-utama.component';
 import { ContainerComponent } from './components/container/container.component';
 import { DashboardContainerComponent } from './components/dashboard-container/dashboard-container.component';
 import { DashboardExpenditureComponent } from './components/dashboard-expenditure/dashboard-expenditure.component';
@@ -24,7 +28,6 @@ const routes: Routes = [
   { path: 'expenditure', component: ExpenditureComponent, canActivate:[AuthGuardService] },
   { path: 'container', component: ContainerComponent },
   { path: 'giro', component: GiroComponent, canActivate:[AuthGuardService] },
-  { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate:[AuthGuardService] },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
@@ -35,7 +38,11 @@ const routes: Routes = [
   { path: 'investment', component: InvestmentComponent, canActivate: [AuthGuardService] },
   { path: 'deposit-approval', component: ApprovalSaldoDepositoComponent, canActivate: [AuthGuardService] },
   { path: 'giro-approval', component: ApprovalSaldoGiroComponent, },
-  { path: 'investation-approval', component: ApprovalSaldoInvestasiComponent, canActivate: [AuthGuardService] },
+  { path: 'investment-approval', component: ApprovalSaldoInvestasiComponent, },
+  { path: 'main-approval', component: ApprovalTransactionUtamaComponent,},
+  { path: 'file-mt940-approval', component: ApprovalTransactionFileMt940Component, },
+  { path: 'container-approval', component: ApprovalTransactionPenampunganComponent },
+  { path: 'expenditure-approval', component: ApprovalTransactionPengeluaranComponent},
   { path: 'dashboard-container', component: DashboardContainerComponent, canActivate: [AuthGuardService] },
   { path: 'dashboard-expenditure', component: DashboardExpenditureComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
