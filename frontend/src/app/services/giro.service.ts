@@ -10,6 +10,7 @@ const httpOptions = {
   }),
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,13 @@ export class GiroService {
 
   constructor(private http: HttpClient) { }
 
+
   getGiro(): Observable<any> {
     return this.http.get<any>(this.giroUrl + `findAll`, httpOptions);
   }
+
+  getAllCategories(keyword: string): Observable<any> {
+    return this.http.get<any>(this.giroUrl + `getAllCategories?all=${keyword}`, httpOptions);
+  }
+
 }
