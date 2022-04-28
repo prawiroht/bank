@@ -35,8 +35,8 @@
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-main>
-            <tr>
+        <ng-template pTemplate="body" let-main >
+            <tr *ngIf="main.universityName=='Universitas Gadjah Mada'">
                 <td>{{main.mainId}}</td>
                 <td>{{main.bankName}}</td>
                 <td>{{main.accountNumber}}</td>
