@@ -15,6 +15,7 @@ export class DashboardExpenditureComponent implements OnInit {
   chartOptions: any;
   keyword='';
   banks:any;
+  bankName='';
   // subscription: Subscription;
   // config: AppConfig;
 
