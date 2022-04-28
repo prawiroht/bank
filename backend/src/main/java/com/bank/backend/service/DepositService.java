@@ -2,17 +2,15 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.Deposit;
-import com.bank.backend.entity.Period;
-import com.bank.backend.entity.University;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.DepositRepository;
 import com.bank.backend.repository.PeriodRepository;
+import com.bank.backend.repository.StatusRepository;
 import com.bank.backend.repository.UniversityRepository;
+import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.DepositWrapper;
 
@@ -33,33 +31,29 @@ public class DepositService {
     BankRepository bankRepository;
     @Autowired
     PeriodRepository periodRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    StatusRepository statusRepository;
 
     // util
     private Deposit toEntity(DepositWrapper wrapper) {
         Deposit entity = new Deposit();
         if (wrapper.getDepositId() != null) {
-            Optional<Deposit> deposit = depositRepository.findById(wrapper.getDepositId());
-            if (!deposit.isPresent())
-                throw new BusinessException("Current Account not found: " + wrapper.getDepositId() + '.');
-            entity = deposit.get();
+            entity = depositRepository.getById(wrapper.getDepositId());
         }
-        Optional<University> optionalUniv = universityRepository.findById(wrapper.getUniversityId());
-        University university = optionalUniv.orElse(null);
-        entity.setUniversity(university);
+        entity.setUniversity(universityRepository.getById(wrapper.getUniversityId()));
         entity.setDepositName(wrapper.getDepositName());
-        Optional<Bank> optionalBank = bankRepository.findById(wrapper.getBankId());
-        Bank bank = optionalBank.orElse(null);
-        entity.setBank(bank);
+        entity.setBank(bankRepository.getById(wrapper.getBankId()));
         entity.setAccountNumber(wrapper.getAccountNumber());
-        Optional<Period> optionalPeriod = periodRepository.findById(wrapper.getPeriodId());
-        Period period = optionalPeriod.orElse(null);
-        entity.setPeriod(period);
+        entity.setPeriod(periodRepository.getById(wrapper.getPeriodId()));
         entity.setNominal(wrapper.getNominal());
         entity.setInterest(wrapper.getInterest());
         entity.setEarningInterest(wrapper.getEarningInterest());
         entity.setStartDate(wrapper.getStartDate());
         entity.setDueDate(wrapper.getDueDate());
-        entity.setStatus(wrapper.getStatus());
+        entity.setStatus(statusRepository.getById(wrapper.getStatusId()));
+        entity.setUser(userRepository.getById(wrapper.getUserId()));
         return entity;
     }
 
@@ -79,7 +73,10 @@ public class DepositService {
         wrapper.setEarningInterest(entity.getEarningInterest());
         wrapper.setStartDate(entity.getStartDate());
         wrapper.setDueDate(entity.getDueDate());
-        wrapper.setStatus(entity.getStatus());
+        wrapper.setStatusId(entity.getStatus() != null ? entity.getStatus().getStatusId() : null);
+        wrapper.setStatusName(entity.getStatus() != null ? entity.getStatus().getStatusName() : null);
+        wrapper.setUserId(entity.getUser() != null ? entity.getUser().getUserId() : null);
+        wrapper.setUserName(entity.getUser() != null ? entity.getUser().getUsername() : null);
         return wrapper;
     }
 
@@ -119,9 +116,6 @@ public class DepositService {
     public void delete(Long id) {
         if (id == null)
             throw new BusinessException("Id cannot be null");
-        Optional<Deposit> entity = depositRepository.findById(id);
-        if (!entity.isPresent())
-            throw new BusinessException("Cannot found Deposit with id : " + id + ".");
         depositRepository.deleteById(id);
     }
 

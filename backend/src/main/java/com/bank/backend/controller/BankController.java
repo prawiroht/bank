@@ -29,9 +29,13 @@ public class BankController {
         return new DataResponseList<Bank>(bankService.findAll());
     }
 
-    @GetMapping (path = "/findByBankId")
+    @GetMapping (path = "/findById")
     public DataResponse<Bank> findById(Long id){
-        return new DataResponse<Bank>(bankService.findByBankId(id));
+        try {
+            return new DataResponse<Bank>(bankService.findById(id));
+        } catch (Exception e) {
+            return new DataResponse<Bank>(false, "Data not found: "+ id);
+        }
     }
 
     @GetMapping (path = "/findAllPagination")
@@ -51,14 +55,24 @@ public class BankController {
 
     @PutMapping (path = "/put")
     public DataResponse<Bank> put(@RequestBody Bank bank){
-        return new DataResponse<Bank>(bankService.save(bank));
+        try {
+            return new DataResponse<Bank>(bankService.save(bank));
+        } catch (Exception e) {
+            return new DataResponse<Bank>(false, "Data not found: "+ bank.getBankId());
+        }
+        
     }
 
     //delete
     @DeleteMapping (path = "/delete")
     public DataResponse<Bank> delete(@RequestParam("id") Long id){
-        bankService.delete(id);
-            return new DataResponse<Bank>(true, "Delete Sukses");
+        try {
+            bankService.delete(id);
+            return new DataResponse<Bank>(true, "Delete Successful");
+        } catch (Exception e) {
+            return new DataResponse<Bank>(false, "Data not found: "+ id);
+        }
+        
     }
 
 }

@@ -30,3 +30,8 @@ SELECT m.menu_ID, m.NAME
         JOIN group_menuS gm ON m.menu_ID = gm.menu_ID
         JOIN groups g ON gm.group_ID = g.group_ID
         WHERE g.group_ID = :pGroupId and gm.IS_ACTIVE = 'Y'
+
+alter table GROUPs
+add DESCRIPTION varchar2(255)
+
+DESC GROUPS

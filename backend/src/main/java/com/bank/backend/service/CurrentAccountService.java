@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.bank.backend.entity.AccountType;
-import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.CurrentAccount;
-import com.bank.backend.entity.University;
+import com.bank.backend.entity.Investation;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.CurrentAccountRepository;
+import com.bank.backend.repository.StatusRepository;
 import com.bank.backend.repository.UniversityRepository;
+import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.CurrentAccountWrapper;
 
@@ -34,28 +34,26 @@ public class CurrentAccountService {
     @Autowired
     AccountTypeRepository accountTypeRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    StatusRepository statusRepository;
+
     // util
     private CurrentAccount toEntity(CurrentAccountWrapper wrapper) {
         CurrentAccount entity = new CurrentAccount();
         if (wrapper.getCurrentAccountId() != null) {
-            Optional<CurrentAccount> currentAccount = currentAccountRepository.findById(wrapper.getAccountTypeId());
-            if (!currentAccount.isPresent())
-                throw new BusinessException("Current Account not found: " + wrapper.getAccountTypeId() + '.');
-            entity = currentAccount.get();
+            entity = currentAccountRepository.getById(wrapper.getAccountTypeId());
         }
-        Optional<University> optionalUniv = universityRepository.findById(wrapper.getUniversityId());
-        University university = optionalUniv.orElse(null);
-        entity.setUniversity(university);
-        Optional<Bank> optionalBank = bankRepository.findById(wrapper.getBankId());
-        Bank bank = optionalBank.orElse(null);
-        entity.setBank(bank);
+        entity.setUniversity(universityRepository.getById(wrapper.getUniversityId()));
+        entity.setBank(bankRepository.getById(wrapper.getBankId()));
         entity.setAccountNumber(wrapper.getAccountNumber());
-        Optional<AccountType> optionalAcc = accountTypeRepository.findById(wrapper.getAccountTypeId());
-        AccountType accountType = optionalAcc.orElse(null);
-        entity.setAccountType(accountType);
+        entity.setAccountType(accountTypeRepository.getById(wrapper.getAccountTypeId()));
         entity.setInitialBalanceAccount(wrapper.getInitialBalanceAccount());
         entity.setInitialBalanceDate(wrapper.getInitialBalanceDate());
-        entity.setStatus(wrapper.getStatus());
+        entity.setStatus(statusRepository.getById(wrapper.getStatusId()));
+        entity.setUser(userRepository.getById(wrapper.getUserId()));
         return entity;
     }
 
@@ -73,7 +71,10 @@ public class CurrentAccountService {
                 entity.getAccountType() != null ? entity.getAccountType().getAccountTypeName() : null);
         wrapper.setInitialBalanceAccount(entity.getInitialBalanceAccount());
         wrapper.setInitialBalanceDate(entity.getInitialBalanceDate());
-        wrapper.setStatus(entity.getStatus());
+        wrapper.setStatusId(entity.getStatus() != null ? entity.getStatus().getStatusId() : null);
+        wrapper.setStatusName(entity.getStatus() != null ? entity.getStatus().getStatusName() : null);
+        wrapper.setUserId(entity.getUser() != null ? entity.getUser().getUserId() : null);
+        wrapper.setUserName(entity.getUser() != null ? entity.getUser().getUsername() : null);
         return wrapper;
     }
 
@@ -84,6 +85,14 @@ public class CurrentAccountService {
             wrapperList.add(wrapper);
         }
         return wrapperList;
+    }
+
+    private PaginationList<CurrentAccountWrapper, CurrentAccount> toPaginationList(Page<CurrentAccount> entityPage) {
+        List<CurrentAccount> entityList = entityPage.getContent();
+        List<CurrentAccountWrapper> wrapperList = toWrapperList(entityList);
+        PaginationList<CurrentAccountWrapper, CurrentAccount> paginationList = new PaginationList<>(wrapperList,
+                entityPage);
+        return paginationList;
     }
 
     // Retrieve list of data
@@ -100,20 +109,18 @@ public class CurrentAccountService {
     // Retrieve list of data with pagination
     public PaginationList<CurrentAccountWrapper, CurrentAccount> findAllWithPagination(int page,
             int size) {
-        Page<CurrentAccount> currentAccountPage = currentAccountRepository.findAll(PageRequest.of(page, size));
-        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
-        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
-        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers,
-                currentAccountPage);
+        return toPaginationList(currentAccountRepository.findAll(PageRequest.of(page, size)));
     }
 
     // Retrieve list of data with pagination with param all category
     public PaginationList<CurrentAccountWrapper, CurrentAccount> getAllCategories(String all, int page, int size) {
-        Page<CurrentAccount> currentAccountPage = currentAccountRepository.getByAllCategories(all,
-                PageRequest.of(page, size));
-        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
-        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
-        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers, currentAccountPage);
+        return toPaginationList(currentAccountRepository.getByAllCategories(all, PageRequest.of(page, size)));
+    }
+
+    // Retieve list of data with pagination with status requested
+    public PaginationList<CurrentAccountWrapper, CurrentAccount> findByResquestStatus(int page, int size) {
+        return toPaginationList(
+                currentAccountRepository.findByStatus(statusRepository.getById(1L), PageRequest.of(page, size)));
     }
 
     // Create and Update

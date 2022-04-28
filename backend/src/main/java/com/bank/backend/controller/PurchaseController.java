@@ -47,7 +47,12 @@ public class PurchaseController {
     // GET BY ID
     @GetMapping(path = "/getById")
     public DataResponse<Purchase> getById(@RequestParam("id") Long purchaseId){
-        return new DataResponse<Purchase>(purchaseService.getByPurchaseId(purchaseId));
+        try {
+            return new DataResponse<Purchase>(purchaseService.getByPurchaseId(purchaseId));
+        } catch (Exception e) {
+            return new DataResponse<Purchase>(false, "Belanja dengan id " + purchaseId + " tidak ditemukan");
+        }
+
     }
 
     // POST / ADD
@@ -59,13 +64,24 @@ public class PurchaseController {
     // PUT / EDIT
     @PutMapping(path = "/put")
     public DataResponse<Purchase> update(@RequestBody Purchase purchase) {
-        return new DataResponse<Purchase>(purchaseService.save(purchase));
+        try {
+            return new DataResponse<Purchase>(purchaseService.save(purchase));
+        } catch (Exception e) {
+            return new DataResponse<Purchase>(false, "Belanja dengan id " + purchase.getPurchaseId() + " tidak ditemukan");
+        }
+        
     }
 
     // DELETE
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") Long purchaseId) {
-        purchaseService.delete(purchaseId);
+    public DataResponse<Purchase> delete(@PathVariable("id") Long purchaseId) {
+        try {
+            purchaseService.delete(purchaseId);
+            return new DataResponse<Purchase>(true, "Delete sukses");
+        } catch (Exception e) {
+            return new DataResponse<Purchase>(false, "Belanja dengan id " + purchaseId + " tidak ditemukan");
+        }
+        
     }
 
 }

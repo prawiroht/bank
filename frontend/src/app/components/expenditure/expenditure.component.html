@@ -5,8 +5,8 @@
 </div>
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
-    <div class="col-12 lg:col-3">
-        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Transaction" class="p-button-outlined mr-3 button-nav"></button>
+    <div class="col-12 lg:col-5">
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Transaction" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
         <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
@@ -14,7 +14,7 @@
 <div class="card">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="keyword" (keyup.enter)="searchExpenditureByAllCategories(keyword)" />
     </span>
     <p-table [value]="expenditures" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
@@ -23,23 +23,154 @@
                 <th>ID</th>
                 <th>Bank</th>
                 <th>Account Number</th>
-                <th>Account Name</th>
+                <th>Account Type</th>
+                <th>Mutation ID</th>
                 <th>Transaction Date</th>
                 <th>Value</th>
                 <th>Purchase</th>
                 <th>Fund Name</th>
                 <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
 
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-expenditure>
             <tr>
-                <!-- <td>{{customer.name}}</td>
-                <td>{{customer.country.name}}</td>
-                <td>{{customer.company}}</td>
-                <td>{{customer.representative.name}}</td> -->
+                <td>{{expenditure.expenditureId}}</td>
+                <td>{{expenditure.bankName}}</td>
+                <td>{{expenditure.accountNumber}}</td>
+                <td>{{expenditure.accountTypeName}}</td>
+                <td>{{expenditure.mutationId}}</td>
+                <td>{{expenditure.transactionDate}}</td>
+                <td>{{expenditure.value}}</td>
+                <td>{{expenditure.purchaseName}}</td>
+                <td>{{expenditure.fundName}}</td>
+                <td>{{expenditure.description}}</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog [header]="action == 'Add' ? 'Add Transaction' : 'Edit Transaction'" [(visible)]="display" [modal]="true"
+        [style]="{ width: '50vw', height: '40vw' }" [maximizable]="true" [baseZIndex]="10000" [draggable]="false"
+        [resizable]="false" (onHide)="handleReset($event,'click')">
+        <div class="grid p-fluid">
+            <!-- <div class="col-12 md:col-6">
+                <h5>ID</h5>
+                <input type="text" pInputText id="containerId" [(ngModel)]="row.containerId" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.containerId">
+                    ID Required!
+                </h5>
+            </div> -->
+            <div class="col-12 md:col-6">
+                <h5>Bank</h5>
+                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Select a Bank Name">
+                    <ng-template let-bank pTemplate="item">
+                        <div class="bank-item">
+                            <div>{{bank.code}} : {{bank.bankName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
+                    Bank Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Account Number</h5>
+                <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
+                    Account Number Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Account Type Name</h5>
+                <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="bankId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Select a Account Type Name">
+                    <ng-template let-accountType pTemplate="item">
+                        <div class="accountType-item">
+                            <div> {{accountType.accountTypeName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Account Type Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Mutation ID</h5>
+                <br>
+                <div *ngFor="let mutation of mutations" class="field-checkbox" style="display:inline-block">
+                    <p-radioButton [inputId]="mutation.value" name="mutation" [value]="mutation" [(ngModel)]="selectedMutation" ></p-radioButton>
+                    <label style="display:inline">{{mutation.label}} &nbsp;</label>
+                </div>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Mutation ID Required!
+                </h5>
+            </div>
+
+
+            <div class="col-12 md:col-6">
+                <h5>Transaction Date</h5>
+                    <input type="date" pInputText [(ngModel)]="row.transactionDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.transactionDate">
+                   Transaction Date Required!
+                </h5>
+            </div>
+            
+            <div class="col-12 md:col-6">
+                <h5>Value</h5>
+                <input type="text" pInputText [(ngModel)]="row.value" id="value">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.value">
+                    Value Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Purchase Name</h5>
+                <p-dropdown appendTo="body" [options]="purchases" [(ngModel)]="row.purchaseId" optionLabel="purchaseName" optionValue="purchaseId" [filter]="true" filterBy="purchaseName" [showClear]="true" placeholder="Select a Purchase Name">
+                    <ng-template let-purchase pTemplate="item">
+                        <div class="purchase-item">
+                            <div>{{purchase.alias}} : {{purchase.purchaseName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.purchaseName">
+                    Purchase Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Fund Name</h5>
+                <p-dropdown appendTo="body" [options]="funds" [(ngModel)]="row.fundId" optionLabel="fundName" optionValue="fundId" [filter]="true" filterBy="fundName" [showClear]="true" placeholder="Select a Fund Name">
+                    <ng-template let-fund pTemplate="item">
+                        <div class="fund-item">
+                            <div>{{fund.alias}} : {{fund.fundName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.fundName">
+                    Fund Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Description</h5>
+                <input type="text" pInputText id="fundName" [(ngModel)]="row.description" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.description">
+                    Fund Name Required!
+                </h5>
+            </div>
+            </div>
+
+
+    <ng-template pTemplate="footer">
+    <button pButton type="button" label="Save" icon="pi pi-check"></button>
+    <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
+        class="mt-2 ml-1 p-button-danger"></button>
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
+        class="mt-2 ml-1 p-button-danger"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+
+
 

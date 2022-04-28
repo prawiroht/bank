@@ -60,6 +60,7 @@ public class GroupService {
             entity=groupRepository.getById(wrapper.getGroupId());
         }
         entity.setName(wrapper.getName());
+        entity.setDescription(wrapper.getDescription());
         return entity;
     }
 
@@ -67,12 +68,9 @@ public class GroupService {
         GroupWrapper wrapper = new GroupWrapper();
         wrapper.setGroupId(entity.getGroupId());
         wrapper.setName(entity.getName());
+        wrapper.setDescription(entity.getDescription());
         List<Menu> menuEntities = menuRepository.findMenuByGroupId(entity.getGroupId());
-        List<String> menus = new ArrayList<String>();
-        for (Menu menu : menuEntities){
-            menus.add(menu.getName());
-        }
-        wrapper.setMenus(menus);
+        wrapper.setMenus(menuEntities);
         return wrapper;
     }
 

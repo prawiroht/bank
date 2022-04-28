@@ -47,33 +47,18 @@ public class PurchaseService {
 
     // GET BY PURCHASE ID
     public Purchase getByPurchaseId(Long purchaseId) {
-		if (purchaseId == null)
-			throw new BusinessException("ID cannot be null.");
-		Optional<Purchase> purchase = purchaseRepository.findById(purchaseId);
-		if (!purchase.isPresent())
-			throw new BusinessException("Purchase with id " + purchaseId + " is not found.");
-		return purchase.get();
+		Purchase purchase = purchaseRepository.findById(purchaseId).get();
+		return purchase;
 	}
 
     // ADD (POST) & UPDATE (PUT)
     public Purchase save(Purchase purchase) {
-		if (purchase.getPurchaseId() != null) {
-			Purchase existedPurchase = purchaseRepository.getById(purchase.getPurchaseId());
-			existedPurchase.setPurchaseName(purchase.getPurchaseName());
-            existedPurchase.setAlias(purchase.getAlias());
-			return purchaseRepository.save(existedPurchase);
-		} else {
+
 			return purchaseRepository.save(purchase);
-		}
 	}
 
     // DELETE
     public void delete(Long purchaseId) {
-		if (purchaseId == null)
-			throw new BusinessException("ID cannot be null.");
-		Optional<Purchase> purchase = purchaseRepository.findById(purchaseId);
-		if (!purchase.isPresent())
-			throw new BusinessException("Purchase with ID " + purchaseId + " is not found");
 		purchaseRepository.deleteById(purchaseId);
 	}
 

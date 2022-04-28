@@ -1,5 +1,6 @@
 package com.bank.backend.controller;
 
+
 import com.bank.backend.entity.Expenditure;
 import com.bank.backend.service.ExpenditureService;
 import com.bank.backend.util.DataResponse;
@@ -31,12 +32,14 @@ public class ExpenditureController {
         return new DataResponseList<ExpenditureWrapper>(expenditureService.findAll());
     }
 
-    @GetMapping (path = "/findByBankId")
+    @GetMapping (path = "/findById")
     public DataResponse<ExpenditureWrapper> findById(@RequestParam("id") Long id){
-        ExpenditureWrapper expenditure = expenditureService.findByExpenditureId(id);
-        if (expenditure == null)
-            return new DataResponse<ExpenditureWrapper>(false, "Data not found");
-        return new DataResponse<ExpenditureWrapper>(expenditure);
+        try {
+            ExpenditureWrapper expenditure = expenditureService.findById(id);
+            return new DataResponse<ExpenditureWrapper>(expenditure);
+        } catch (Exception e){
+            return new DataResponse<ExpenditureWrapper>(false, "Data with ID "+ id +" not found");
+        }
     }
 
     @GetMapping (path = "/findAllPagination")
@@ -49,6 +52,16 @@ public class ExpenditureController {
         return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findAllCategories(all, page, size));
     }
 
+    // @GetMapping (path = "/findAllWithRequestStatus")
+    // public DataResponsePagination<ExpenditureWrapper, Expenditure> findAllWithRequestStatus(int page, int size) {
+    //     return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findAllWithRequestStatus(page, size));
+    // }
+
+    @GetMapping (path = "/findByRequestStatus")
+    public DataResponsePagination<ExpenditureWrapper, Expenditure> findByRequestStatus(int page, int size){
+        return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findByResquestStatus(page, size));
+    }
+
     @PostMapping (path = "/post")
     public DataResponse<ExpenditureWrapper> post(@RequestBody ExpenditureWrapper wrapper){
         return new DataResponse<ExpenditureWrapper>(expenditureService.save(wrapper));
@@ -56,14 +69,42 @@ public class ExpenditureController {
 
     @PutMapping (path = "/put")
     public DataResponse<ExpenditureWrapper> put(@RequestBody ExpenditureWrapper wrapper){
-        return new DataResponse<ExpenditureWrapper>(expenditureService.save(wrapper));
+        try {
+            return new DataResponse<ExpenditureWrapper>(expenditureService.save(wrapper));
+        } catch (Exception e) {
+            String errorMessage;
+            if (e.getMessage().contains("Expenditure")){
+                errorMessage = "Expenditure with ID "+ wrapper.getExpenditureId() +" is not found";
+            } else if (e.getMessage().contains("Bank")){
+                errorMessage = "Bank with ID "+ wrapper.getBankId() +" is not found";
+            } else if (e.getMessage().contains("University")){
+                errorMessage = "University with ID "+ wrapper.getUniversityId() +" is not found";
+            } else if (e.getMessage().contains("Purchase")){
+                errorMessage = "Purchase with ID "+ wrapper.getPurchaseId() +" is not found";
+            } else if (e.getMessage().contains("AccountType")){
+                errorMessage = "Account Type with ID "+ wrapper.getAccountTypeId() +" is not found";
+            } else if (e.getMessage().contains("Fund")){
+                errorMessage = "Fund with ID "+ wrapper.getFundId() +" is not found";
+            } else if (e.getMessage().contains("Status")){
+                errorMessage = "Status with ID "+ wrapper.getStatusId() +" is not found";
+            } else if (e.getMessage().contains("User")){
+                errorMessage = "User with ID "+ wrapper.getUserId() +" is not found";
+            } else {
+               errorMessage = e.getMessage();
+            }
+            return new DataResponse<ExpenditureWrapper>(false, errorMessage);
+        }
     }
 
     //delete
     @DeleteMapping (path = "/delete")
     public DataResponse<ExpenditureWrapper> delete(@RequestParam("id") Long id){
-        expenditureService.delete(id);
-            return new DataResponse<ExpenditureWrapper>(true, "Delete Sukses");
+        try {
+            expenditureService.delete(id);
+            return new DataResponse<ExpenditureWrapper>(true, "Delete Successful");
+        } catch (Exception e) {
+            return new DataResponse<ExpenditureWrapper>(false, "Data not found: "+ id);
+        }
     }
 
 

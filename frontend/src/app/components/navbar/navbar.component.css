@@ -4,13 +4,12 @@
 }
 
 .topbar{
-    position: fixed;
-    position: fixed;
+    position: relative;
     width: 100%;
     left: 0;
     top: 0;
     background-color: #043975;
-    height: 80px;
+    height: 100%;
     padding: 0px 0px;
     z-index: 100;
     box-shadow: 0 0px 6px 0px rgb(0 0 0 / 12%);
