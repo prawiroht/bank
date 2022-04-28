@@ -25,8 +25,7 @@ public interface MainRepository extends JpaRepository<Main, Long>{
                         "WHERE LOWER(u.UNIVERSITY_NAME) " +
                         "LIKE LOWER(CONCAT(CONCAT('%',:pUniversityName),'%')) OR LOWER(b.CODE) " +
                         "LIKE LOWER(CONCAT(CONCAT('%',:pCode), '%')) OR LOWER(b.BANK_NAME) " +
-                        "LIKE LOWER(CONCAT(CONCAT('%',:pBankName), '%')) OR LOWER(p.ALIAS) " +
-                        "LIKE LOWER(CONCAT(CONCAT('%',:pAlias), '%')) OR LOWER(p.PURCHASE_NAME) " +
+                        "LIKE LOWER(CONCAT(CONCAT('%',:pBankName), '%')) OR LOWER(p.PURCHASE_NAME) " +
                         "LIKE LOWER(CONCAT(CONCAT('%',:pPurchaseName), '%')) OR LOWER(a.ACCOUNT_TYPE_NAME) " +
                         "LIKE LOWER(CONCAT(CONCAT('%',:pAccountTypeName), '%')) OR LOWER(m.ACCOUNT_NUMBER) " +
                         "LIKE LOWER(CONCAT(CONCAT('%',:pAccountNumber), '%')) OR LOWER(m.MUTATION_ID) " +
@@ -56,7 +55,6 @@ public interface MainRepository extends JpaRepository<Main, Long>{
         Page<Main> getByAllCategorie(@Param("pUniversityName") String universityName,
                         @Param("pCode") String code,
                         @Param("pBankName") String bankName,
-                        @Param("pAlias") String alias,
                         @Param("pPurchaseName") String purchaseName,
                         @Param("pAccountTypeName") String accountTypeName,
                         @Param("pAccountNumber") String accountNumber,
@@ -65,7 +63,7 @@ public interface MainRepository extends JpaRepository<Main, Long>{
                         Pageable page);
 
         default Page<Main> getByAllCategories(String all, Pageable page) {
-                return getByAllCategorie(all, all, all, all, all, all, all, all, all, page);
+                return getByAllCategorie(all, all, all, all, all, all, all, all, page);
         }
     
 

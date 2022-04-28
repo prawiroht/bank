@@ -2,10 +2,8 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.bank.backend.entity.Menu;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.MenuRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.MenuWrapper;
@@ -36,11 +34,6 @@ public class MenuService {
     }
 
     public void delete(Long id){
-        if(id == null)
-            throw new BusinessException("ID tidak boleh kosong");
-        Optional<Menu> menu = menuRepository.findById(id);
-        if (!menu.isPresent())
-            throw new BusinessException("Menu tidak ditemukan "+id+'.');
         menuRepository.deleteById(id);
     }
 
@@ -48,10 +41,7 @@ public class MenuService {
     private Menu toEntity(MenuWrapper wrapper){
         Menu entity = new Menu();
         if(wrapper.getMenuId() != null){
-            Optional<Menu> menu = menuRepository.findById(wrapper.getMenuId());
-            if (!menu.isPresent())
-                throw new BusinessException("Menu not found: " + wrapper.getMenuId() + '.');
-            entity=menu.get();
+            entity = menuRepository.getById(wrapper.getMenuId());
         }
         entity.setName(wrapper.getName());
         return entity;

@@ -2,10 +2,8 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.bank.backend.entity.User;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.GroupRepository;
 import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
@@ -41,29 +39,17 @@ public class UserService {
     }
 
     public UserWrapper getById(Long id){
-        if (id == null)
-	        return null;
-        Optional<User> user = userRepository.findById(id);
-        if (!user.isPresent())
-            return null;
-        return toWrapper(user.get());
+        User user = userRepository.getById(id);
+        return toWrapper(user);
     }
 
     public UserWrapper getByUsername(String username){
-        if (username == null)
-            return null;
-        Optional<User> user = userRepository.findByUsername(username);
-        if (!user.isPresent())
-            return null;
-        return toWrapper(user.get());
+        User user = userRepository.getByUsername(username);
+        return toWrapper(user);
     }
     public UserWrapper getByEmail(String email){
-        if (email == null)
-            return null;
-        Optional<User> user = userRepository.findByEmail(email);
-        if (!user.isPresent())
-            return null;
-        return toWrapper(user.get());
+        User user = userRepository.getByEmail(email);
+        return toWrapper(user);
     }
     // post & put
     public UserWrapper save(UserWrapper wrapper){
@@ -72,11 +58,6 @@ public class UserService {
 
     // delete
     public void delete(Long id){
-        if (id == null)
-	        throw new BusinessException("ID cannot be null.");
-		Optional<User> entity = userRepository.findById(id);
-		if (!entity.isPresent())
-			throw new BusinessException("User not found: " + id + '.');
 		userRepository.deleteById(id);
     }
 
@@ -84,10 +65,7 @@ public class UserService {
     private User toEntity(UserWrapper wrapper){
         User entity = new User();
         if(wrapper.getUserId() != null){
-            Optional<User> user = userRepository.findById(wrapper.getUserId());
-            if (!user.isPresent())
-                throw new BusinessException("User not found: " + wrapper.getUserId() + '.');
-            entity=user.get();
+            entity = userRepository.getById(wrapper.getUserId());
         }
         entity.setUsername(wrapper.getUsername());
         entity.setPassword(wrapper.getPassword());

@@ -12,6 +12,7 @@ import com.bank.backend.entity.Fund;
 import com.bank.backend.entity.Main;
 import com.bank.backend.entity.Purchase;
 import com.bank.backend.entity.University;
+import com.bank.backend.entity.User;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
@@ -19,6 +20,7 @@ import com.bank.backend.repository.FundRepository;
 import com.bank.backend.repository.MainRepository;
 import com.bank.backend.repository.PurchaseRepository;
 import com.bank.backend.repository.UniversityRepository;
+import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.MainWrapper;
 
@@ -43,6 +45,8 @@ public class MainService {
     PurchaseRepository purchaseRepository;
     @Autowired
     FundRepository fundRepository;
+    @Autowired
+    UserRepository userRepository;
 
     private Main toEntity(MainWrapper wrapper) {
         Main entity = new Main();
@@ -69,6 +73,9 @@ public class MainService {
         Fund fund = optionalFund.orElse(null);
         entity.setFund(fund);
         entity.setDescription(wrapper.getDescription());
+        Optional<User> optionalUser = userRepository.findById(wrapper.getUserId());
+        User user = optionalUser.orElse(null);
+        entity.setUser(user); 
         return entity;
     }
 
@@ -85,14 +92,14 @@ public class MainService {
         wrapper.setTransactionDate(entityMain.getTransactionDate());
         wrapper.setValue(entityMain.getValue());
         wrapper.setPurchaseId(entityMain.getPurchase() != null ? entityMain.getPurchase().getPurchaseId() : null);
-        wrapper.setAlias(entityMain.getPurchase() != null ? entityMain.getPurchase().getAlias() : null);
         wrapper.setPurchaseName(entityMain.getPurchase() != null ? entityMain.getPurchase().getPurchaseName() : null);
         wrapper.setAccountTypeId(entityMain.getAccountType() != null ? entityMain.getAccountType().getAccountTypeId() : null);
         wrapper.setAccountTypeName(entityMain.getAccountType() != null ? entityMain.getAccountType().getAccountTypeName() : null);
         wrapper.setFundId(entityMain.getFund() != null ? entityMain.getFund().getFundId() : null);
-        wrapper.setAlias1(entityMain.getFund() != null ? entityMain.getFund().getAlias() : null);
         wrapper.setFundName(entityMain.getFund() != null ? entityMain.getFund().getFundName() : null);
         wrapper.setDescription(entityMain.getDescription());
+        wrapper.setUserId(entityMain.getUser() != null ? entityMain.getUser().getUserId() : null);
+        wrapper.setUsername(entityMain.getUser() != null ? entityMain.getUser().getUsername() : null);
         return wrapper;
     }
 

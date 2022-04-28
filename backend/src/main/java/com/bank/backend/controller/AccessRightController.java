@@ -39,15 +39,41 @@ public class AccessRightController {
     }
     @PutMapping(path = "/update")
     public DataResponse<AccessRightWrapper> update(@RequestBody AccessRightWrapper wrapper){
-        return new DataResponse<AccessRightWrapper>(accessRightService.save(wrapper));
+        try {
+            return new DataResponse<AccessRightWrapper>(accessRightService.save(wrapper));
+        } catch (Exception e) {
+            String errorMessage;
+            if (e.getMessage().contains("AccessRight"))
+                errorMessage = "Hak akses tidak ditemukan: "+ wrapper.getAccessRightId();
+            else if(e.getMessage().contains("Group")){
+                errorMessage = "Group tidak ditemukan: "+ wrapper.getGroupId();
+            }
+            else if(e.getMessage().contains("User")){
+                errorMessage = "User tidak ditemukan: "+ wrapper.getUserId();
+            }
+            else{
+                errorMessage = e.getMessage();
+            }
+            return new DataResponse<AccessRightWrapper>(false, errorMessage);
+        }
+        
     }
     @PutMapping(path = "/updateByUserIdAndGroupId")
     public DataResponse<AccessRightWrapper> updateByUserIdAndGroupId(@RequestParam Long userId,@RequestParam Long groupId, @RequestParam Character isActive){
-        return new DataResponse<AccessRightWrapper>(accessRightService.saveByUserIdAndGroupId(userId, groupId, isActive));
+        try {
+            return new DataResponse<AccessRightWrapper>(accessRightService.saveByUserIdAndGroupId(userId, groupId, isActive));    
+        } catch (Exception e) {
+            return new DataResponse<AccessRightWrapper>(false, "Hak akses tidak ditemukan: userId="+ userId +", groupId="+groupId);
+        }
+        
     }
     @DeleteMapping(path = "/delete")
     public DataResponse<AccessRightWrapper> delete(@RequestParam Long id){
-        accessRightService.delete(id);
-        return new DataResponse<AccessRightWrapper>(true,"Data berhasil dihapus");
+        try {
+            accessRightService.delete(id);
+            return new DataResponse<AccessRightWrapper>(true,"Data berhasil dihapus");    
+        } catch (Exception e) {
+            return new DataResponse<AccessRightWrapper>(false, "Hak akses tidak ditemukan: "+id);
+        }
     }
 }

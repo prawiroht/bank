@@ -14,7 +14,7 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     @Query (value =
     "SELECT e.EXPENDITURE_ID, e.BANK_ID, b.BANK_NAME, e.UNIVERSITY_ID, u.UNIVERSITY_NAME, e.ACCOUNT_NUMBER, "+ 
     "e.MUTATION_ID, e.TRANSACTION_DATE, e.VALUE, e.PURCHASE_ID, p.PURCHASE_NAME, e.ACCOUNT_TYPE_ID, at.ACCOUNT_TYPE_NAME, "+
-    "e.FUND_ID, f.FUND_NAME, e.DESCRIPTION FROM EXPENDITURES e "+
+    "e.FUND_ID, f.FUND_NAME, e.DESCRIPTION, e.STATUS FROM EXPENDITURES e "+
     "LEFT JOIN BANKS b ON e.BANK_ID = b.BANK_ID "+
     "LEFT JOIN UNIVERSITIES u ON e.UNIVERSITY_ID = u.UNIVERSITY_ID "+
     "LEFT JOIN PURCHASES p ON e.PURCHASE_ID = p.PURCHASE_ID "+
@@ -27,15 +27,15 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     "LOWER(p.PURCHASE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pPurchaseName), '%')) OR "+
     "LOWER(at.ACCOUNT_TYPE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pAccountTypeName), '%')) OR "+
     "LOWER(f.FUND_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pFundName), '%')) OR "+
-    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%')) "+
+    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%')) OR "+
     "LOWER(e.STATUS) LIKE LOWER(CONCAT(CONCAT('%', :pStatus), '%'))", 
     countQuery = "SELECT COUNT(e.EXPENDITURE_ID, e.BANK_ID, b.BANK_NAME, e.UNIVERSITY_ID, u.UNIVERSITY_NAME, e.ACCOUNT_NUMBER, "+ 
     "e.MUTATION_ID, e.TRANSACTION_DATE, e.VALUE, e.PURCHASE_ID, p.PURCHASE_NAME, e.ACCOUNT_TYPE_ID, at.ACCOUNT_TYPE_NAME, "+
-    "e.FUND_ID, f.FUND_NAME, e.DESCRIPTION) FROM EXPENDITURES e "+
+    "e.FUND_ID, f.FUND_NAME, e.DESCRIPTION, e.STATUS) FROM EXPENDITURES e "+
     "LEFT JOIN BANKS b ON e.BANK_ID = b.BANK_ID "+
     "LEFT JOIN UNIVERSITIES u ON e.UNIVERSITY_ID = u.UNIVERSITY_ID "+
     "LEFT JOIN PURCHASES p ON e.PURCHASE_ID = p.PURCHASE_ID "+
-    "LEFT JOIN ACCOUNT_TYPES at ON e.ACCOUNT_TYPE_ID = at.ACCOUNT_TYPE_ID "+
+    "LEFT JOIN ACCOUNT_TYPES at ON e.ACCO UNT_TYPE_ID = at.ACCOUNT_TYPE_ID "+
     "LEFT JOIN FUNDS f ON e.FUND_ID = f.FUND_ID "+
     "WHERE LOWER(b.BANK_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pBankName), '%')) OR "+
     "LOWER(u.UNIVERSITY_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pUniversityName), '%')) OR "+
@@ -44,7 +44,7 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     "LOWER(p.PURCHASE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pPurchaseName), '%')) OR "+
     "LOWER(at.ACCOUNT_TYPE_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pAccountTypeName), '%')) OR "+
     "LOWER(f.FUND_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pFundName), '%')) OR "+
-    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%'))"+
+    "LOWER(e.DESCRIPTION) LIKE LOWER(CONCAT(CONCAT('%', :pDescription), '%')) OR "+
     "LOWER(e.STATUS) LIKE LOWER(CONCAT(CONCAT('%', :pStatus), '%'))", nativeQuery = true
     )
     Page<Expenditure> findByAllCategoriesWithIndexedQueryParam(
