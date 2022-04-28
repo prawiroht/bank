@@ -1,14 +1,14 @@
 
 
 .sidebar{
-    z-index: -10;
-    position: fixed;
-    top: 10%;
-    height: 100%;
+    /* z-index: -10; */
+    /* position: fixed; */
+    position: relative;
+    /* top: 10%; */
+    width: 100%;
     background-color: rgb(58, 104, 179);
-    width: 20%;
     left: 0;
-    overflow: auto;
+    /* overflow: auto; */
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;

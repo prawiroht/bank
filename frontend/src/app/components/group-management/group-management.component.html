@@ -1,1 +1,105 @@
-<p>group-management works!</p>
+<div class="grid">
+    <div class="col-12 lg:col-6">
+      <h2>&gt; User Access - User Management</h2>
+    </div>
+  </div>
+  
+  <div class="grid justify-content-start lg:justify-content-end text-right">
+    <div class="col-12 lg:col-5">
+      <button (click)="openAddDialog()" pButton icon="pi pi-plus" pRipple type="button" label="Add User"
+        class="p-button-outlined mr-3 button-nav"></button>
+      <button pButton icon="pi pi-upload" pRipple type="button" label="Export"
+        class="p-button-outlined p-button-success button-nav"></button>
+    </div>
+  </div>
+  
+  <p-table [value]="groups" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll" dataKey="id"
+    [selection]="selectedGroups" (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll"
+    (selectAllChange)="onSelectAllChange($event)" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
+    [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Desctiption</th>
+        <th>Permissions</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-group let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <td>{{group.name}}</td>
+        <td>{{group.description}}</td>
+        <td>
+          <ul>
+            <li *ngFor="let j of group.menus" style="float: left; min-width: 220px;">{{j}}</li>
+          </ul>
+        </td>
+        <td>
+          <button pButton pRipple (click)="showEditDialog(group)" type="button" icon="pi pi-pencil"
+            class="p-button-outlined p-button-success"></button>
+          <button pButton pRipple (click)="deleteDialog(group)" type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  
+  <p-dialog header="Change User Data" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false" (onHide)="isEdit=false; isAdd=false; handleHideDialog()">
+    <div class="grid">
+      <div class="col-6" *ngIf="isAdd">
+          <span class="p-float-label">
+            <small>Username</small>
+            <input type="text" pInputText [(ngModel)]="row.username" style="width: 100%;">
+          </span>
+        </div>
+        <div class="col-6" *ngIf="isAdd">
+          <span class="p-float-label">
+            <small>Password</small>
+            <input type="text" pInputText [(ngModel)]="row.password" style="width: 100%;">
+          </span>
+        </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <small>Fullname</small>
+          <input type="text" pInputText [(ngModel)]="row.name" style="width: 100%;">
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <small>Email</small>
+          <input type="text" pInputText [(ngModel)]="row.email" style="width: 100%;">
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <small>Phone</small>
+          <input type="text" pInputText [(ngModel)]="row.phone" style="width: 100%;">
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <small>Address</small>
+          <input type="text" pInputText [(ngModel)]="row.address" style="width: 100%;">
+        </span>
+      </div>
+    </div>
+    <div class="col-12">
+      <p-fieldset legend="Group">
+      <div *ngFor="let group of groups" class="field-checkbox">
+          <p-checkbox name="group" value="group" [value]="group" [(ngModel)]="selectedGroups" [inputId]="group.key" [disabled]="group.name === 'Super Admin'"></p-checkbox>
+          <label [for]="group.key">{{group.name}}</label>
+      </div>
+  </p-fieldset>
+    </div>
+    <ng-template pTemplate="footer">
+      <button (click)="putUser()" (click)="displayMaximizable=false" *ngIf="isEdit" pButton icon="pi pi-check" pRipple type="button" label="Submit"
+      class="p-button-outlined mr-3 button-nav"></button>
+      <button (click)="postUser()" (click)="displayMaximizable=false" *ngIf="isAdd" pButton icon="pi pi-check" pRipple type="button" label="Submit"
+      class="p-button-outlined mr-3 button-nav"></button>
+    </ng-template>
+  </p-dialog>
+  <p-toast></p-toast>
+  
+  <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

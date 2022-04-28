@@ -1,11 +1,11 @@
 <div class="grid">
-  <div class="col-12 lg:col-4">
+  <div class="col-12 lg:col-6">
     <h2>&gt; User Access - User Management</h2>
   </div>
 </div>
 
-<div class="grid justify-content-start lg:justify-content-end text-center">
-  <div class="col-12 lg:col-3">
+<div class="grid justify-content-start lg:justify-content-end text-right">
+  <div class="col-12 lg:col-5">
     <button (click)="openAddDialog()" pButton icon="pi pi-plus" pRipple type="button" label="Add User"
       class="p-button-outlined mr-3 button-nav"></button>
     <button pButton icon="pi pi-upload" pRipple type="button" label="Export"
@@ -49,7 +49,6 @@
       <td>
         <button pButton pRipple (click)="showEditDialog(user)" type="button" icon="pi pi-pencil"
           class="p-button-outlined p-button-success"></button>
-        <button pButton pRipple type="button" icon="pi pi-key" class="p-button-outlined mx-2"></button>
         <button pButton pRipple (click)="deleteDialog(user)" type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger"></button>
       </td>
     </tr>
