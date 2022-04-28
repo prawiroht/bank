@@ -2,12 +2,8 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.bank.backend.entity.Group;
 import com.bank.backend.entity.GroupMenu;
-import com.bank.backend.entity.Menu;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.GroupMenuRepository;
 import com.bank.backend.repository.GroupRepository;
 import com.bank.backend.repository.MenuRepository;
@@ -45,42 +41,22 @@ public class GroupMenuService {
     }
 
     public GroupMenuWrapper saveByGroupIdAndMenuId(Long groupId,Long menuId, Character isActive){
-        if (menuId == null || groupId == null || isActive == null)
-            throw new BusinessException("Input tidak boleh kosong");
-        Optional<GroupMenu> access = groupMenuRepository.findByGroupIdAndMenuId(groupId, menuId);
-        if(!access.isPresent())
-            throw new BusinessException("Akses tidak ditemukan");
-        access.get().setIsActive(isActive);
-        return toWrapper(groupMenuRepository.save(access.get()));
+        GroupMenu access = groupMenuRepository.findByGroupIdAndMenuId(groupId, menuId);
+        access.setIsActive(isActive);
+        return toWrapper(groupMenuRepository.save(access));
     }
 
     public void delete(Long id){
-        if(id == null)
-            throw new BusinessException("ID tidak boleh kosong");
-        Optional<GroupMenu> access = groupMenuRepository.findById(id);
-        if(!access.isPresent())
-            throw new BusinessException("Hak akses tidak ditemukan: "+id+".");
         groupMenuRepository.deleteById(id);
     }
 
     private GroupMenu toEntity(GroupMenuWrapper wrapper){
         GroupMenu entity = new GroupMenu();
         if(wrapper.getGroupMenuId() != null){
-            Optional<GroupMenu> gm = groupMenuRepository.findById(wrapper.getGroupMenuId());
-            if (!gm.isPresent())
-                throw new BusinessException("GroupMenu not found: " + wrapper.getGroupMenuId() + '.');
-            entity=gm.get();
+            entity=groupMenuRepository.getById(wrapper.getGroupMenuId());
         }
-        if(wrapper.getGroupId() == null || wrapper.getMenuId() == null)
-            throw new BusinessException("ID grup atau menu tidak boleh null");
-        Optional<Group> group = groupRepository.findById(wrapper.getGroupId());
-        if(!group.isPresent())
-            throw new BusinessException("Grup tidak ditemukan");
-        entity.setGroup(group.get());
-        Optional<Menu> menu = menuRepository.findById(wrapper.getMenuId());
-        if(!menu.isPresent())
-            throw new BusinessException("User tidak ditemukan");
-        entity.setMenu(menu.get());
+        entity.setGroup(groupRepository.getById(wrapper.getGroupId()));
+        entity.setMenu(menuRepository.getById(wrapper.getMenuId()));
         entity.setIsActive(wrapper.getIsActive());
         return entity;
     }
