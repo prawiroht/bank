@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface GroupRepository extends JpaRepository<Group,Long>{
-    @Query(value = "SELECT G.GROUP_ID, G.NAME"+
+    @Query(value = "SELECT G.GROUP_ID, G.NAME, G.DESCRIPTION"+
         " FROM GROUPS G"+
         " JOIN ACCESS_RIGHTS AR ON G.GROUP_ID = AR.GROUP_ID"+
         " JOIN USERS U ON AR.USER_ID = U.USER_ID"+

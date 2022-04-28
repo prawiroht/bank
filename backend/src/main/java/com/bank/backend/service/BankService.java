@@ -33,7 +33,7 @@ public class BankService {
     }
 
     public Bank findById(Long id){
-        Bank bank = bankRepository.getById(id);
+        Bank bank = bankRepository.findById(id).get();
         return bank;
     }
 

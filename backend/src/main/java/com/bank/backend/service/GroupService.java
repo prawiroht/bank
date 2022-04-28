@@ -70,11 +70,7 @@ public class GroupService {
         wrapper.setName(entity.getName());
         wrapper.setDescription(entity.getDescription());
         List<Menu> menuEntities = menuRepository.findMenuByGroupId(entity.getGroupId());
-        List<String> menus = new ArrayList<String>();
-        for (Menu menu : menuEntities){
-            menus.add(menu.getName());
-        }
-        wrapper.setMenus(menus);
+        wrapper.setMenus(menuEntities);
         return wrapper;
     }
 

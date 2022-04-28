@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GiroService } from 'src/app/services/giro.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-giro',
@@ -11,10 +12,12 @@ export class GiroComponent implements OnInit {
   giros: any;
   first = 0;
   rows = 10;
-  searchVal = '';
+  keyword = '';
 
   constructor(
-    private giroService : GiroService
+    private giroService : GiroService,
+    private messageService : MessageService,
+    private confirmationService : ConfirmationService, 
     
   ) { }
 
@@ -57,6 +60,20 @@ export class GiroComponent implements OnInit {
         this.giros = res.data;
       }
     )
+  }
+
+  searchByAllCategories(keyword: string): void {
+    this.giroService.getAllCategories(this.keyword).subscribe((res) => {
+      console.log(res);
+      this.giros = res;
+      if (res.length == 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'No result',
+          detail: 'The search key was not found in any record!',
+        });
+      }
+    });
   }
 
 }
