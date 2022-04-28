@@ -1,7 +1,5 @@
 package com.bank.backend.repository;
 
-import java.util.List;
-
 import com.bank.backend.entity.Deposit;
 import com.bank.backend.entity.Status;
 
@@ -47,7 +45,4 @@ public interface DepositRepository extends JpaRepository<Deposit, Long> {
     }
 
     Page<Deposit> findByStatus(Status status, Pageable page);
-
-    @Query(value = "SELECT d.NOMINAL FROM DEPOSITS d WHERE d.STATUS_ID = 2")
-    List<Deposit> findNominalWithStatusApprove();
 }
