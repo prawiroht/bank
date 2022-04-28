@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BankService } from 'src/app/services/bank.service';
 
 @Component({
   selector: 'app-dashboard-container',
@@ -15,15 +16,16 @@ export class DashboardContainerComponent implements OnInit {
   chartOptions: any;
   keyword='';
   banks:any;
+  bankName='';
   // subscription: Subscription;
   // config: AppConfig;
 
 
-  constructor() { }
+  constructor(private bankService: BankService) { }
 
   ngOnInit(): void {
     this.data={
-      labels: ['A','B','C'],
+      labels: ['Bank A', 'Bank B', 'Bank C'],
       datasets: [
         {
           data: [300, 50, 100],
@@ -40,11 +42,21 @@ export class DashboardContainerComponent implements OnInit {
         }
       ]
     }
-  
+  this.getBank();
+  // console.log(this.banks);
+  // console.log(this.getBank());
   }
 
 Search(){
   console.log(this.keyword);
 }
+
+getBank(){
+  this.bankService.getBank().subscribe((res) => {
+    this.banks = res.data;
+    console.log(this.banks);
+    console.log(this.banks.bankName);
+})}
+
 
 }

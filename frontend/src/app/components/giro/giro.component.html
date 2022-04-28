@@ -14,7 +14,7 @@
 <div class="card">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" [(ngModel)]="keyword" (keyup.enter)="searchByAllCategories(keyword)" />
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="keyword" (keyup.enter)="searchGiroByAllCategories(keyword)" />
     </span>
     <p-table [value]="giros" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DepositsService } from 'src/app/services/deposits.service';
-
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-deposits',
@@ -8,14 +8,15 @@ import { DepositsService } from 'src/app/services/deposits.service';
   styleUrls: ['./deposits.component.css']
 })
 export class DepositsComponent implements OnInit {
-  page : number = 0;
   deposito: any;
   first = 0;
   rows = 10;
-  searchVal = '';
+  keyword = '';
 
   constructor(
-    private depositsService :DepositsService
+    private depositsService :DepositsService,
+    private messageService : MessageService,
+    private confirmationService : ConfirmationService,
   ) { }
 
   ngOnInit(): void {
@@ -51,12 +52,31 @@ export class DepositsComponent implements OnInit {
   }
 
   loadData(){
-    this.depositsService.getDeposits().subscribe (
-      (      res: { data: any; })  => {
-        console.log(res.data)
-        this.deposito = res.data;
+    this.depositsService.getDeposits().subscribe(
+      {
+        next: (data)=>{
+          this.deposito=data.data
+        },
+        error: (err) => {
+          console.log('error cuy')
+        }
       }
     )
+  }
+
+  searchDepositsByAllCategories(keyword:string): void {
+    this.depositsService.getDepositsByAllCategories(keyword).subscribe(
+      res => {
+        this.deposito=res.data;
+        if(res.data.length==0){
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'No result',
+            detail: 'The search key was not found in any record!',
+          });
+        }
+      }
+    );
   }
 
 }

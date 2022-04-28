@@ -99,6 +99,10 @@ public class DepositService {
         return toWrapperList(depositRepository.findAll());
     }
 
+    public Long sumNominalWithStatusApprove() {
+        return depositRepository.sumNominalWithStatusApprove();
+    }
+
     // Retrieve all data with pagination
     public PaginationList<DepositWrapper, Deposit> findAllWithPaginationList(int page, int size) {
         Page<Deposit> depositPage = depositRepository.findAll(PageRequest.of(page, size));

@@ -11,14 +11,14 @@ import org.springframework.data.repository.query.Param;
 
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
     // Select ALl Categories
-    @Query(value = "SELECT d.DEPOSIT_ID,d.UNIVERSITY_ID,b.BANK_ID,p.PERIOD_ID,d.DEPOSIT_NAME,b.CODE, " +
-            "b.BANK_NAME,d.ACCOUNT_NUMBER,p.PERIOD,us.USER_ID,s.STATUS_ID,d.NOMINAL,d.INTEREST,d.EARNING_INTEREST, " +
+    @Query(value = "SELECT d.DEPOSIT_ID,d.UNIVERSITY_ID,d.BANK_ID,d.PERIOD_ID,d.DEPOSIT_NAME,b.CODE, " +
+            "b.BANK_NAME,d.ACCOUNT_NUMBER,p.PERIOD,d.USER_ID,d.STATUS_ID,d.NOMINAL,d.INTEREST,d.EARNING_INTEREST, " +
             "d.START_DATE,d.DUE_DATE FROM DEPOSITS d " +
-            "LEFT JOIN UNIVERSITIES u ON u.UNIVERSITY_ID = d.UNIVERSITY_ID " +
-            "LEFT JOIN BANKS b ON b.BANK_ID = d.BANK_ID " +
-            "LEFT JOIN PERIODS p ON p.PERIOD_ID = d.PERIOD_ID " +
-            "LEFT JOIN STATUSES s ON s.STATUS_ID = d.STATUS_ID " +
-            "LEFT JOIN USERS us ON us.USER_ID = us.USER_ID " +
+            "LEFT JOIN UNIVERSITIES u ON d.UNIVERSITY_ID = u.UNIVERSITY_ID " +
+            "LEFT JOIN BANKS b ON d.BANK_ID = b.BANK_ID " +
+            "LEFT JOIN PERIODS p ON d.PERIOD_ID = p.PERIOD_ID " +
+            "LEFT JOIN STATUSES s ON d.STATUS_ID = s.STATUS_ID " +
+            "LEFT JOIN USERS us ON d.USER_ID = us.USER_ID " +
             "WHERE LOWER(d.DEPOSIT_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pDepositName),'%')) " +
             "OR LOWER(b.CODE) LIKE LOWER(CONCAT(CONCAT('%', :pCode),'%')) " +
             "OR LOWER(b.BANK_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pBankName),'%')) " +
@@ -45,4 +45,7 @@ public interface DepositRepository extends JpaRepository<Deposit, Long> {
     }
 
     Page<Deposit> findByStatus(Status status, Pageable page);
+
+    @Query("SELECT sum(nominal) FROM Deposit where status_id = 2")
+    public Long sumNominalWithStatusApprove();
 }

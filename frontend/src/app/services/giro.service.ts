@@ -24,7 +24,7 @@ export class GiroService {
     return this.http.get<any>(API_URL + `currentaccount/findAll`, httpOptions);
   }
 
-  getByAllCategories(keyword: string): Observable<any> {
+  getGiroByAllCategories(keyword: string): Observable<any> {
     return this.http.get<any>(API_URL + `currentaccount/getAllCategories?all=` + keyword + `&page=0&size=20`, httpOptions);
   }
 

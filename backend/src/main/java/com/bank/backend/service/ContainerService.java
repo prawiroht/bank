@@ -116,6 +116,7 @@ public class ContainerService {
         wrapper.setFundName(entity.getFund() != null ? entity.getFund().getFundName() : null);
         wrapper.setDescription(entity.getDescription());
         wrapper.setStatusId(entity.getStatus() != null ? entity.getStatus().getStatusId() : null);
+        wrapper.setStatusName(entity.getStatus() != null ? entity.getStatus().getStatusName() : null);
         wrapper.setUserId(entity.getUser() != null ? entity.getUser().getUserId() : null);
         wrapper.setUsername(entity.getUser() != null ? entity.getUser().getUsername() : null);
         return wrapper;
