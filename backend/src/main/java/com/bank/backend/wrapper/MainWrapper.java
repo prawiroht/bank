@@ -19,12 +19,12 @@ public class MainWrapper {
     private Date transactionDate;
     private Long value;
     private Long purchaseId;
-    private String alias;
     private String purchaseName;
     private Long accountTypeId;
     private String accountTypeName;
     private Long fundId;
-    private String alias1;
     private String fundName;
     private String description;
+    private Long userId;
+    private String username;
 }

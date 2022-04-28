@@ -35,24 +35,33 @@ public class UserController {
     }
     @GetMapping(path = "/findById")
     public DataResponse<UserWrapper> findById(@RequestParam("id")Long id){
-        UserWrapper hasil = userService.getById(id);
-        if(hasil == null)
-            return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
-        return new DataResponse<UserWrapper>(hasil);
+        try {
+            UserWrapper hasil = userService.getById(id);
+            return new DataResponse<UserWrapper>(hasil);      
+        } catch (Exception e) {
+            return new DataResponse<UserWrapper>(false, "User tidak ditemukan: "+ id);
+        }
+        
     }
     @GetMapping(path = "/findByUsername")
     public DataResponse<UserWrapper> findByUsername(@RequestParam String username){
-        UserWrapper hasil = userService.getByUsername(username);
-        if(hasil == null)
-            return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
-        return new DataResponse<UserWrapper>(hasil);
+        try {
+            UserWrapper hasil = userService.getByUsername(username);
+            return new DataResponse<UserWrapper>(hasil);    
+        } catch (Exception e) {
+            return new DataResponse<UserWrapper>(false, "User tidak ditemukan: "+ username);
+        }
+        
     }
     @GetMapping(path = "/findByEmail")
     public DataResponse<UserWrapper> findByEmail(@RequestParam String email){
-        UserWrapper hasil = userService.getByEmail(email);
-        if(hasil == null)
-            return new DataResponse<UserWrapper>(false,"Data tidak ditemukan");
-        return new DataResponse<UserWrapper>(hasil);
+        try{
+            UserWrapper hasil = userService.getByEmail(email);
+            return new DataResponse<UserWrapper>(hasil);
+        }catch(Exception e){
+            return new DataResponse<UserWrapper>(false, "User tidak ditemukan: "+ email);
+        }
+        
     }
     // post&put
     @PostMapping(path = "/post")
@@ -61,13 +70,21 @@ public class UserController {
     }
     @PutMapping(path = "/update")
     public DataResponse<UserWrapper> update(@RequestBody UserWrapper wrapper){
-        return new DataResponse<UserWrapper>(userService.save(wrapper));
+        try {
+            return new DataResponse<UserWrapper>(userService.save(wrapper));
+        } catch (Exception e) {
+            return new DataResponse<UserWrapper>(false, "User tidak ditemukan: "+ wrapper.getUserId());
+        }
     }
     // delete
     @DeleteMapping(path = "/delete")
-    public DataResponse<UserWrapper> put(@RequestParam("id") Long id){
-        userService.delete(id);
-        return new DataResponse<UserWrapper>(true, "Delete Sukses");
+    public DataResponse<UserWrapper> delete(@RequestParam("id") Long id){
+        try {
+            userService.delete(id);
+            return new DataResponse<UserWrapper>(true, "Delete Sukses");    
+        } catch (Exception e) {
+            return new DataResponse<UserWrapper>(false, "User tidak ditemukan: "+ id);
+        }
     }
 
 }
