@@ -39,11 +39,20 @@ public class GroupController {
     }
     @PutMapping(path = "/update")
     public DataResponse<GroupWrapper> update(@RequestBody GroupWrapper wrapper){
-        return new DataResponse<GroupWrapper>(groupService.save(wrapper));
+        try {
+            return new DataResponse<GroupWrapper>(groupService.save(wrapper));    
+        } catch (Exception e) {
+            return new DataResponse<GroupWrapper>(false,"Group tidak ditemukan: "+ wrapper.getGroupId());
+        }
     }
     @DeleteMapping(path = "/delete")
     public DataResponse<GroupWrapper> delete(@RequestParam Long id){
-        groupService.delete(id);
-        return new DataResponse<GroupWrapper>(true, "Data berhasil dihapus");
+        try {
+            groupService.delete(id);
+            return new DataResponse<GroupWrapper>(true, "Group berhasil dihapus");    
+        } catch (Exception e) {
+            return new DataResponse<GroupWrapper>(false,"Group tidak ditemukan: "+id);
+        }
+        
     }
 }

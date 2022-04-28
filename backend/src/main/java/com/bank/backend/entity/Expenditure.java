@@ -64,7 +64,11 @@ public class Expenditure {
     @Column (name = "DESCRIPTION")
     private String description;
 
-    @Column (name = "STATUS")
-    private String status;
+    @ManyToOne
+    @JoinColumn (name = "STATUS_ID")
+    private Status status;
 
+    @ManyToOne
+    @JoinColumn (name = "USER_ID")
+    private User user;
 }

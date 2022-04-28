@@ -39,11 +39,21 @@ public class MenuController {
     }
     @PutMapping(path = "/update")
     public DataResponse<MenuWrapper> update(@RequestBody MenuWrapper wrapper){
-        return new DataResponse<MenuWrapper>(menuService.save(wrapper));
+        try {
+            return new DataResponse<MenuWrapper>(menuService.save(wrapper));    
+        } catch (Exception e) {
+            return new DataResponse<MenuWrapper>(false,"Menu tidak ditemukan: "+wrapper.getMenuId());
+        }
+        
     }
     @DeleteMapping(path = "/delete")
     public DataResponse<MenuWrapper> delete(@RequestParam Long id){
-        menuService.delete(id);
-        return new DataResponse<MenuWrapper>(true, "Data berhasil dihapus.");
+        try {
+            menuService.delete(id);
+            return new DataResponse<MenuWrapper>(true, "Data berhasil dihapus.");    
+        } catch (Exception e) {
+            return new DataResponse<MenuWrapper>(false, "Menu tidak ditemukan: "+ id);
+        }
+        
     }
 }
