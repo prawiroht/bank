@@ -16,10 +16,10 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
             "c.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT,c.STATUS_ID,c.USER_ID " +
             "FROM CURRENT_ACCOUNTS c LEFT JOIN BANKS b " +
             "ON c.BANK_ID = b.BANK_ID " +
-            "LEFT JOIN USERS us ON us.USER_ID = c.USER_ID " +
-            "LEFT JOIN STATUSES s ON s.STATUS_ID = s.STATUS_ID " +
-            "LEFT JOIN UNIVERSITIES u ON u.UNIVERSITY_ID = c.UNIVERSITY_ID " +
-            "LEFT JOIN ACCOUNT_TYPES a ON a.ACCOUNT_TYPE_ID = c.ACCOUNT_TYPE_ID " +
+            "LEFT JOIN USERS us ON c.USER_ID = us.USER_ID " +
+            "LEFT JOIN STATUSES s ON c.STATUS_ID = s.STATUS_ID " +
+            "LEFT JOIN UNIVERSITIES u ON c.UNIVERSITY_ID = u.UNIVERSITY_ID " +
+            "LEFT JOIN ACCOUNT_TYPES a ON c.ACCOUNT_TYPE_ID = a.ACCOUNT_TYPE_ID " +
             "WHERE LOWER(u.UNIVERSITY_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pUniversityName),'%')) OR " +
             "LOWER(b.BANK_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pBankName),'%')) OR " +
             "LOWER(b.CODE) LIKE LOWER(CONCAT(CONCAT('%', :pCode),'%')) OR " +
