@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, Long> {
     // Select ALl Categories
-    @Query(value = "SELECT c.CURRENT_ACCOUNT_ID,b.BANK_ID,u.UNIVERSITY_ID,u.UNIVERSITY_NAME,b.BANK_NAME,b.CODE,c.ACCOUNT_NUMBER, "
+    @Query(value = "SELECT c.CURRENT_ACCOUNT_ID,c.BANK_ID,c.UNIVERSITY_ID,u.UNIVERSITY_NAME,b.BANK_NAME,b.CODE,c.ACCOUNT_NUMBER, "
             +
-            "a.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT,s.STATUS_ID,us.USER_ID " +
+            "c.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT,c.STATUS_ID,c.USER_ID " +
             "FROM CURRENT_ACCOUNTS c LEFT JOIN BANKS b " +
             "ON c.BANK_ID = b.BANK_ID " +
             "LEFT JOIN USERS us ON us.USER_ID = c.USER_ID " +
@@ -25,9 +25,8 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
             "LOWER(b.CODE) LIKE LOWER(CONCAT(CONCAT('%', :pCode),'%')) OR " +
             "LOWER(c.ACCOUNT_NUMBER) LIKE LOWER(CONCAT(CONCAT('%', :pAccountNumber), '%')) OR " +
             "LOWER(c.INITIAL_BALANCE_DATE) LIKE LOWER(CONCAT(CONCAT('%', :pInitialBalanceDate), '%')) OR " +
-            "LOWER(c.INITIAL_BALANCE_ACCOUNT) LIKE LOWER(CONCAT(CONCAT('%', :pInitialBalanceAccount),'%'))", countQuery = "SELECT c.CURRENT_ACCOUNT_ID,b.BANK_ID,u.UNIVERSITY_ID,u.UNIVERSITY_NAME,b.BANK_NAME,b.CODE,c.ACCOUNT_NUMBER, "
+            "LOWER(c.INITIAL_BALANCE_ACCOUNT) LIKE LOWER(CONCAT(CONCAT('%', :pInitialBalanceAccount),'%'))", countQuery = "SELECT COUNT(*) "
                     +
-                    "a.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT,s.STATUS_ID,us.USER_ID " +
                     "FROM CURRENT_ACCOUNTS c LEFT JOIN BANKS b " +
                     "ON c.BANK_ID = b.BANK_ID " +
                     "LEFT JOIN USERS us ON us.USER_ID = c.USER_ID" +

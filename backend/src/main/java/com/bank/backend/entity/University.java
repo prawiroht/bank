@@ -19,6 +19,7 @@ public class University {
     @Id
     @GeneratedValue(generator = "PERIOD_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "PERIOD_GEN", sequenceName = "PERIOD_SEQ", allocationSize = 1)
+    @Column(name = "UNIVERSITY_ID")
     private Long universityId;
     @Column(name = "UNIVERSITY_NAME")
     private String universityName;
