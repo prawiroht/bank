@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { BankService } from 'src/app/services/bank.service';
 import { FundService } from 'src/app/services/fund.service';
 import { MainService } from 'src/app/services/main.service';
 
@@ -21,6 +22,7 @@ export class MainComponent implements OnInit {
   submitted = false;
   display = false;
   fundId = 0;
+  banks: any
 
   row: any = {
     mainId: 0,
@@ -38,7 +40,8 @@ export class MainComponent implements OnInit {
     private mainService : MainService,
     private messageService : MessageService,
     private confirmationService : ConfirmationService,
-    private fundService : FundService
+    private fundService : FundService,
+    private bankService : BankService,
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +92,7 @@ export class MainComponent implements OnInit {
     )
 
     this.funds=this.getFundName();
+    this.banks=this.getBankName();
   }
 
   searchMainByAllCategories(keyword:string): void {
@@ -145,7 +149,20 @@ export class MainComponent implements OnInit {
         }
       }
     )
-    
+  }
+
+  getBankName(){
+    this.bankService.getBank().subscribe(
+      {
+        next: (data) => {
+          this.banks=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy');
+        }
+      }
+    )
   }
 
 }
