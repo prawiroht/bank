@@ -63,7 +63,13 @@
             </div> -->
             <div class="col-12 md:col-6">
                 <h5>Bank</h5>
-                <input type="text" pInputText id="bankName" [(ngModel)]="row.bankName" required="autofocus" />
+                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Select a Bank Name">
+                    <ng-template let-bank pTemplate="item">
+                        <div class="bank-item">
+                            <div>{{bank.code}} : {{bank.bankName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
                     Bank Name Required!
                 </h5>
