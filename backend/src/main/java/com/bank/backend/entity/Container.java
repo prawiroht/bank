@@ -64,11 +64,19 @@ public class Container {
     @JoinColumn(name = "ACCOUNT_TYPE_ID")
     private AccountType accountType;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "FUND_ID")
-    private List<Fund> fund;
+    private Fund fund;
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "STATUS_ID")
+    private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
 }

@@ -46,9 +46,14 @@ public class UniversityController {
     }
 
     // GET BY ID
-    @RequestMapping(path = "/getById", method = RequestMethod.GET)
-	public DataResponse<University> getByLocationId(@RequestParam("id") Long universityId) {
-		return new DataResponse<University>(universityService.getByUniversityId(universityId));
+    @GetMapping(path = "/getById")
+	public DataResponse<University> getByUniversityId(Long universityId) {
+        try {
+            return new DataResponse<University>(universityService.getByUniversityId(universityId));
+        } catch (Exception e) {
+            return new DataResponse<University>(false, "Universitas dengan id " + universityId + " tidak ditemukan");
+        }
+		
 	}
 
     // POST / ADD
@@ -60,13 +65,23 @@ public class UniversityController {
 	// PUT / EDIT
 	@PutMapping(path="/put")
 	public DataResponse<University> update(@RequestBody University university) {
-		return new DataResponse<University>(universityService.save(university));
+        try {
+            return new DataResponse<University>(universityService.save(university));
+        } catch (Exception e) {
+            return new DataResponse<University>(false, "Universitas dengan id " + university.getUniversityId() + " tidak ditemukan");
+        }
 	}	
 
     // DELETE
     @DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable("id") Long universityId) {
-		universityService.delete(universityId);
+	public DataResponse<University> delete(@PathVariable("id") Long universityId) {
+        try {
+            universityService.delete(universityId);
+            return new DataResponse<University>(true, "Delete sukses");
+        } catch (Exception e) {
+            return new DataResponse<University>(false, "Universitas dengan id " + universityId + " tidak ditemukan");
+        }
+		
 	}
 
 }

@@ -46,12 +46,8 @@ public class UniversityService {
 
 	// GET BY ID
     public University getByUniversityId(Long universityId) {
-		if (universityId == null)
-			throw new BusinessException("ID cannot be null.");
-		Optional<University> university = universityRepository.findById(universityId);
-		if (!university.isPresent())
-			throw new BusinessException("University with id " + universityId + " is not found.");
-		return university.get();
+		University university = universityRepository.findById(universityId).get();
+		return university;
 	}
 
 	// ADD (POST) & UPDATE (PUT)
@@ -62,11 +58,6 @@ public class UniversityService {
 
 	// DELETE
     public void delete(Long universityId) {
-		if (universityId == null)
-			throw new BusinessException("ID cannot be null.");
-		Optional<University> university = universityRepository.findById(universityId);
-		if (!university.isPresent())
-			throw new BusinessException("University with ID " + universityId + " is not found");
 		universityRepository.deleteById(universityId);
 	}
 
