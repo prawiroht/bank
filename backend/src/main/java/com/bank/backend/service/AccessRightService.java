@@ -2,12 +2,10 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.bank.backend.entity.AccessRight;
 import com.bank.backend.entity.Group;
 import com.bank.backend.entity.User;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccessRightRepository;
 import com.bank.backend.repository.GroupRepository;
 import com.bank.backend.repository.UserRepository;
@@ -45,41 +43,25 @@ public class AccessRightService {
     }
 
     public AccessRightWrapper saveByUserIdAndGroupId(Long userId,Long groupId, Character isActive){
-        if (userId == null || groupId == null || isActive == null)
-            throw new BusinessException("Input tidak boleh kosong");
-        Optional<AccessRight> access = accessRightRepository.findByGroupIdAndUserId(groupId, userId);
-        if(!access.isPresent())
-            throw new BusinessException("Akses tidak ditemukan");
-        access.get().setIsActive(isActive);
-        return toWrapper(accessRightRepository.save(access.get()));
+        AccessRight access = accessRightRepository.getByGroupIdAndUserId(groupId, userId);
+        access.setIsActive(isActive);
+        return toWrapper(accessRightRepository.save(access));
     }
 
     public void delete(Long id){
-        if(id == null)
-            throw new BusinessException("ID tidak boleh kosong");
-        Optional<AccessRight> access = accessRightRepository.findById(id);
-        if(!access.isPresent())
-            throw new BusinessException("Hak akses tidak ditemukan: "+id+".");
         accessRightRepository.deleteById(id);
     }
     private AccessRight toEntity(AccessRightWrapper wrapper){
         AccessRight entity = new AccessRight();
         if(wrapper.getAccessRightId() != null){
-            Optional<AccessRight> access = accessRightRepository.findById(wrapper.getAccessRightId());
-            if (!access.isPresent())
-                throw new BusinessException("AccessRight not found: " + wrapper.getAccessRightId() + '.');
-            entity=access.get();
+            entity = accessRightRepository.getById(wrapper.getAccessRightId());
         }
-        if(wrapper.getGroupId() == null || wrapper.getUserId() == null)
-            throw new BusinessException("ID grup atau user tidak boleh null");
-        Optional<Group> group = groupRepository.findById(wrapper.getGroupId());
-        if(!group.isPresent())
-            throw new BusinessException("Grup tidak ditemukan");
-        entity.setGroup(group.get());
-        Optional<User> user = userRepository.findById(wrapper.getUserId());
-        if(!user.isPresent())
-            throw new BusinessException("User tidak ditemukan");
-        entity.setUser(user.get());
+        Group group = groupRepository.getById(wrapper.getGroupId());
+        System.out.println(group);
+        entity.setGroup(group);
+        User user = userRepository.getById(wrapper.getUserId());
+        System.out.println(user);
+        entity.setUser(user);
         entity.setIsActive(wrapper.getIsActive());
         return entity;
     }
