@@ -26,5 +26,7 @@ public class Bank {
     private String code;
     @Column(name = "BANK_NAME")
     private String bankName;
+    @Column
+    private String image;
 
 }
