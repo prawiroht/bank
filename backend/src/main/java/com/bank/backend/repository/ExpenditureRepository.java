@@ -1,6 +1,7 @@
 package com.bank.backend.repository;
 
 import com.bank.backend.entity.Expenditure;
+import com.bank.backend.entity.Status;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,18 +65,12 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
             all, all, all, all, all, all, all, all, page);
     }
 
-    @Query (value = 
-    "SELECT e.EXPENDITURE_ID, e.BANK_ID, b.BANK_NAME, e.UNIVERSITY_ID, u.UNIVERSITY_NAME, e.ACCOUNT_NUMBER, "+ 
-    "e.MUTATION_ID, e.TRANSACTION_DATE, e.VALUE, e.PURCHASE_ID, p.PURCHASE_NAME, e.ACCOUNT_TYPE_ID, at.ACCOUNT_TYPE_NAME, "+
-    "e.FUND_ID, f.FUND_NAME, e.DESCRIPTION, e.STATUS_ID, s.STATUS_NAME, e.USER_ID, u.USERNAME FROM EXPENDITURES e "+
-    "LEFT JOIN BANKS b ON e.BANK_ID = b.BANK_ID "+
-    "LEFT JOIN UNIVERSITIES u ON e.UNIVERSITY_ID = u.UNIVERSITY_ID "+
-    "LEFT JOIN PURCHASES p ON e.PURCHASE_ID = p.PURCHASE_ID "+
-    "LEFT JOIN ACCOUNT_TYPES at ON e.ACCOUNT_TYPE_ID = at.ACCOUNT_TYPE_ID "+
-    "LEFT JOIN FUNDS f ON e.FUND_ID = f.FUND_ID "+
-    "LEFT JOIN STATUSES s ON e.STATUS_ID = s.STATUS_ID "+
-    "LEFT JOIN USERS u ON e.USER_ID = u.USER_ID "+
-    "WHERE e.STATUS_ID = 1", nativeQuery = true)
-    Page<Expenditure> findAllWithRequestStatus(Pageable page);
+    // @Query (value = 
+    // "SELECT e.EXPENDITURE_ID, e.BANK_ID, e.UNIVERSITY_ID, e.ACCOUNT_NUMBER, "+ 
+    // "e.MUTATION_ID, e.TRANSACTION_DATE, e.VALUE, e.PURCHASE_ID, e.ACCOUNT_TYPE_ID, "+
+    // "e.FUND_ID, e.DESCRIPTION, e.STATUS_ID, e.USER_ID FROM EXPENDITURES e "+
+    // "WHERE e.STATUS_ID = 1", nativeQuery = true)
+    // Page<Expenditure> findAllWithRequestStatus(Pageable page);
 
+    Page<Expenditure> findByStatus(Status status,Pageable page);
 }
