@@ -23,4 +23,6 @@ public class Group {
     private Long groupId;
     @Column(name = "NAME")
     private String name;
+    @Column(name = "DESCRIPTION")
+    private String description;
 }
