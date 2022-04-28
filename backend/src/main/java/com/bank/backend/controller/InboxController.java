@@ -62,7 +62,18 @@ public class InboxController {
 
     @PostMapping("/post")
     public DataResponse<InboxWrapper> post(@RequestBody InboxWrapper wrapper){
-        return new DataResponse<InboxWrapper>(inboxService.save(wrapper));
+        try {
+            return new DataResponse<InboxWrapper>(inboxService.save(wrapper));    
+        } catch (Exception e) {
+            String errorMessage;
+            if(e.getMessage().contains("User"))
+                errorMessage = "User tidak ditemukan: "+ wrapper.getUserId();
+            if(e.getMessage().contains("Transaction"))
+                errorMessage = "Transaksi tidak ditemukan: "+ wrapper.getUserId();
+            else 
+                errorMessage = e.getMessage();
+            return new DataResponse<InboxWrapper>(false,errorMessage);
+        }
     }
     @PutMapping("/update")
     public DataResponse<InboxWrapper> update(@RequestBody InboxWrapper wrapper){
