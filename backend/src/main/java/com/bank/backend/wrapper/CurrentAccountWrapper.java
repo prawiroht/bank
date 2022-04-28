@@ -19,5 +19,8 @@ public class CurrentAccountWrapper {
     private String accountTypeName;
     private Date initialBalanceDate;
     private Long initialBalanceAccount;
-    private String status;
+    private Long statusId;
+    private String statusName;
+    private Long userId;
+    private String userName;
 }

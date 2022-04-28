@@ -1,7 +1,5 @@
 package com.bank.backend.controller;
 
-import javax.persistence.Table;
-
 import com.bank.backend.entity.Investation;
 import com.bank.backend.service.InvestationService;
 import com.bank.backend.util.DataResponse;
@@ -38,6 +36,16 @@ public class InvestationController {
         return new DataResponseList<InvestationWrapper>(investationService.findAll());
     }
 
+    @GetMapping(path = "/findById")
+    public DataResponse<InvestationWrapper> findById(@RequestParam Long id) {
+        try {
+            InvestationWrapper hasil = investationService.getInvestationById(id);
+            return new DataResponse<InvestationWrapper>(hasil);
+        } catch (Exception e) {
+            return new DataResponse<InvestationWrapper>(false, "Current Account not found with id: " + id);
+        }
+    }
+
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable("id") Long InvestationId) {
         investationService.delete(InvestationId);
@@ -48,12 +56,11 @@ public class InvestationController {
         return new DataResponse<InvestationWrapper>(investationService.save(wrapper));
     }
 
-    // @GetMapping(path = "/getAllCategories")
-    // public DataResponsePagination<InvestationWrapper, Investation>
-    // getByAllCategories(
-    // @RequestParam("all") String all,
-    // @RequestParam("page") int page, @RequestParam("size") int size) {
-    // return new DataResponsePagination<InvestationWrapper, Investation>(
-    // InvestationService.getAllCategories(all, page, size));
-    // }
+    @GetMapping(path = "/getAllCategories")
+    public DataResponsePagination<InvestationWrapper, Investation> getByAllCategories(
+            @RequestParam("all") String all,
+            @RequestParam("page") int page, @RequestParam("size") int size) {
+        return new DataResponsePagination<InvestationWrapper, Investation>(
+                investationService.findAllCategoriesWithPagination(all, page, size));
+    }
 }

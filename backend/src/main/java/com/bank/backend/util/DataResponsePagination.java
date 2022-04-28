@@ -17,6 +17,10 @@ public class DataResponsePagination<E, U> extends DataResponseList<E> {
 		this.lastPage = (this.totalPages - 1) == this.page ? true : false;
 	}
 
+	public DataResponsePagination(boolean status, String message) {
+		super(status, message);
+	}
+
 	public Integer getPage() {
 		return page;
 	}

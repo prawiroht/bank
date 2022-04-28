@@ -1,13 +1,14 @@
-<div class="grid">
+<div class="grid" *ngIf="isLoggedIn">
    <div class=" p-0 col-12">
       <app-navbar></app-navbar>
    </div>
 </div>
-<div class="grid">
-   <div class=" px-0 col-12 lg:col-2">
+<div class="grid" *ngIf="isLoggedIn">
+   <div class=" px-0 col-12 lg:col-2" >
       <app-dashboard></app-dashboard>
    </div>
    <div class="col-12 lg:col-10">
       <router-outlet></router-outlet>
    </div>
 </div>
+<router-outlet *ngIf="!isLoggedIn"></router-outlet>
