@@ -22,6 +22,7 @@ public class Fund {
     @GeneratedValue(generator = "FUND_GEN", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "FUND_GEN", sequenceName = "FUNDS_SEQ", allocationSize = 1)
     private Long fundId;
+    @Column(name = "ALIAS")
     private String alias;
     @Column(name = "FUND_NAME")
     private String fundName;

@@ -42,9 +42,19 @@ public class MainController {
         return new DataResponsePagination<MainWrapper, Main>(mainService.findAllCategories(all, page, size));
     }
 
+    @GetMapping (path = "/findByRequestStatus")
+    public DataResponsePagination<MainWrapper, Main> findByRequestStatus(int page, int size){
+        return new DataResponsePagination<MainWrapper, Main>(mainService.findByResquestStatus(page, size));
+    }
+
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long mainId) {
-        mainService.delete(mainId);
+    public DataResponse<MainWrapper> delete(@RequestParam Long mainId) {
+        try {
+            mainService.delete(mainId);
+            return new DataResponse<MainWrapper>(true,"Data berhasil dihapus");
+        } catch (Exception e) {
+            return new DataResponse<MainWrapper>(false, "Main Id tidak ditemukan: "+ mainId);
+        }        
     }
 
     @PostMapping("/post")
@@ -54,6 +64,26 @@ public class MainController {
 
     @PutMapping("/update")
     public DataResponse<MainWrapper> update(@RequestBody MainWrapper wrapper) {
-        return new DataResponse<MainWrapper>(mainService.save(wrapper));
+        try {
+            return new DataResponse<MainWrapper>(mainService.save(wrapper));
+        } catch (Exception e) {
+            String errorMessage;
+            if(e.getMessage().contains("University"))
+                errorMessage = "University dengan id: "+wrapper.getUniversityId()+" tidak ditemukan";
+            else if(e.getMessage().contains("Bank")){
+                errorMessage = "Bank dengan id:" +wrapper.getBankId()+" tidak ditemukan";
+            }
+            else if(e.getMessage().contains("AccountType")){
+                errorMessage = "Jenis rekening dengan id: "+wrapper.getAccountTypeId() +" tidak ditemukan";
+            }
+            else if(e.getMessage().contains("Fund")){
+                errorMessage = "Sumber Dana dengan id: "+wrapper.getFundId() +" tidak ditemukan: ";
+            }
+            else{
+                errorMessage=e.getMessage();
+            }
+            return new DataResponse<MainWrapper>(false, errorMessage);
+        }
     }
 }
+
