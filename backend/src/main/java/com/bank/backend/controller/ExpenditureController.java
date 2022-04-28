@@ -52,6 +52,11 @@ public class ExpenditureController {
         return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findAllCategories(all, page, size));
     }
 
+    @GetMapping (path = "/findAllWithRequestStatus")
+    public DataResponsePagination<ExpenditureWrapper, Expenditure> findAllWithRequestStatus(int page, int size) {
+        return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findAllWithRequestStatus(page, size));
+    }
+
     @PostMapping (path = "/post")
     public DataResponse<ExpenditureWrapper> post(@RequestBody ExpenditureWrapper wrapper){
         return new DataResponse<ExpenditureWrapper>(expenditureService.save(wrapper));

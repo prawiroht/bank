@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { UserService } from 'src/app/services/user.service';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -26,16 +26,17 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.itemHome = [
-      {label: 'Dashboard',
+      {
+        label: 'Dashboard',
         icon: 'pi pi-pw pi-home',
-        routerLink : '/home'
+        routerLink: '/home'
       }
     ]
     this.itemDashboard = [
       {
-          label: 'Saldo',
-          icon: 'pi pi-pw pi-wallet',
-          routerLink: '/saldo'
+        label: 'Saldo',
+        icon: 'pi pi-pw pi-wallet',
+        routerLink: '/saldo'
 
       },
       {
