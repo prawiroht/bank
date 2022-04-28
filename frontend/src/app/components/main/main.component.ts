@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AccountTypeService } from 'src/app/services/account-type.service';
 import { BankService } from 'src/app/services/bank.service';
 import { FundService } from 'src/app/services/fund.service';
 import { MainService } from 'src/app/services/main.service';
+import { PurchaseService } from 'src/app/services/purchase.service';
 
 @Component({
   selector: 'app-main',
@@ -22,7 +24,9 @@ export class MainComponent implements OnInit {
   submitted = false;
   display = false;
   fundId = 0;
-  banks: any
+  banks: any;
+  purchases: any;
+  accountTypes: any;
 
   row: any = {
     mainId: 0,
@@ -42,6 +46,8 @@ export class MainComponent implements OnInit {
     private confirmationService : ConfirmationService,
     private fundService : FundService,
     private bankService : BankService,
+    private purchaseService : PurchaseService,
+    private accountTypeService : AccountTypeService
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +99,8 @@ export class MainComponent implements OnInit {
 
     this.funds=this.getFundName();
     this.banks=this.getBankName();
+    this.purchases=this.getPurchaseName();
+    this.accountTypes=this.getAccountTypeName();
   }
 
   searchMainByAllCategories(keyword:string): void {
@@ -163,6 +171,35 @@ export class MainComponent implements OnInit {
         }
       }
     )
+  }
+
+  getPurchaseName(){
+    this.purchaseService.getPurchase().subscribe(
+      {
+        next: (data) => {
+          this.purchases=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy')
+        }
+      }
+    )
+  }
+
+  getAccountTypeName(){
+    this.accountTypeService.getAccountType().subscribe(
+      {
+        next: (data) => {
+          this.accountTypes=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy')
+        }
+      }
+    )
+
   }
 
 }
