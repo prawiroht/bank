@@ -27,12 +27,17 @@ export class MainComponent implements OnInit {
   banks: any;
   purchases: any;
   accountTypes: any;
+  selectedMutation: any;
+  mutations =[
+    {label :'Debet', value: 'Debet'},
+    {label :'Credit', value: 'Credit'}]
 
   row: any = {
     mainId: 0,
     bankName: '',
     accountNumber: '',
     accountTypeName: '',
+    mutationId: '',
     transactionDate: '',
     value: 0,
     purchaseName: '',
@@ -52,6 +57,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    this.selectedMutation = this.mutations[0];
   }
 
   next(){
@@ -131,6 +137,7 @@ export class MainComponent implements OnInit {
       bankName: '',
       accountNumber:0,
       accountName:'',
+      mutationId: '',
       transactionDate:'',
       value:0,
       purchaseId:0,
