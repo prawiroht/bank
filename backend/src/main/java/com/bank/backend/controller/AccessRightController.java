@@ -35,7 +35,21 @@ public class AccessRightController {
     }
     @PostMapping(path = "/post")
     public DataResponse<AccessRightWrapper> post(@RequestBody AccessRightWrapper wrapper){
-        return new DataResponse<AccessRightWrapper>(accessRightService.save(wrapper));
+        try {
+            return new DataResponse<AccessRightWrapper>(accessRightService.save(wrapper));
+        } catch (Exception e) {
+            String errorMessage;
+            if(e.getMessage().contains("Group")){
+                errorMessage = "Group tidak ditemukan: "+ wrapper.getGroupId();
+            }
+            else if(e.getMessage().contains("User")){
+                errorMessage = "User tidak ditemukan: "+ wrapper.getUserId();
+            }
+            else{
+                errorMessage = e.getMessage();
+            }
+            return new DataResponse<AccessRightWrapper>(false, errorMessage);
+        }
     }
     @PutMapping(path = "/update")
     public DataResponse<AccessRightWrapper> update(@RequestBody AccessRightWrapper wrapper){

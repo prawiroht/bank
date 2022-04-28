@@ -35,7 +35,21 @@ public class GroupMenuController {
     }
     @PostMapping(path = "/post")
     public DataResponse<GroupMenuWrapper> post(@RequestBody GroupMenuWrapper wrapper){
-        return new DataResponse<GroupMenuWrapper>(groupMenuService.save(wrapper));
+        try {
+            return new DataResponse<GroupMenuWrapper>(groupMenuService.save(wrapper));
+        } catch (Exception e) {
+            String errorMessage;
+            if(e.getMessage().contains("Group")){
+                errorMessage = "Group tidak ditemukan: "+ wrapper.getGroupId();
+            }
+            else if(e.getMessage().contains("Menu")){
+                errorMessage = "Menu tidak ditemukan: "+ wrapper.getMenuId();
+            }
+            else{
+                errorMessage = e.getMessage();
+            }
+            return new DataResponse<GroupMenuWrapper>(false, errorMessage);
+        }
     }
     @PutMapping(path = "/update")
     public DataResponse<GroupMenuWrapper> update(@RequestBody GroupMenuWrapper wrapper){
