@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmEventType } from 'primeng/api';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-group-management',
@@ -34,16 +35,16 @@ export class GroupManagementComponent implements OnInit {
   permissions: any[] = [];
 
   checked: boolean = false;
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private userService: UserService, private groupService: GroupService, private accessService: RightAccessService) { }
+  constructor(private menuService: MenuService, private confirmationService: ConfirmationService, private messageService: MessageService, private userService: UserService, private groupService: GroupService, private accessService: RightAccessService) { }
 
   ngOnInit(): void {
     // this.loadData({lazyEvent: JSON.stringify(event)});
     // this.selectedCategories = this.groups;
     // console.log(this.selectedCategories, 'ini cat')
-    this.groupService.getGroup().subscribe(
+    this.menuService.getMenu().subscribe(
       res => {
-        this.groups = res.data;
-        console.log(this.groups, 'ini this groups')
+        this.permissions = res.data;
+        console.log(this.permissions, 'ini this groups')
       }
     )
   }
@@ -92,7 +93,7 @@ export class GroupManagementComponent implements OnInit {
     const checked = event.checked;
 
     if (checked) {
-      this.userService.getUser({ lazyEvent: JSON.stringify(event) }).subscribe(res => {
+      this.groupService.getGroupPagination({ lazyEvent: JSON.stringify(event) }).subscribe(res => {
         this.selectedGroups = res.data;
         this.selectAll = true;
       });
