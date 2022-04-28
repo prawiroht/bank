@@ -23,4 +23,10 @@ export class GroupService {
     });
   }
 
+  getGroupPagination(page: any): Observable<any> {
+    return this.http.get<any>(url + `group/findAllPagination?page=${page}&size=5`, {
+      responseType: 'json',
+    });
+  }
+
 }
