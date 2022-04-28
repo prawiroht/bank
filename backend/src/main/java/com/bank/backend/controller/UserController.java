@@ -66,14 +66,30 @@ public class UserController {
     // post&put
     @PostMapping(path = "/post")
     public DataResponse<UserWrapper> post(@RequestBody UserWrapper wrapper){
-        return new DataResponse<UserWrapper>(userService.save(wrapper));
+        try {
+            return new DataResponse<UserWrapper>(userService.save(wrapper));
+        } catch (Exception e) {
+            String errorMessage;
+            if(e.getMessage().contains("University"))
+                errorMessage = "Universitas tidak ditemukan: "+ wrapper.getUniversityId();
+            else
+                errorMessage = e.getMessage();
+            return new DataResponse<UserWrapper>(false, errorMessage);
+        }
     }
     @PutMapping(path = "/update")
     public DataResponse<UserWrapper> update(@RequestBody UserWrapper wrapper){
         try {
             return new DataResponse<UserWrapper>(userService.save(wrapper));
         } catch (Exception e) {
-            return new DataResponse<UserWrapper>(false, "User tidak ditemukan: "+ wrapper.getUserId());
+            String errorMessage;
+            if(e.getMessage().contains("User"))
+                errorMessage = "User tidak ditemukan: "+ wrapper.getUserId();
+            else if(e.getMessage().contains("University"))
+                errorMessage = "Universitas tidak ditemukan: "+ wrapper.getUniversityId();
+            else
+                errorMessage = e.getMessage();
+            return new DataResponse<UserWrapper>(false, errorMessage);
         }
     }
     // delete

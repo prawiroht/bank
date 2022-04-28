@@ -18,5 +18,7 @@ public class UserWrapper {
     private String phone;
     private Character isActive;
     private Calendar lastLogin;
+    private Long universityId;
+    private String universityName;
     private List<GroupWrapper> groups;
 }
