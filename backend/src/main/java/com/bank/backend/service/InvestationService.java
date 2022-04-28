@@ -2,11 +2,7 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.Investation;
-import com.bank.backend.entity.University;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.InvestationRepository;
@@ -69,6 +65,8 @@ public class InvestationService {
         wrapper.setMarketUnit(entity.getMarketUnit());
         wrapper.setMarketValue(entity.getMarketValue());
         wrapper.setStartDate(entity.getStartDate());
+        wrapper.setBankId(entity.getBank() != null ? entity.getBank().getBankId() : null);
+        wrapper.setBankName(entity.getBank() != null ? entity.getBank().getBankName() : null);
         wrapper.setStatusId(entity.getStatus() != null ? entity.getStatus().getStatusId() : null);
         wrapper.setStatusName(entity.getStatus() != null ? entity.getStatus().getStatusName() : null);
         wrapper.setUserId(entity.getUser() != null ? entity.getUser().getUserId() : null);
