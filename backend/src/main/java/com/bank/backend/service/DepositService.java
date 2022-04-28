@@ -120,9 +120,6 @@ public class DepositService {
     public void delete(Long id) {
         if (id == null)
             throw new BusinessException("Id cannot be null");
-        Optional<Deposit> entity = depositRepository.findById(id);
-        if (!entity.isPresent())
-            throw new BusinessException("Cannot found Deposit with id : " + id + ".");
         depositRepository.deleteById(id);
     }
 

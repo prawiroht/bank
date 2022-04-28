@@ -36,6 +36,16 @@ public class InvestationController {
         return new DataResponseList<InvestationWrapper>(investationService.findAll());
     }
 
+    @GetMapping(path = "/findById")
+    public DataResponse<InvestationWrapper> findById(@RequestParam Long id) {
+        try {
+            InvestationWrapper hasil = investationService.getInvestationById(id);
+            return new DataResponse<InvestationWrapper>(hasil);
+        } catch (Exception e) {
+            return new DataResponse<InvestationWrapper>(false, "Current Account not found with id: " + id);
+        }
+    }
+
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable("id") Long InvestationId) {
         investationService.delete(InvestationId);

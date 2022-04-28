@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepositController {
     @Autowired
     DepositService depositService;
+    String errorMassage;
 
     @PostMapping(path = "/posts")
     public DataResponse<DepositWrapper> save(@RequestBody DepositWrapper wrapper) {
@@ -36,6 +37,16 @@ public class DepositController {
         return new DataResponseList<DepositWrapper>(depositService.findAll());
     }
 
+    @GetMapping(path = "/findById")
+    public DataResponse<DepositWrapper> findById(@RequestParam Long id) {
+        try {
+            DepositWrapper hasil = depositService.getDepositById(id);
+            return new DataResponse<DepositWrapper>(hasil);
+        } catch (Exception e) {
+            return new DataResponse<DepositWrapper>(false, "Current Account not found with id: " + id);
+        }
+    }
+
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable("id") Long depositId) {
         depositService.delete(depositId);
@@ -43,7 +54,27 @@ public class DepositController {
 
     @PutMapping(path = "/update")
     public DataResponse<DepositWrapper> update(@RequestBody DepositWrapper wrapper) {
-        return new DataResponse<DepositWrapper>(depositService.save(wrapper));
+        try {
+            return new DataResponse<DepositWrapper>(depositService.save(wrapper));
+        } catch (Exception e) {
+            if (e.getMessage().contains("Deposit"))
+                errorMassage = "Current Account not found with id: " + wrapper.getBankId();
+            else if (e.getMessage().contains("University"))
+                errorMassage = "University not found with id: " + wrapper.getUniversityId();
+            else if (e.getMessage().contains("Bank"))
+                errorMassage = "Bank not found with id: " + wrapper.getBankId();
+            else if (e.getMessage().contains("Period"))
+                errorMassage = "Account type not found with id: " + wrapper.getPeriodId();
+            else if (e.getMessage().contains("User"))
+                errorMassage = "User not found with id: " + wrapper.getUserId();
+            else if (e.getMessage().contains("Status"))
+                errorMassage = "Status not found with id: " + wrapper.getStatusId();
+            else {
+                errorMassage = e.getMessage();
+            }
+            return new DataResponse<DepositWrapper>(false, errorMassage);
+        }
+
     }
 
     @GetMapping(path = "/getAllCategories")
