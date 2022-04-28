@@ -37,7 +37,7 @@ public class AccountTypeService {
     }
 
     public AccountType findById(Long id){
-        AccountType accountType = accountTypeRepository.getById(id);
+        AccountType accountType = accountTypeRepository.findById(id).get();
         return accountType;
     }
 
