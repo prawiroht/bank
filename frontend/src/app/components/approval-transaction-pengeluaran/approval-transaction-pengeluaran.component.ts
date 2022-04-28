@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ExpenditureService } from 'src/app/services/expenditure.service';
 
 @Component({
   selector: 'app-approval-transaction-pengeluaran',
@@ -12,7 +13,11 @@ export class ApprovalTransactionPengeluaranComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
-  constructor() { }
+  constructor(
+    private expenditureService : ExpenditureService,
+  ) { 
+    
+  }
 
   ngOnInit(): void {
     this.loadData(this.page);
@@ -39,6 +44,18 @@ export class ApprovalTransactionPengeluaranComponent implements OnInit {
   }
 
   loadData(page: number) {
+    this.expenditureService.getRequestedExpenditure().subscribe(
+      {
+        next: (data) => {
+          this.data=data.data
+          console.log(this.data);
+          
+        },
+        error: (err) => {
+          console.log('error')
+        }
+      }
+    )
   }
 
 }
