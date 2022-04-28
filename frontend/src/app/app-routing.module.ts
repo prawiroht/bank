@@ -27,7 +27,6 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'expenditure', component: ExpenditureComponent, canActivate:[AuthGuardService] },
   { path: 'container', component: ContainerComponent },
-  { path: 'giro', component: GiroComponent, canActivate:[AuthGuardService] },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
