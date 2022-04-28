@@ -83,4 +83,9 @@ public class DepositController {
         return new DataResponsePagination<DepositWrapper, Deposit>(
                 depositService.getAllCategories(all, page, size));
     }
+
+    @GetMapping(path = "/getTotalDeposit")
+    public Long getTotalDeposit() {
+        return depositService.sumNominalWithStatusApprove();
+    }
 }
