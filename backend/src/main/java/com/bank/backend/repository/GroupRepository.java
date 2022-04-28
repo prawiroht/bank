@@ -16,6 +16,4 @@ public interface GroupRepository extends JpaRepository<Group,Long>{
         " WHERE U.USER_ID = :pUserId and AR.IS_ACTIVE = 'Y'",
         nativeQuery = true)
     List<Group> findGroupByUserId(@Param("pUserId") Long userId);
-
-    // Page<Group> findAll(Pageable paging);
 }
