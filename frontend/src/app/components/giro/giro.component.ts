@@ -65,8 +65,8 @@ export class GiroComponent implements OnInit {
     )
   }
 
-  searchByAllCategories(keyword:string): void {
-    this.giroService.getByAllCategories(keyword).subscribe(
+  searchGiroByAllCategories(keyword:string): void {
+    this.giroService.getGiroByAllCategories(keyword).subscribe(
       res => {
         this.giros=res.data;
         if(res.data.length==0){
