@@ -44,7 +44,7 @@ export class GroupManagementComponent implements OnInit {
     this.menuService.getMenu().subscribe(
       res => {
         this.permissions = res.data;
-        console.log(this.permissions, 'ini this groups')
+        console.log(this.permissions, 'ini this permis')
       }
     )
   }
@@ -108,7 +108,7 @@ export class GroupManagementComponent implements OnInit {
     this.isEdit = true;
     this.row = { ...row };
     console.log(this.row, ' in row')
-    this.selectedPermissions = this.row.groups
+    this.selectedPermissions = this.row.menus
     console.log(this.selectedPermissions)
     this.displayMaximizable = true;
   }
@@ -126,11 +126,11 @@ export class GroupManagementComponent implements OnInit {
     }
   }
 
-  postUser() {
+  postGroup() {
     this.row.isActive = 'N';
     console.log(this.selectedPermissions, 'ini di post')
     console.log(this.row, 'ini post')
-    this.userService.postUser(this.row).subscribe(
+    this.groupService.postGroup(this.row).subscribe(
       res => {
         console.log(res);
         for (var i in this.selectedPermissions) {
@@ -140,7 +140,7 @@ export class GroupManagementComponent implements OnInit {
     )
   }
 
-  putUser() {
+  putGroup() {
     console.log(this.row, 'ini row put')
     this.userService.putUser(this.row).subscribe(
       res => {

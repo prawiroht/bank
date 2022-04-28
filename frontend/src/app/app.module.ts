@@ -50,7 +50,7 @@ import { PanelModule } from 'primeng/panel';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import {DropdownModule} from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
 import { HomeComponent } from './components/home/home.component';
 
 @NgModule({

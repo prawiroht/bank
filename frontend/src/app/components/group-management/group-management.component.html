@@ -15,7 +15,7 @@
   
   <p-table [value]="groups" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll" dataKey="id"
     [selection]="selectedGroups" (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll"
-    (selectAllChange)="onSelectAllChange($event)" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
+    (selectAllChange)="onSelectAllChange($event)" [paginator]="true" [rows]="5" [totalRecords]="totalRecords"
     [loading]="loading">
     <ng-template pTemplate="header">
       <tr>
@@ -33,7 +33,7 @@
         <td>{{group.description}}</td>
         <td>
           <ul>
-            <li *ngFor="let j of group.menus" style="float: left; min-width: 220px;">{{j}}</li>
+            <li *ngFor="let j of group.menus" style="float: left; min-width: 220px;">{{j.name}}</li>
           </ul>
         </td>
         <td>
@@ -70,9 +70,9 @@
   </p-fieldset>
     </div>
     <ng-template pTemplate="footer">
-      <button (click)="putUser()" (click)="displayMaximizable=false" *ngIf="isEdit" pButton icon="pi pi-check" pRipple type="button" label="Submit"
+      <button (click)="putGroup()" (click)="displayMaximizable=false" *ngIf="isEdit" pButton icon="pi pi-check" pRipple type="button" label="Submit"
       class="p-button-outlined mr-3 button-nav"></button>
-      <button (click)="postUser()" (click)="displayMaximizable=false" *ngIf="isAdd" pButton icon="pi pi-check" pRipple type="button" label="Submit"
+      <button (click)="postGroup()" (click)="displayMaximizable=false" *ngIf="isAdd" pButton icon="pi pi-check" pRipple type="button" label="Submit"
       class="p-button-outlined mr-3 button-nav"></button>
     </ng-template>
   </p-dialog>
