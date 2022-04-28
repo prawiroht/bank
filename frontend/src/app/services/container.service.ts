@@ -27,4 +27,8 @@ export class ContainerService {
     return this.http
       .get<any>(API_URL + 'container/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
   }
+
+  getRequestedContainer():Observable<any>{
+    return this.http.get<any>(API_URL + 'container/findByRequestStatus?page=0&size=100' , httpOptions);
+  }
 }
