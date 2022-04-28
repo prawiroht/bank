@@ -33,7 +33,7 @@ public class BankService {
     }
 
     public Bank findById(Long id){
-        Bank bank = bankRepository.getById(id);
+        Bank bank = bankRepository.findById(id).get();
         return bank;
     }
 
@@ -50,6 +50,7 @@ public class BankService {
 			Bank existedBank = bankRepository.getById(bank.getBankId());
 			existedBank.setBankName(bank.getBankName());
             existedBank.setCode(bank.getCode());
+            existedBank.setImage(bank.getImage());
 			return bankRepository.save(existedBank);
 		} else {
 			return bankRepository.save(bank);

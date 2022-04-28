@@ -49,9 +49,10 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { NavbarComponent } from './navbar/navbar.component';
-import {DropdownModule} from 'primeng/dropdown';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { DropdownModule } from 'primeng/dropdown';
 import { HomeComponent } from './components/home/home.component';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { HomeComponent } from './components/home/home.component';
     AccordionModule,
     ConfirmDialogModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    RadioButtonModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

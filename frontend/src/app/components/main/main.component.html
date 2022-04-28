@@ -23,7 +23,8 @@
                 <th>ID</th>
                 <th>Bank</th>
                 <th>Account Number</th>
-                <th>Account Name</th>
+                <th>Account Type</th>
+                <th>Mutation ID</th>
                 <th>Transaction Date</th>
                 <th>Value</th>
                 <th>Purchase</th>
@@ -34,12 +35,13 @@
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-main>
-            <tr>
+        <ng-template pTemplate="body" let-main >
+            <tr *ngIf="main.universityName=='Universitas Gadjah Mada'">
                 <td>{{main.mainId}}</td>
                 <td>{{main.bankName}}</td>
                 <td>{{main.accountNumber}}</td>
                 <td>{{main.accountTypeName}}</td>
+                <td>{{main.mutationId}}</td>
                 <td>{{main.transactionDate}}</td>
                 <td>{{main.value}}</td>
                 <td>{{main.purchaseName}}</td>
@@ -76,18 +78,37 @@
             </div>
             <div class="col-12 md:col-6">
                 <h5>Account Number</h5>
-                <input type="text" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
                     Account Number Required!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Account Name</h5>
-                <input type="text" pInputText id="accountName" [(ngModel)]="row.accountName" required="autofocus" />
+                <h5>Account Type Name</h5>
+                <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="bankId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Select a Account Type Name">
+                    <ng-template let-accountType pTemplate="item">
+                        <div class="accountType-item">
+                            <div> {{accountType.accountTypeName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
-                    Account Name Required!
+                    Account Type Name Required!
                 </h5>
             </div>
+            <div class="col-12 md:col-6">
+                <h5>Mutation ID</h5>
+                <br>
+                <div *ngFor="let mutation of mutations" class="field-checkbox" style="display:inline-block">
+                    <p-radioButton [inputId]="mutation.value" name="mutation" [value]="mutation" [(ngModel)]="selectedMutation" ></p-radioButton>
+                    <label style="display:inline">{{mutation.label}} &nbsp;</label>
+                </div>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Mutation ID Required!
+                </h5>
+            </div>
+
+
             <div class="col-12 md:col-6">
                 <h5>Transaction Date</h5>
                     <input type="date" pInputText [(ngModel)]="row.transactionDate" inputId="time">
@@ -105,7 +126,13 @@
             </div>
             <div class="col-12 md:col-6">
                 <h5>Purchase Name</h5>
-                <input type="text" pInputText id="purchase" [(ngModel)]="row.purchase" required="autofocus" />
+                <p-dropdown appendTo="body" [options]="purchases" [(ngModel)]="row.purchaseId" optionLabel="purchaseName" optionValue="purchaseId" [filter]="true" filterBy="purchaseName" [showClear]="true" placeholder="Select a Purchase Name">
+                    <ng-template let-purchase pTemplate="item">
+                        <div class="purchase-item">
+                            <div>{{purchase.alias}} : {{purchase.purchaseName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.purchaseName">
                     Purchase Name Required!
                 </h5>

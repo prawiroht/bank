@@ -22,5 +22,8 @@ public class DepositWrapper {
     private Long earningInterest;
     private Date startDate;
     private Date dueDate;
-    private String status;
+    private Long statusId;
+    private String statusName;
+    private Long userId;
+    private String userName;
 }

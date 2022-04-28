@@ -152,6 +152,17 @@ public class ExpenditureService {
         return toPaginationList(expenditureRepository.findByAllCategories(all, paging));
     }
 
+    // public PaginationList<ExpenditureWrapper, Expenditure> findAllWithRequestStatus(int page, int size){
+    //     Pageable paging = PageRequest.of(page, size);
+    //     return toPaginationList(expenditureRepository.findAllWithRequestStatus(paging));
+    // }
+
+    public PaginationList<ExpenditureWrapper, Expenditure> findByResquestStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(1L);
+        return toPaginationList(expenditureRepository.findByStatus(status, paging));
+    }
+
     //post and put
     public ExpenditureWrapper save(ExpenditureWrapper wrapper){
         return toWrapper(expenditureRepository.save(toEntity(wrapper)));

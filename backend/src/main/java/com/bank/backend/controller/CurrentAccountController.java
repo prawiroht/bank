@@ -26,9 +26,21 @@ public class CurrentAccountController {
     @Autowired
     CurrentAccountService currentAccountService;
 
+    String errorMassage;
+
     @PostMapping(path = "/posts")
     public DataResponse<CurrentAccountWrapper> save(@RequestBody CurrentAccountWrapper wrapper) {
         return new DataResponse<CurrentAccountWrapper>(currentAccountService.save(wrapper));
+    }
+
+    @GetMapping(path = "/findById")
+    public DataResponse<CurrentAccountWrapper> findById(@RequestParam Long id) {
+        try {
+            CurrentAccountWrapper hasil = currentAccountService.getCurrentAccountById(id);
+            return new DataResponse<CurrentAccountWrapper>(hasil);
+        } catch (Exception e) {
+            return new DataResponse<CurrentAccountWrapper>(false, "Current Account not found with id: " + id);
+        }
     }
 
     @GetMapping(path = "/findAll")
@@ -43,7 +55,27 @@ public class CurrentAccountController {
 
     @PutMapping(path = "/update")
     public DataResponse<CurrentAccountWrapper> update(@RequestBody CurrentAccountWrapper wrapper) {
-        return new DataResponse<CurrentAccountWrapper>(currentAccountService.save(wrapper));
+        try {
+            return new DataResponse<CurrentAccountWrapper>(currentAccountService.save(wrapper));
+        } catch (Exception e) {
+            if (e.getMessage().contains("CurrentAccount"))
+                errorMassage = "Current Account not found with id: " + wrapper.getCurrentAccountId();
+            else if (e.getMessage().contains("University"))
+                errorMassage = "University not found with id: " + wrapper.getUniversityId();
+            else if (e.getMessage().contains("Bank"))
+                errorMassage = "Bank not found with id: " + wrapper.getBankId();
+            else if (e.getMessage().contains("AccountType"))
+                errorMassage = "Account type not found with id: " + wrapper.getAccountTypeId();
+            else if (e.getMessage().contains("User"))
+                errorMassage = "User not found with id: " + wrapper.getUserId();
+            else if (e.getMessage().contains("Status"))
+                errorMassage = "Status not found with id: " + wrapper.getStatusId();
+            else {
+                errorMassage = e.getMessage();
+            }
+            return new DataResponse<CurrentAccountWrapper>(false, errorMassage);
+        }
+
     }
 
     @GetMapping(path = "/getAllCategories")
