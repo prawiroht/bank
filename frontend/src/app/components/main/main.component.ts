@@ -18,7 +18,6 @@ export class MainComponent implements OnInit {
   funds: any;
   first = 0;
   rows = 10;
-  searchVal = '';
   keyword = '';
   action = '';
   submitted = false;
@@ -136,7 +135,7 @@ export class MainComponent implements OnInit {
       bankId:0,
       bankName: '',
       accountNumber:0,
-      accountName:'',
+      accountTypeName:'',
       mutationId: '',
       transactionDate:'',
       value:0,

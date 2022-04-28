@@ -1,12 +1,12 @@
 <div class="grid">
     <div class="col-12 lg:col-4">
-        <h2>&gt; Input Transaction - Containers</h2>
+        <h2>&gt; Input Transaksi - Penampungan</h2>
     </div>
 </div>
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
-    <div class="col-12 lg:col-3">
-        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Transaction" (onClick)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
+    <div class="col-12 lg:col-5">
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Input Transaksi" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
         <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
@@ -14,74 +14,106 @@
 <div class="card">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="keyword" (keyup.enter)="searchContainerByAllCategories(keyword)" />
     </span>
     <p-table [value]="containers" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        currentPageReportTemplate="Menampilkan {first} hingga {last} dari total {totalRecords} entri" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
                 <th>ID</th>
                 <th>Bank</th>
-                <th>Account Number</th>
-                <th>Account Name</th>
-                <th>Transaction Date</th>
-                <th>Value</th>
-                <th>Purchase</th>
-                <th>Fund Name</th>
-                <th>Description</th>
+                <th>Nomor Rekening</th>
+                <th>Jenis Rekening</th>
+                <th>Mutasi</th>
+                <th>Waktu</th>
+                <th>Nilai</th>
+                <th>Pembelian</th>
+                <th>Sumber Dana</th>
+                <th>Keterangan</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Aksi</th>
 
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-container>
             <tr>
-                <!-- <td>{{customer.name}}</td>
-                <td>{{customer.country.name}}</td>
-                <td>{{customer.company}}</td>
-                <td>{{customer.representative.name}}</td> -->
+                <td>{{container.containerId}}</td>
+                <td>{{container.bankName}}</td>
+                <td>{{container.accountNumber}}</td>
+                <td>{{container.accountTypeName}}</td>
+                <td>{{container.mutationId}}</td>
+                <td>{{container.transactionDate}}</td>
+                <td>{{container.value}}</td>
+                <td>{{container.purchaseName}}</td>
+                <td>{{container.fundName}}</td>
+                <td>{{container.description}}</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
 
-<p-dialog [header]="action == 'Add' ? 'Add Transaction' : 'Edit Transaction'" [(visible)]="display" [modal]="true"
+<p-dialog [header]="action == 'Add' ? 'Input Transaksi' : 'Input Transaksi'" [(visible)]="display" [modal]="true"
         [style]="{ width: '50vw', height: '40vw' }" [maximizable]="true" [baseZIndex]="10000" [draggable]="false"
         [resizable]="false" (onHide)="handleReset($event,'click')">
         <div class="grid p-fluid">
-            <div class="col-12 md:col-6">
+            <!-- <div class="col-12 md:col-6">
                 <h5>ID</h5>
                 <input type="text" pInputText id="containerId" [(ngModel)]="row.containerId" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.containerId">
                     ID Required!
                 </h5>
-            </div>
+            </div> -->
             <div class="col-12 md:col-6">
                 <h5>Bank</h5>
-                <input type="text" pInputText id="bankName" [(ngModel)]="row.bankName" required="autofocus" />
+                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Select a Bank Name">
+                    <ng-template let-bank pTemplate="item">
+                        <div class="bank-item">
+                            <div>{{bank.code}} : {{bank.bankName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
                     Bank Name Required!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
                 <h5>Account Number</h5>
-                <input type="text" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
                     Account Number Required!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Account Name</h5>
-                <input type="text" pInputText id="accountName" [(ngModel)]="row.accountName" required="autofocus" />
+                <h5>Account Type Name</h5>
+                <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="bankId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Select a Account Type Name">
+                    <ng-template let-accountType pTemplate="item">
+                        <div class="accountType-item">
+                            <div> {{accountType.accountTypeName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
-                    Account Name Required!
+                    Account Type Name Required!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Transaction Time</h5>
-                    <input type="date" pInputText [(ngModel)]="row.transactionTime" inputId="time">
-                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.transactionTime">
-                   Transaction Time Required!
+                <h5>Mutation ID</h5>
+                <br>
+                <div *ngFor="let mutation of mutations" class="field-checkbox" style="display:inline-block">
+                    <p-radioButton [inputId]="mutation.value" name="mutation" [value]="mutation" [(ngModel)]="selectedMutation" ></p-radioButton>
+                    <label style="display:inline">{{mutation.label}} &nbsp;</label>
+                </div>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Mutation ID Required!
+                </h5>
+            </div>
+
+
+            <div class="col-12 md:col-6">
+                <h5>Transaction Date</h5>
+                    <input type="date" pInputText [(ngModel)]="row.transactionDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.transactionDate">
+                   Transaction Date Required!
                 </h5>
             </div>
             
@@ -93,15 +125,27 @@
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Purchase</h5>
-                <input type="text" pInputText id="purchase" [(ngModel)]="row.purchase" required="autofocus" />
-                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.purchase">
-                    Purchase Required!
+                <h5>Purchase Name</h5>
+                <p-dropdown appendTo="body" [options]="purchases" [(ngModel)]="row.purchaseId" optionLabel="purchaseName" optionValue="purchaseId" [filter]="true" filterBy="purchaseName" [showClear]="true" placeholder="Select a Purchase Name">
+                    <ng-template let-purchase pTemplate="item">
+                        <div class="purchase-item">
+                            <div>{{purchase.alias}} : {{purchase.purchaseName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.purchaseName">
+                    Purchase Name Required!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
                 <h5>Fund Name</h5>
-                <input type="text" pInputText id="fundName" [(ngModel)]="row.fundName" required="autofocus" />
+                <p-dropdown appendTo="body" [options]="funds" [(ngModel)]="row.fundId" optionLabel="fundName" optionValue="fundId" [filter]="true" filterBy="fundName" [showClear]="true" placeholder="Select a Fund Name">
+                    <ng-template let-fund pTemplate="item">
+                        <div class="fund-item">
+                            <div>{{fund.alias}} : {{fund.fundName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.fundName">
                     Fund Name Required!
                 </h5>
@@ -114,18 +158,20 @@
                 </h5>
             </div>
             </div>
-    </p-dialog>
-
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 
 
-<!-- <ng-template pTemplate="footer">
-    <button pButton type="button" label="Save" icon="pi pi-check"
-        (click)="handleSaveEmployee($event)" [disabled]="handleValidation()"></button>
+    <ng-template pTemplate="footer">
+    <button pButton type="button" label="Save" icon="pi pi-check"></button>
     <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
         class="mt-2 ml-1 p-button-danger"></button>
     <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
         class="mt-2 ml-1 p-button-danger"></button>
-</ng-template> -->
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+
+
 
 
