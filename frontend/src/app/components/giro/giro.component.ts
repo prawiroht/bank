@@ -8,7 +8,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./giro.component.css']
 })
 export class GiroComponent implements OnInit {
-  page : number = 0;
   giros: any;
   first = 0;
   rows = 10;
@@ -55,25 +54,30 @@ export class GiroComponent implements OnInit {
 
   loadData(){
     this.giroService.getGiro().subscribe(
-      res => {
-        console.log(res.data)
-        this.giros = res.data;
+      {
+        next: (data)=>{
+          this.giros=data.data
+        },
+        error: (err) => {
+          console.log('error cuy')
+        }
       }
     )
   }
 
-  searchByAllCategories(keyword: string): void {
-    this.giroService.getAllCategories(this.keyword).subscribe((res) => {
-      console.log(res);
-      this.giros = res;
-      if (res.length == 0) {
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'No result',
-          detail: 'The search key was not found in any record!',
-        });
+  searchByAllCategories(keyword:string): void {
+    this.giroService.getByAllCategories(keyword).subscribe(
+      res => {
+        this.giros=res.data;
+        if(res.data.length==0){
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'No result',
+            detail: 'The search key was not found in any record!',
+          });
+        }
       }
-    });
+    );
   }
 
 }
