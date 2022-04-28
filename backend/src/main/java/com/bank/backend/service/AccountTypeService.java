@@ -1,12 +1,10 @@
 package com.bank.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.bank.backend.entity.AccountType;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.util.PaginationList;
 
@@ -39,12 +37,8 @@ public class AccountTypeService {
     }
 
     public AccountType findById(Long id){
-        if (id == null)
-            throw new BusinessException("Please insert ID");
-        Optional<AccountType> accountType = accountTypeRepository.findById(id);
-        if (!accountType.isPresent())
-            throw new BusinessException("ID "+ id +" is not found.");
-        return accountType.get();
+        AccountType accountType = accountTypeRepository.getById(id);
+        return accountType;
     }
 
     public PaginationList<AccountType, AccountType> findAllCategories(String all, int page, int size){
@@ -67,11 +61,6 @@ public class AccountTypeService {
 
     //delete
     public void delete(Long id){
-        if (id == null)
-            throw new BusinessException("Please insert ID.");
-        Optional<AccountType> accountType = accountTypeRepository.findById(id);
-        if (!accountType.isPresent())
-            throw new BusinessException("Account Type ID "+ id +" is not found.");
         accountTypeRepository.deleteById(id);
     }
 }

@@ -29,9 +29,14 @@ public class AccountTypeController {
         return new DataResponseList<AccountType>(accountTypeService.findAll());
     }
 
-    @GetMapping (path = "/findByBankId")
+    @GetMapping (path = "/findById")
     public DataResponse<AccountType> findById(Long id){
-        return new DataResponse<AccountType>(accountTypeService.findByAccountTypeId(id));
+        try {
+            return new DataResponse<AccountType>(accountTypeService.findByAccountTypeId(id));
+        } catch (Exception e) {
+            return new DataResponse<AccountType>(false, "Data not found: "+ id);
+        }
+        
     }
 
     @GetMapping (path = "/findAllPagination")
@@ -51,14 +56,23 @@ public class AccountTypeController {
 
     @PutMapping (path = "/put")
     public DataResponse<AccountType> put(@RequestBody AccountType accountType){
-        return new DataResponse<AccountType>(accountTypeService.save(accountType));
+        try {
+            return new DataResponse<AccountType>(accountTypeService.save(accountType));
+        } catch (Exception e) {
+            return new DataResponse<AccountType>(false, "Data not found: "+ accountType.getAccountTypeId());
+        }
+        
     }
 
     //delete
     @DeleteMapping (path = "/delete")
     public DataResponse<AccountType> delete(@RequestParam("id") Long id){
-        accountTypeService.delete(id);
-            return new DataResponse<AccountType>(true, "Delete Sukses");
+        try {
+            accountTypeService.delete(id);
+            return new DataResponse<AccountType>(true, "Delete Successful");
+        } catch (Exception e) {
+            return new DataResponse<AccountType>(false, "Data not found: "+ id);
+        }
     }
 
 }

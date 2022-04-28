@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class GroupWrapper {
     private Long groupId;
     private String name;
+    private String description;
     private List<String> menus;
 }

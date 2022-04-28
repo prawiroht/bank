@@ -39,15 +39,41 @@ public class GroupMenuController {
     }
     @PutMapping(path = "/update")
     public DataResponse<GroupMenuWrapper> update(@RequestBody GroupMenuWrapper wrapper){
-        return new DataResponse<GroupMenuWrapper>(groupMenuService.save(wrapper));
+        try {
+            return new DataResponse<GroupMenuWrapper>(groupMenuService.save(wrapper));    
+        } catch (Exception e) {
+            String errorMessage;
+            if (e.getMessage().contains("GroupMenu"))
+                errorMessage = "Group menu tidak ditemukan: "+ wrapper.getGroupMenuId();
+            else if(e.getMessage().contains("Group")){
+                errorMessage = "Group tidak ditemukan: "+ wrapper.getGroupId();
+            }
+            else if(e.getMessage().contains("Menu")){
+                errorMessage = "Menu tidak ditemukan: "+ wrapper.getMenuId();
+            }
+            else{
+                errorMessage = e.getMessage();
+            }
+            return new DataResponse<GroupMenuWrapper>(false, errorMessage);
+        }
+        
     }
     @PutMapping(path = "/updateByGroupIdAndMenuId")
     public DataResponse<GroupMenuWrapper> updateByGroupIdAndMenuId(@RequestParam Long groupId,@RequestParam Long menuId, @RequestParam Character isActive){
-        return new DataResponse<GroupMenuWrapper>(groupMenuService.saveByGroupIdAndMenuId(groupId, menuId, isActive));
+        try{
+            return new DataResponse<GroupMenuWrapper>(groupMenuService.saveByGroupIdAndMenuId(groupId, menuId, isActive));
+        } catch (Exception e) {
+            return new DataResponse<GroupMenuWrapper>(false, "Hak akses tidak ditemukan: groupId="+ groupId +", groupId="+menuId);
+        }
     }
     @DeleteMapping(path = "/delete")
     public DataResponse<GroupMenuWrapper> delete(@RequestParam Long id){
-        groupMenuService.delete(id);
-        return new DataResponse<GroupMenuWrapper>(true,"Data berhasil dihapus");
+        try {
+            groupMenuService.delete(id);
+            return new DataResponse<GroupMenuWrapper>(true,"Data berhasil dihapus");    
+        } catch (Exception e) {
+            return new DataResponse<GroupMenuWrapper>(false, "Group menu tidak ditemukan: "+id);
+        }
+        
     }
 }

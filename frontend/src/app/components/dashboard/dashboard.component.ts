@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { UserService } from 'src/app/services/user.service';
+<<<<<<< HEAD
 import { MenuItem } from 'primeng/api';
+=======
+import {MenuItem} from 'primeng/api';
+import { RouterLink } from '@angular/router';
+>>>>>>> 3465990c64594d060de3c0ff9d231b14d9042a55
 
 @Component({
   selector: 'app-dashboard',
@@ -25,16 +30,29 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.itemHome = [
+<<<<<<< HEAD
       {
         label: 'Dashboard',
         icon: 'pi pi-pw pi-home'
+=======
+      {label: 'Dashboard',
+        icon: 'pi pi-pw pi-home',
+        routerLink : '/home'
+>>>>>>> 3465990c64594d060de3c0ff9d231b14d9042a55
       }
     ]
     this.itemDashboard = [
       {
+<<<<<<< HEAD
         label: 'Saldo',
         icon: 'pi pi-pw pi-wallet',
 
+=======
+          label: 'Saldo',
+          icon: 'pi pi-pw pi-wallet',
+          routerLink: '/saldo'
+
+>>>>>>> 3465990c64594d060de3c0ff9d231b14d9042a55
       },
       {
         label: 'Penampungan',
@@ -98,11 +116,11 @@ export class DashboardComponent implements OnInit {
         items: [
           {
             label: 'User Management',
-            routerLink: 'user-management'
+            routerLink: '/user-management'
           },
           {
             label: 'Group Management',
-            routerLink: 'group-management'
+            routerLink: '/group-management'
           }
         ]
       },

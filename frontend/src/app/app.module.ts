@@ -50,6 +50,7 @@ import { PanelModule } from 'primeng/panel';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NavbarComponent } from './navbar/navbar.component';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserAnimationsModule,
     AccordionModule,
     ConfirmDialogModule,
+    DropdownModule,
     InputTextareaModule
   ],
   providers: [MessageService, ConfirmationService],
