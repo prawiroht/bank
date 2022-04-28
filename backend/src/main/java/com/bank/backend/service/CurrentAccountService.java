@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.bank.backend.entity.CurrentAccount;
+import com.bank.backend.entity.Investation;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
@@ -86,6 +87,14 @@ public class CurrentAccountService {
         return wrapperList;
     }
 
+    private PaginationList<CurrentAccountWrapper, CurrentAccount> toPaginationList(Page<CurrentAccount> entityPage) {
+        List<CurrentAccount> entityList = entityPage.getContent();
+        List<CurrentAccountWrapper> wrapperList = toWrapperList(entityList);
+        PaginationList<CurrentAccountWrapper, CurrentAccount> paginationList = new PaginationList<>(wrapperList,
+                entityPage);
+        return paginationList;
+    }
+
     // Retrieve list of data
     public List<CurrentAccountWrapper> findAll() {
         List<CurrentAccount> currentAccountList = currentAccountRepository.findAll();
@@ -100,20 +109,18 @@ public class CurrentAccountService {
     // Retrieve list of data with pagination
     public PaginationList<CurrentAccountWrapper, CurrentAccount> findAllWithPagination(int page,
             int size) {
-        Page<CurrentAccount> currentAccountPage = currentAccountRepository.findAll(PageRequest.of(page, size));
-        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
-        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
-        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers,
-                currentAccountPage);
+        return toPaginationList(currentAccountRepository.findAll(PageRequest.of(page, size)));
     }
 
     // Retrieve list of data with pagination with param all category
     public PaginationList<CurrentAccountWrapper, CurrentAccount> getAllCategories(String all, int page, int size) {
-        Page<CurrentAccount> currentAccountPage = currentAccountRepository.getByAllCategories(all,
-                PageRequest.of(page, size));
-        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
-        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
-        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers, currentAccountPage);
+        return toPaginationList(currentAccountRepository.getByAllCategories(all, PageRequest.of(page, size)));
+    }
+
+    // Retieve list of data with pagination with status requested
+    public PaginationList<CurrentAccountWrapper, CurrentAccount> findByResquestStatus(int page, int size) {
+        return toPaginationList(
+                currentAccountRepository.findByStatus(statusRepository.getById(1L), PageRequest.of(page, size)));
     }
 
     // Create and Update
