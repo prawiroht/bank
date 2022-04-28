@@ -49,8 +49,9 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import {DropdownModule} from 'primeng/dropdown';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import {DropdownModule} from 'primeng/dropdown';
     ApprovalTransactionPengeluaranComponent,
     ApprovalTransactionFileMt940Component,
     NavbarComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

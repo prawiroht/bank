@@ -67,32 +67,24 @@ public class ExpenditureService {
                 throw new BusinessException("Expenditure ID "+ wrapper.getExpenditureId() +" is not found.");
             entity=expenditure.get();
         }
-        Optional<Bank> optBank = bankRepository.findById(wrapper.getBankId());
-        Bank bank = optBank.orElse(null);
+        Bank bank = bankRepository.getById(wrapper.getBankId());
         entity.setBank(bank);
-        Optional<University> optUniversity= universityRepository.findById(wrapper.getUniversityId());
-        University university = optUniversity.orElse(null);
+        University university = universityRepository.getById(wrapper.getUniversityId());
         entity.setUniversity(university);
         entity.setAccountNumber(wrapper.getAccountNumber());
         entity.setMutationId(wrapper.getMutationId());
         entity.setTransactionDate(wrapper.getTransactionDate());
         entity.setValue(wrapper.getValue());
-        Optional<Purchase> optPurchase = purchaseRepository.findById(wrapper.getPurchaseId());
-        Purchase purchase = optPurchase.orElse(null);
+        Purchase purchase = purchaseRepository.getById(wrapper.getPurchaseId());
         entity.setPurchase(purchase);
-        Optional<AccountType> optAccountType = accountTypeRepository.findById(wrapper.getAccountTypeId());
-        AccountType accountType = optAccountType.orElse(null);
+        AccountType accountType = accountTypeRepository.getById(wrapper.getAccountTypeId());
         entity.setAccountType(accountType);
-        Optional<Fund> optFund = fundRepository.findById(wrapper.getFundId());
-        Fund fund = optFund.orElse(null);
-        System.out.println(fund);
+        Fund fund = fundRepository.getById(wrapper.getFundId());
         entity.setFund(fund);
         entity.setDescription(wrapper.getDescription());
-        Optional<Status> optStatus = statusRepository.findById(wrapper.getStatusId());
-        Status status = optStatus.orElse(null);
+        Status status = statusRepository.getById(wrapper.getStatusId());
         entity.setStatus(status);
-        Optional<User> optUser = userRepository.findById(wrapper.getUserId());
-        User user = optUser.orElse(null);
+        User user = userRepository.getById(wrapper.getUserId());
         entity.setUser(user);
         return entity;
     }
@@ -145,27 +137,24 @@ public class ExpenditureService {
     return toWrapperList(expenditureRepository.findAll());
     }
 
-    public ExpenditureWrapper findByExpenditureId(Long id){
-        return toWrapper(expenditureRepository.findById(id).get());
-    }
-
     public PaginationList<ExpenditureWrapper, Expenditure> findAllPagination(int page, int size){
         Pageable paging = PageRequest.of(page, size);
         return toPaginationList(expenditureRepository.findAll(paging));
     }
 
-    public Expenditure findById(Long id){
-        if (id == null)
-            throw new BusinessException("Please insert ID");
-        Optional<Expenditure> expenditure = expenditureRepository.findById(id);
-        if (!expenditure.isPresent())
-            throw new BusinessException("ID "+ id +" is not found.");
-        return expenditure.get();
+    public ExpenditureWrapper findById(Long id){
+        Expenditure expenditure = expenditureRepository.getById(id);
+        return toWrapper(expenditure);
     }
 
     public PaginationList<ExpenditureWrapper, Expenditure> findAllCategories(String all, int page, int size){
         Pageable paging  = PageRequest.of(page, size);
         return toPaginationList(expenditureRepository.findByAllCategories(all, paging));
+    }
+
+    public PaginationList<ExpenditureWrapper, Expenditure> findAllWithRequestStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        return toPaginationList(expenditureRepository.findAllWithRequestStatus(paging));
     }
 
     //post and put
@@ -175,11 +164,6 @@ public class ExpenditureService {
 
     //delete
     public void delete(Long id){
-        if (id == null)
-            throw new BusinessException("Please insert ID.");
-        Optional<Expenditure> expenditure = expenditureRepository.findById(id);
-        if (!expenditure.isPresent())
-            throw new BusinessException("Expenditure ID "+ id +" is not found.");
         expenditureRepository.deleteById(id);
     }
 }

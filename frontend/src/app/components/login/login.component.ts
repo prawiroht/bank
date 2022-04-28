@@ -30,12 +30,6 @@ export class LoginComponent implements OnInit {
     dataAccess: any;
     dataMenu: any;
     penampungMenuId: any[] = [];
-    
-    logout(): void {
-      console.log('inini')
-      this.messageService.add({ key: 'tc', severity: 'info', summary: 'Goodbye', detail: 'Thank you, see you later' });
-      localStorage.clear();
-    }
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
@@ -47,12 +41,12 @@ export class LoginComponent implements OnInit {
     this.userService.getByUsername(this.username).subscribe(
       res => {
         this.userData = res.data;
-        console.log(this.userData,'iniinin');
         if (res.status) {
           if (this.userData.username==this.username && this.userData.password == this.password) {
             this.successLogin()
             localStorage.setItem('token', this.userData.userId)
             window.location.reload();
+            return
           }
         } else {
           this.wrongUser();
