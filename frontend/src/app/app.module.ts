@@ -40,7 +40,7 @@ import { ApprovalTransactionUtamaComponent } from './components/approval-transac
 import { ApprovalTransactionPengeluaranComponent } from './components/approval-transaction-pengeluaran/approval-transaction-pengeluaran.component';
 import { ApprovalTransactionFileMt940Component } from './components/approval-transaction-file-mt940/approval-transaction-file-mt940.component';
 import { FieldsetModule } from 'primeng/fieldset';
-
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
@@ -48,7 +48,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
@@ -78,7 +78,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     ApprovalTransactionUtamaComponent,
     ApprovalTransactionPengeluaranComponent,
     ApprovalTransactionFileMt940Component,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +104,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     PanelModule,
     BrowserAnimationsModule,
     AccordionModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    InputTextareaModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
