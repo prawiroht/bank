@@ -1,5 +1,3 @@
-giro html
-
 <div class="grid">
     <div class="col-12 lg:col-4">
         <h2>&gt; Input Saldo - Giro</h2>
@@ -7,7 +5,7 @@ giro html
 </div>
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
-    <div class="col-12 lg:col-3">
+    <div class="col-12 lg:col-5">
         <button pButton icon="pi pi-plus" pRipple type="button" label="Add Giro" class="p-button-outlined mr-3 button-nav"></button>
         <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
     </div>
@@ -16,7 +14,7 @@ giro html
 <div class="card">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData()" />
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="keyword" (keyup.enter)="searchByAllCategories(keyword)" />
     </span>
     <p-table [value]="giros" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
