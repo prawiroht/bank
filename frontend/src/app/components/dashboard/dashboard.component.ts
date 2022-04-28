@@ -42,14 +42,17 @@ export class DashboardComponent implements OnInit {
       {
         label: 'Penampungan',
         icon: 'pi pi-fw pi-tag',
+        
       },
       {
         label: 'Utama',
         icon: 'pi pi-fw pi-star',
+        
       },
       {
         label: 'Pengeluaran',
         icon: 'pi pi-fw pi-cog',
+        
       }
     ];
     this.itemInput = [
@@ -66,9 +69,9 @@ export class DashboardComponent implements OnInit {
         label: 'Input Transaction',
         icon: 'pi pi-fw pi-file',
         items: [
-          { label: 'Penampungan' },
-          { label: 'Utama' },
-          { label: 'Pengeluaran' },
+          { label: 'Penampungan', routerLink: '/penampungan' },
+          { label: 'Utama', routerLink: '/utama' },
+          { label: 'Pengeluaran', routerLink: '/pengeluaran' },
           { label: 'File MT940' }
         ]
       }

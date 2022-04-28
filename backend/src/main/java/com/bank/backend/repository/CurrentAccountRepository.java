@@ -1,6 +1,7 @@
 package com.bank.backend.repository;
 
 import com.bank.backend.entity.CurrentAccount;
+import com.bank.backend.entity.Status;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +13,11 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
     // Select ALl Categories
     @Query(value = "SELECT c.CURRENT_ACCOUNT_ID,b.BANK_ID,u.UNIVERSITY_ID,u.UNIVERSITY_NAME,b.BANK_NAME,b.CODE,c.ACCOUNT_NUMBER, "
             +
-            "a.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT " +
+            "a.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT,s.STATUS_ID,us.USER_ID " +
             "FROM CURRENT_ACCOUNTS c LEFT JOIN BANKS b " +
             "ON c.BANK_ID = b.BANK_ID " +
+            "LEFT JOIN USERS us ON us.USER_ID = c.USER_ID " +
+            "LEFT JOIN STATUSES s ON s.STATUS_ID = s.STATUS_ID " +
             "LEFT JOIN UNIVERSITIES u ON u.UNIVERSITY_ID = c.UNIVERSITY_ID " +
             "LEFT JOIN ACCOUNT_TYPES a ON a.ACCOUNT_TYPE_ID = c.ACCOUNT_TYPE_ID " +
             "WHERE LOWER(u.UNIVERSITY_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pUniversityName),'%')) OR " +
@@ -22,11 +25,15 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
             "LOWER(b.CODE) LIKE LOWER(CONCAT(CONCAT('%', :pCode),'%')) OR " +
             "LOWER(c.ACCOUNT_NUMBER) LIKE LOWER(CONCAT(CONCAT('%', :pAccountNumber), '%')) OR " +
             "LOWER(c.INITIAL_BALANCE_DATE) LIKE LOWER(CONCAT(CONCAT('%', :pInitialBalanceDate), '%')) OR " +
-            "LOWER(c.INITIAL_BALANCE_ACCOUNT) LIKE LOWER(CONCAT(CONCAT('%', :pInitialBalanceAccount),'%'))", countQuery = "SELECT COUNT(c.CURRENT_ACCOUNT,b.BANK_ID,u.UNIVERSITY_ID,u.UNIVERSITY_NAME,b.BANK_NAME,b.CODE,c.ACCOUNT_NUMBER, c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT) "
+            "LOWER(c.INITIAL_BALANCE_ACCOUNT) LIKE LOWER(CONCAT(CONCAT('%', :pInitialBalanceAccount),'%'))", countQuery = "SELECT c.CURRENT_ACCOUNT_ID,b.BANK_ID,u.UNIVERSITY_ID,u.UNIVERSITY_NAME,b.BANK_NAME,b.CODE,c.ACCOUNT_NUMBER, "
                     +
+                    "a.ACCOUNT_TYPE_ID,c.INITIAL_BALANCE_DATE,c.INITIAL_BALANCE_ACCOUNT,s.STATUS_ID,us.USER_ID " +
                     "FROM CURRENT_ACCOUNTS c LEFT JOIN BANKS b " +
                     "ON c.BANK_ID = b.BANK_ID " +
+                    "LEFT JOIN USERS us ON us.USER_ID = c.USER_ID" +
+                    "LEFT JOIN STATUS s ON s.STATUS_ID = s.STATUS_ID " +
                     "LEFT JOIN UNIVERSITIES u ON u.UNIVERSITY_ID = c.UNIVERSITY_ID " +
+                    "LEFT JOIN ACCOUNT_TYPES a ON a.ACCOUNT_TYPE_ID = c.ACCOUNT_TYPE_ID " +
                     "WHERE LOWER(u.UNIVERSITY_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pUniversityName),'%')) OR " +
                     "LOWER(b.BANK_NAME) LIKE LOWER(CONCAT(CONCAT('%', :pBankName),'%')) OR " +
                     "LOWER(b.CODE) LIKE LOWER(CONCAT(CONCAT('%', :pCode),'%')) OR " +
@@ -43,4 +50,6 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
     default Page<CurrentAccount> getByAllCategories(String all, Pageable paging) {
         return findByAllCategories(all, all, all, all, all, all, paging);
     }
+
+    Page<CurrentAccount> findByStatus(Status status, Pageable page);
 }
