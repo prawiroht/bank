@@ -27,4 +27,6 @@ public class MainWrapper {
     private String description;
     private Long userId;
     private String username;
+    private Long statusId;
+    private String statusName;
 }

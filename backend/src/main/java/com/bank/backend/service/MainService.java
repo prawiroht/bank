@@ -2,7 +2,6 @@ package com.bank.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -11,14 +10,15 @@ import com.bank.backend.entity.Bank;
 import com.bank.backend.entity.Fund;
 import com.bank.backend.entity.Main;
 import com.bank.backend.entity.Purchase;
+import com.bank.backend.entity.Status;
 import com.bank.backend.entity.University;
 import com.bank.backend.entity.User;
-import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.FundRepository;
 import com.bank.backend.repository.MainRepository;
 import com.bank.backend.repository.PurchaseRepository;
+import com.bank.backend.repository.StatusRepository;
 import com.bank.backend.repository.UniversityRepository;
 import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
@@ -47,35 +47,33 @@ public class MainService {
     FundRepository fundRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    StatusRepository statusRepository;
 
     private Main toEntity(MainWrapper wrapper) {
         Main entity = new Main();
         if (wrapper.getMainId() != null) {
             entity = mainRepository.getById(wrapper.getMainId());
         }
-        Optional<University> optionalUniv = universityRepository.findById(wrapper.getUniversityId());
-        University university = optionalUniv.orElse(null);
+        University university = universityRepository.getById(wrapper.getUniversityId());
         entity.setUniversity(university);
-        Optional<Bank> optionalBank = bankRepository.findById(wrapper.getBankId());
-        Bank bank = optionalBank.orElse(null);
+        Bank bank = bankRepository.getById(wrapper.getBankId());
         entity.setBank(bank);
         entity.setAccountNumber(wrapper.getAccountNumber());
         entity.setMutationId(wrapper.getMutationId());
         entity.setTransactionDate(wrapper.getTransactionDate());
         entity.setValue(wrapper.getValue());
-        Optional<Purchase> optionalPurchase = purchaseRepository.findById(wrapper.getPurchaseId());
-        Purchase purchase = optionalPurchase.orElse(null);
+        Purchase purchase = purchaseRepository.getById(wrapper.getPurchaseId());
         entity.setPurchase(purchase);
-        Optional<AccountType> optionalAcc = accountTypeRepository.findById(wrapper.getAccountTypeId());
-        AccountType acc = optionalAcc.orElse(null);
-        entity.setAccountType(acc);
-        Optional<Fund> optionalFund = fundRepository.findById(wrapper.getFundId());
-        Fund fund = optionalFund.orElse(null);
+        AccountType accountType = accountTypeRepository.getById(wrapper.getAccountTypeId());
+        entity.setAccountType(accountType);
+        Fund fund = fundRepository.getById(wrapper.getFundId());
         entity.setFund(fund);
         entity.setDescription(wrapper.getDescription());
-        Optional<User> optionalUser = userRepository.findById(wrapper.getUserId());
-        User user = optionalUser.orElse(null);
-        entity.setUser(user); 
+        User user = userRepository.getById(wrapper.getUserId());
+        entity.setUser(user);
+        Status status =  statusRepository.getById(wrapper.getStatusId());
+        entity.setStatus(status);
         return entity;
     }
 
@@ -100,6 +98,8 @@ public class MainService {
         wrapper.setDescription(entityMain.getDescription());
         wrapper.setUserId(entityMain.getUser() != null ? entityMain.getUser().getUserId() : null);
         wrapper.setUsername(entityMain.getUser() != null ? entityMain.getUser().getUsername() : null);
+        wrapper.setStatusId(entityMain.getStatus() != null ? entityMain.getStatus().getStatusId() : null);
+        wrapper.setStatusName(entityMain.getStatus() != null ? entityMain.getStatus().getStatusName() : null);
         return wrapper;
     }
 
@@ -113,8 +113,8 @@ public class MainService {
     }
 
     /* Retrieve single item */
-    public MainWrapper getByMainId(Long mainId) {
-        Main main = mainRepository.findById(mainId).get();
+    public MainWrapper findById(Long mainId) {
+        Main main = mainRepository.getById(mainId);
         return toWrapper(main);
     }
 
@@ -124,13 +124,17 @@ public class MainService {
         return toWrapperList(mainList);
     }
 
-    /* Find All With Pagination */
-    public PaginationList<MainWrapper, Main> findAllPagination(int page, int size) {
+    public PaginationList<MainWrapper, Main> toPaginationList(Page<Main> entityPage) {
+        List<Main> entityList = entityPage.getContent();
+        List<MainWrapper> wrapperList = toWrapperList(entityList);
+        PaginationList<MainWrapper, Main> paginationList = new PaginationList<>(wrapperList, entityPage);
+        return paginationList;
+    }
+
+    //find All Pagination
+    public PaginationList<MainWrapper, Main> findAllPagination(int page, int size){
         Pageable paging = PageRequest.of(page, size);
-        Page<Main> mainPage = mainRepository.findAll(paging);
-        List<Main> mainList = mainPage.getContent();
-        List<MainWrapper> mainWrapperList = toWrapperList(mainList);
-        return new PaginationList<MainWrapper, Main>(mainWrapperList, mainPage);
+        return toPaginationList(mainRepository.findAll(paging));
     }
 //Find by All Categories
     public PaginationList<MainWrapper, Main> findAllCategories(String all, int page, int size){
@@ -140,32 +144,20 @@ public class MainService {
         List<MainWrapper> mainWrapperList = toWrapperList(mainList);
         return new PaginationList<MainWrapper, Main>(mainWrapperList, mainPage);
     }
+
+
+    public PaginationList<MainWrapper, Main> findByResquestStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(1L);
+        return toPaginationList(mainRepository.findByStatus(status, paging));
+    }
+
 /* Create and Update */
 public MainWrapper save(MainWrapper wrapper) {
-    Main main = new Main();
-    if (wrapper.getMainId() == null) {
-        if (wrapper.getUniversityId() == null) {
-            throw new BusinessException("University Id can't be null");
-        }
-        if (wrapper.getBankId() == null) {
-            throw new BusinessException("Bank Id can't be null");
-        }
-        main = mainRepository.save(toEntity(wrapper));
-    } else {
-        main = mainRepository.save(toEntity(wrapper));
-    }
-    return toWrapper(main);
-}
-
+        return toWrapper(mainRepository.save(toEntity(wrapper)));
+    } 
 /* Delete Data */
 public void delete(Long id) {
-    if (id == null) {
-        throw new BusinessException("Employee Id does not exist");
-    }
-    Optional<Main> main = mainRepository.findById(id);
-    if (!main.isPresent()) {
-        throw new BusinessException("Main Id does not found");
-    }
     mainRepository.deleteById(id);
 }
 
