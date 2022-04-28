@@ -47,7 +47,7 @@ public class Investation {
     @Temporal(TemporalType.DATE)
     private Date startDate;
     @ManyToOne
-    @JoinColumn(name = "STATUS")
+    @JoinColumn(name = "STATUS_ID")
     private Status status;
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
