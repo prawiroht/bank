@@ -28,6 +28,8 @@ export class ContainerComponent implements OnInit {
   bankName: string = '';
   accountNumber: number = 0;
   selectedMutation: any;
+  statusId: any;
+  statusName: any;
   mutations =[
     {label :'Debet', value: 'Debet'},
     {label :'Credit', value: 'Credit'}]
@@ -45,7 +47,8 @@ export class ContainerComponent implements OnInit {
     fundInd:0,
     fundName:'',
     description:'',
-    status:''
+    statusId:'',
+    statusName:'',
 
   };
 

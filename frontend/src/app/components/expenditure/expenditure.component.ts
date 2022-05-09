@@ -28,6 +28,8 @@ export class ExpenditureComponent implements OnInit {
   purchases: any;
   accountTypes: any;
   selectedMutation: any;
+  statusId: any;
+  statusName: any;
   mutations =[
     {label :'Debet', value: 'Debet'},
     {label :'Credit', value: 'Credit'}
@@ -44,6 +46,8 @@ export class ExpenditureComponent implements OnInit {
     purchaseName: '',
     fundName: '',
     description: '',
+    statusId:'',
+    statusName:'',
   }
 
   constructor(

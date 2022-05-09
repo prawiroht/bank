@@ -29,6 +29,8 @@ export class MainComponent implements OnInit {
   purchases: any;
   accountTypes: any;
   selectedMutation: any;
+  statusName: any;
+  statusId: any;
   mutations =[
     {label :'Debet', value: 'Debet'},
     {label :'Credit', value: 'Credit'}]
@@ -44,6 +46,8 @@ export class MainComponent implements OnInit {
     purchaseName: '',
     fundName: '',
     description: '',
+    statusName:'',
+    statusId:'',
   }
 
   constructor(

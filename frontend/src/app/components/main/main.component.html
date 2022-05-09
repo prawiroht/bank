@@ -47,6 +47,13 @@
                 <td>{{main.purchaseName}}</td>
                 <td>{{main.fundName}}</td>
                 <td>{{main.description}}</td>
+                <td>
+                <div [ngStyle]="{'color': main.statusId==2? 'green' : 'red'}"><b>{{main.statusName}}</b></div>
+                </td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success p-button-sm"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger p-button-sm" style="margin-left: 7px;"></button>
+                </td>
             </tr>
         </ng-template>
     </p-table>
