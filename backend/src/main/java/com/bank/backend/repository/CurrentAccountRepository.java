@@ -51,4 +51,7 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
     }
 
     Page<CurrentAccount> findByStatus(Status status, Pageable page);
+
+    @Query("SELECT sum(initialBalanceAccount) FROM CurrentAccount where status_id = 2")
+    public Long sumNominalWithStatusApprove();
 }

@@ -35,4 +35,7 @@ public interface InvestationRepository extends JpaRepository<Investation, Long> 
     }
 
     Page<Investation> findByStatus(Status status, Pageable page);
+
+    @Query("SELECT sum(initialValue) FROM Investation where status_id = 2")
+    public Long sumNominalWithStatusApprove();
 }
