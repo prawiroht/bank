@@ -101,30 +101,6 @@ export class SaldoComponent implements OnInit {
     this.totalAccount();
   }
 
-  getSaldo(){
-    this.saldoService.getSaldo().subscribe((res)=>{
-      // this.saldo = res;
-      this.saldo = this.formatter.format(res);
-      console.log(res, 'ini resi')
-    })
-  }
-
-  getGiro(){
-    this.saldoService.getGiro().subscribe((res)=>{
-      // this.giro = res;
-      this.giro = this.formatter.format(res);
-      console.log(res, 'ini resi')
-    })
-  }
-
-  getInvestment(){
-    this.saldoService.getInvestment().subscribe((res)=>{
-      // this.investment = res;
-      this.investment = this.formatter.format(res);
-      console.log(res, 'ini resi')
-    })
-  }
-
   totalAccount(){
     this.saldoService.getSaldo().subscribe((res)=>{
       this.saldoService.getGiro().subscribe((resu)=>{
