@@ -1,5 +1,7 @@
 package com.bank.backend.controller;
 
+import java.util.Date;
+
 import com.bank.backend.entity.CurrentAccount;
 import com.bank.backend.service.CurrentAccountService;
 import com.bank.backend.util.DataResponse;
@@ -8,6 +10,8 @@ import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.CurrentAccountWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,5 +88,17 @@ public class CurrentAccountController {
             @RequestParam("page") int page, @RequestParam("size") int size) {
         return new DataResponsePagination<CurrentAccountWrapper, CurrentAccount>(
                 currentAccountService.getAllCategories(all, page, size));
+    }
+
+    @GetMapping(path = "/getTotalCurrentAccount")
+    public Long getTotalCurrentAccount() {
+        return currentAccountService.sumNominalWithStatusApprove();
+    }
+
+    @GetMapping(path = "/getTotalCurrentAccountWithParam")
+    public Long getTotalCurrentAccountWithParam(@RequestParam @DateTimeFormat(iso = ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = ISO.DATE) Date endDate,
+            @RequestParam Long bankId) {
+        return currentAccountService.sumNominalWithParam(startDate, endDate, bankId);
     }
 }
