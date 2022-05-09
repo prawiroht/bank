@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.bank.backend.entity.Deposit;
+import com.bank.backend.entity.Status;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.DepositRepository;
@@ -18,6 +19,7 @@ import com.bank.backend.wrapper.DepositWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -134,5 +136,14 @@ public class DepositService {
         List<Deposit> depositList = depositPage.getContent();
         List<DepositWrapper> depositWrappers = toWrapperList(depositList);
         return new PaginationList<DepositWrapper, Deposit>(depositWrappers, depositPage);
+    }
+
+    public PaginationList<DepositWrapper, Deposit> findByRequestStatus(int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(1L);
+        Page<Deposit> depositPage = depositRepository.findByStatus(status, paging);
+        List<Deposit> depositList = depositPage.getContent();
+        List<DepositWrapper> depositWrappers = toWrapperList(depositList);
+        return new PaginationList<DepositWrapper, Deposit>(depositWrappers, depositPage); 
     }
 }

@@ -166,7 +166,6 @@ public class ContainerController {
         }
          
         csvWriter.close();
-
     }
 
     @GetMapping(path="/getTotalContainerWithParam")
