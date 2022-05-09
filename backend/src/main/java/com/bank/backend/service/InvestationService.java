@@ -111,13 +111,14 @@ public class InvestationService {
         return new PaginationList<InvestationWrapper, Investation>(investationWrappers, investationPage);
     }
 
-    public Long sumNominalWithStatusApprove() {
-        return investationRepository.sumNominalWithStatusApprove();
-    }
+    // public Long sumNominalWithStatusApprove() {
+    // return investationRepository.sumNominalWithStatusApprove();
+    // }
 
-    public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
-        return investationRepository.sumNominalWithStatusApproveAndParam(startDate, endDate, bankId);
-    }
+    // public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
+    // return investationRepository.sumNominalWithStatusApproveAndParam(startDate,
+    // endDate, bankId);
+    // }
 
     // Create and update data
     public InvestationWrapper save(InvestationWrapper wrapper) {
