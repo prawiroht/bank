@@ -8,10 +8,25 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./giro.component.css']
 })
 export class GiroComponent implements OnInit {
-  giros: any;
+  giros: [] = [];
   first = 0;
   rows = 10;
   keyword = '';
+
+  action = '';
+  display = false;
+  banks : any;
+  submitted = false;
+  accountTypes: any;
+
+  row: any = {
+    currentAccountId : 0,
+    code : '',
+    bankName : '',
+    accountNumber : '',
+    initialBalanceAccount : 0,
+    initialBalanceDate : '',
+  }
 
   constructor(
     private giroService : GiroService,
@@ -78,6 +93,28 @@ export class GiroComponent implements OnInit {
         }
       }
     );
+  }
+
+  handleReset(event: any,  param: string): void {
+    this.row = {
+      currentAccountId: (this.action == 'edit' && param == 'click') ? this.row.currentAccountId : 0,
+      code : '',
+      bankName: '',
+      accountNumber : '',
+      accountTypeName:'',
+      initialBalanceDate: '',
+      initialBalanceAccount : 0
+
+      // mutationId: '',
+      // transactionDate:'',
+      // value:0,
+      // purchaseId:0,
+      // purchase:'',
+      // fundInd:0,
+      // fundName:'',
+      // description:'',
+      // status:''
+    };
   }
 
 }
