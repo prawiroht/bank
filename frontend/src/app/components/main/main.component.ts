@@ -5,6 +5,8 @@ import { BankService } from 'src/app/services/bank.service';
 import { FundService } from 'src/app/services/fund.service';
 import { MainService } from 'src/app/services/main.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import { saveAs } from 'file-saver';
+import { DownloadService } from 'src/app/services/download.service';
 
 @Component({
   selector: 'app-main',
@@ -51,7 +53,8 @@ export class MainComponent implements OnInit {
     private fundService : FundService,
     private bankService : BankService,
     private purchaseService : PurchaseService,
-    private accountTypeService : AccountTypeService
+    private accountTypeService : AccountTypeService,
+    private downloadService : DownloadService
   ) { }
 
   ngOnInit(): void {
@@ -208,4 +211,24 @@ export class MainComponent implements OnInit {
 
   }
 
+//   downloadFile(data: Response) {
+//     const blob = new Blob([data], { type: 'text/csv' });
+//     const url = window.URL.createObjectURL(blob);
+//     const anchor = document.createElement('a');
+//     anchor.download = 'myfile.txt'; // here you can specify file name
+//     anchor.href = url;
+//     document.body.appendChild(anchor);
+//     anchor.click();
+//     document.body.removeChild(anchor);
+// }
+
+downloadFile(filename: string): void {
+  this.downloadService
+    .download(filename)
+    .subscribe(blob => saveAs(blob, filename));
 }
+
+
+}
+
+
