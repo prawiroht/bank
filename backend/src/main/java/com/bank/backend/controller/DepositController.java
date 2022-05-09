@@ -1,5 +1,7 @@
 package com.bank.backend.controller;
 
+import java.util.Date;
+
 import com.bank.backend.entity.Deposit;
 import com.bank.backend.service.DepositService;
 import com.bank.backend.util.DataResponse;
@@ -8,6 +10,8 @@ import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.DepositWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,5 +91,12 @@ public class DepositController {
     @GetMapping(path = "/getTotalDeposit")
     public Long getTotalDeposit() {
         return depositService.sumNominalWithStatusApprove();
+    }
+
+    @GetMapping(path = "/getTotalDepositWithParam")
+    public Long getTotalDepositWithParam(@RequestParam @DateTimeFormat(iso = ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = ISO.DATE)Date endDate,
+            @RequestParam Long bankId) {
+        return depositService.sumNominalWithParam(startDate, endDate, bankId);
     }
 }

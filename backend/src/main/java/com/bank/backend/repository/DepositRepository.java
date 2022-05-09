@@ -1,5 +1,7 @@
 package com.bank.backend.repository;
 
+import java.util.Date;
+
 import com.bank.backend.entity.Deposit;
 import com.bank.backend.entity.Status;
 
@@ -48,4 +50,8 @@ public interface DepositRepository extends JpaRepository<Deposit, Long> {
 
     @Query("SELECT sum(nominal) FROM Deposit where status_id = 2")
     public Long sumNominalWithStatusApprove();
+
+    @Query("SELECT sum(nominal) FROM Deposit where status.statusId = 2 AND ((startDate BETWEEN :pStartDate AND :pEndDate) OR (dueDate BETWEEN :pStartDate AND :pEndDate)) AND bank.bankId = :pBankId")
+    public Long sumNominalWithStatusApproveAndParam(@Param("pStartDate") Date startDate,
+            @Param("pEndDate") Date endDate, @Param("pBankId") Long bankId);
 }

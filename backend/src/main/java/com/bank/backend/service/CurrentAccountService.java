@@ -1,6 +1,7 @@
 package com.bank.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,6 +122,14 @@ public class CurrentAccountService {
     public PaginationList<CurrentAccountWrapper, CurrentAccount> findByResquestStatus(int page, int size) {
         return toPaginationList(
                 currentAccountRepository.findByStatus(statusRepository.getById(1L), PageRequest.of(page, size)));
+    }
+
+    public Long sumNominalWithStatusApprove() {
+        return currentAccountRepository.sumNominalWithStatusApprove();
+    }
+
+    public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
+        return currentAccountRepository.sumNominalWithStatusApproveAndParam(startDate, endDate, bankId);
     }
 
     // Create and Update
