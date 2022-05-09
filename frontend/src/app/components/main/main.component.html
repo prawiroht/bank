@@ -51,7 +51,7 @@
                 <div [ngStyle]="{'color': main.statusId==2? 'green' : 'red'}"><b>{{main.statusName}}</b></div>
                 </td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success p-button-sm"></button>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success p-button-sm" (click)="openEdit(main)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger p-button-sm" style="margin-left: 7px;"></button>
                 </td>
             </tr>
@@ -92,7 +92,7 @@
             </div>
             <div class="col-12 md:col-6">
                 <h5>Jenis Rekening</h5>
-                <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="bankId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Pilih Jenis Rekening">
+                <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="accountTypeId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Pilih Jenis Rekening">
                     <ng-template let-accountType pTemplate="item">
                         <div class="accountType-item">
                             <div> {{accountType.accountTypeName}} </div>
@@ -159,16 +159,16 @@
             </div>
             <div class="col-12 md:col-6">
                 <h5>Keterangan</h5>
-                <input type="text" pInputText id="fundName" [(ngModel)]="row.description" required="autofocus" placeholder="Keterangan" />
+                <input type="text" pInputText [(ngModel)]="row.description" required="autofocus" placeholder="Keterangan" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.description">
-                    Fund Name Required!
+                    Keterangan Required!
                 </h5>
             </div>
             </div>
 
 
     <ng-template pTemplate="footer">
-    <button pButton type="button" label="Simpan" icon="pi pi-check"></button>
+    <button pButton type="button" label="Simpan" icon="pi pi-check" (click)="handleSaveMain($event)"></button>
     <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
         class="mt-2 ml-1 p-button-danger"></button>
     <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Batal"

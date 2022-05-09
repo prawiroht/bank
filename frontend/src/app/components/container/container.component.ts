@@ -5,6 +5,7 @@ import { BankService } from 'src/app/services/bank.service';
 import { ContainerService } from 'src/app/services/container.service';
 import { FundService } from 'src/app/services/fund.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import {formatToString} from 'rupiah-formatter';
 
 @Component({
   selector: 'app-container',
@@ -214,6 +215,9 @@ export class ContainerComponent implements OnInit {
       }
     )
 
+  }
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
   }
 
 }
