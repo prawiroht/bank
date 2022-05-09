@@ -60,9 +60,9 @@ export class DashboardComponent implements OnInit {
         label: 'Input Saldo',
         icon: 'pi pi-pw pi-file',
         items: [
-          { label: 'Giro' },
-          { label: 'Deposito' },
-          { label: 'Investasi' }
+          { label: 'Giro', routerLink: '/giro' },
+          { label: 'Deposito', routerLink: '/deposits' },
+          { label: 'Investasi', routerLink: '/investment' }
         ]
       },
       {
