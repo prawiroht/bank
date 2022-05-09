@@ -1,0 +1,41 @@
+.card-label {
+    font-size: 42px;
+    font-weight: 700;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+}
+
+.filter {
+    position: absolute;
+    top: 30px;
+    left: 100px;
+}
+
+:host ::ng-deep .nopad .p-card .p-card-body {
+    background-color: #95bff590;
+    padding: 6px 1rem;
+}
+
+:host ::ng-deep .nopad2 .p-card .p-card-body {
+    padding: 6px 1rem;
+}
+
+.logobank {
+    border: 1px solid #efefef;
+    border-radius: 4px;
+    margin-top: -3px;
+    margin-right: 3px;
+}
+
+:host ::ng-deep .bggreen .p-card .p-card-body {
+    background-color: #95f59590;
+}
+
+:host ::ng-deep .bgblue .p-card .p-card-body {
+    background-color: #95bff590;
+}
+
+:host ::ng-deep .bgyellow .p-card .p-card-body {
+    background-color: #f5f29590;
+}

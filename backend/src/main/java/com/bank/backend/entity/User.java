@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,4 +44,7 @@ public class User {
     @Column(name = "LAST_LOGIN")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar lastLogin;
+    @ManyToOne
+    @JoinColumn(name = "UNIVERSITY_ID")
+    private University university;
 }

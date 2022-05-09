@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContainerService } from 'src/app/services/container.service';
 
 @Component({
   selector: 'app-approval-transaction-penampungan',
@@ -12,7 +13,9 @@ export class ApprovalTransactionPenampunganComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
-  constructor() { }
+  constructor(
+    private containerService: ContainerService
+  ) { }
 
   ngOnInit(): void {
     this.loadData(this.page);
@@ -39,6 +42,18 @@ export class ApprovalTransactionPenampunganComponent implements OnInit {
   }
 
   loadData(page: number) {
+    this.containerService.getRequestedContainer().subscribe(
+      {
+        next: (data) => {
+          this.data=data.data
+          console.log(this.data);
+          
+        },
+        error: (err) => {
+          console.log('error')
+        }
+      }
+    )
   }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bank.backend.entity.User;
 import com.bank.backend.repository.GroupRepository;
+import com.bank.backend.repository.UniversityRepository;
 import com.bank.backend.repository.UserRepository;
 import com.bank.backend.util.PaginationList;
 import com.bank.backend.wrapper.GroupWrapper;
@@ -27,7 +28,8 @@ public class UserService {
     GroupRepository groupRepository;
     @Autowired
     GroupService groupService;
-
+    @Autowired
+    UniversityRepository universityRepository;
     // get
     public List<UserWrapper> findAll(){
         return toWrapperList(userRepository.findAll(Sort.by("userId").ascending()));
@@ -75,6 +77,7 @@ public class UserService {
         entity.setPhone(wrapper.getPhone());
         entity.setIsActive(wrapper.getIsActive());
         entity.setLastLogin(wrapper.getLastLogin());
+        entity.setUniversity(universityRepository.getById(wrapper.getUniversityId()));
         return entity;
     }
 
@@ -89,6 +92,10 @@ public class UserService {
         wrapper.setPhone(entity.getPhone());
         wrapper.setIsActive(entity.getIsActive());
         wrapper.setLastLogin(entity.getLastLogin());
+        if(entity.getUniversity() != null){
+            wrapper.setUniversityId(entity.getUniversity().getUniversityId());
+            wrapper.setUniversityName(entity.getUniversity().getUniversityName());
+        }
         List<GroupWrapper> groupEntities = groupService.findGroupByUserId(entity.getUserId());
         wrapper.setGroups(groupEntities);
         return wrapper;

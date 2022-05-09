@@ -53,6 +53,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HomeComponent } from './components/home/home.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import { SaldoComponent } from './components/saldo/saldo.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     ApprovalTransactionFileMt940Component,
     NavbarComponent,
     HomeComponent,
+    SaldoComponent,
   ],
   imports: [
     BrowserModule,

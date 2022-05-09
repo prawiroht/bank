@@ -1,21 +1,6 @@
-#block_container {
-    /* display: inline-block; */
-    justify-content: center;
-}
-
-#bloc1, #bloc2{
-    display:inline;
-}
-
-#blocA, #blocB{
-    display: inline;
-}
-
-.cards{
-    background-color: lightblue;
-}
-
-.pies{
-    width: 20px;
+:host ::ng-deep .bgblue .p-card .p-card-body {
+    background-color: #95bff590;
+    padding: 6px 1rem;
+    float: right;
 }
 

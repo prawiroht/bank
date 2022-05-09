@@ -1,1 +1,62 @@
-
+<div class="grid">
+    <div class="col-12 md:col-8 flex align-items-center justify-content-center">
+        <p-card class="w-full"><i class="pi pi-filter"></i> Filter
+            <div class="filter">
+                <label for="icon" [style]="{'padding':'0 10px'}"> Periode </label>
+                <p-calendar [style]="{'width':'127px'}" id="date" [(ngModel)]="date" dateFormat="yy-mm-dd" [showIcon]="true" inputId="icon"></p-calendar>
+                <span [style]="{'padding':'0 10px'}">-</span>
+                <p-calendar [style]="{'width':'127px'}" id="date" [(ngModel)]="date" dateFormat="yy-mm-dd" [showIcon]="true" inputId="icon"></p-calendar>
+                <label for="icon" [style]="{'padding':'0 10px 0 20px'}"> Bank </label>
+                <p-dropdown [options]="optPurchasing" [(ngModel)]="purchasing"></p-dropdown>
+                <p-button [style]="{'margin':'-5px 0 0 20px'}" icon="pi pi-search" label="" styleClass="p-button-sm"></p-button>
+            </div>
+        </p-card>
+    </div>
+    <div class="col-12 md:col-4 flex align-items-center justify-content-center">
+        <p-card class="w-full nopad">
+            <div><img [src]="logobni" height="14" width="40" class="p-mr-2 logobank">BNI 5% 4Bulan</div>
+            <div><img [src]="logomandiri" height="14" width="40" class="p-mr-2 logobank">Mandiri 5% 6Bulan</div>
+        </p-card>
+    </div>
+    <div class="col-12 md:col-8 flex align-items-center justify-content-center">
+        <p-card class="w-full"><i class="pi pi-wallet"></i> Total Saldo
+            <div class="card-label">
+                {{saldo}}
+            </div>
+        </p-card>
+    </div>
+    <div class="col-12 md:col-4 flex align-items-center justify-content-center">
+        <p-card class="w-full nopad2"><i class="pi pi-wallet"></i> Bank Saldo
+            <div class="mt-2" fullWidth>
+                <div style="display: block;height: 95px;">
+                    <!-- <canvas baseChart
+                        [options]="doughnutChartOptions"
+                        [data]="doughnutChartData"
+                        [type]="doughnutChartType">
+                    </canvas> -->
+                </div>
+            </div>
+        </p-card>
+    </div>
+    <div class="col-12 md:col-4 flex align-items-center justify-content-center">
+        <p-card class="w-full bgblue"><i class="pi pi-copy"></i> Total Giro
+            <div class="card-label">
+                500,000,000
+            </div>
+        </p-card>
+    </div>
+    <div class="col-12 md:col-4 flex align-items-center justify-content-center">
+        <p-card class="w-full bgyellow"><i class="pi pi-briefcase"></i> Total Deposito
+            <div class="card-label">
+                465,000,000
+            </div>
+        </p-card>
+    </div>
+    <div class="col-12 md:col-4 flex align-items-center justify-content-center">
+        <p-card class="w-full bggreen"><i class="pi pi-calendar-plus"></i> Total Invenstasi
+            <div class="card-label">
+                0
+            </div>
+        </p-card>
+    </div>
+</div>
