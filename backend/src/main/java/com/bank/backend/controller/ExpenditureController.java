@@ -1,6 +1,14 @@
 package com.bank.backend.controller;
 
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.bank.backend.entity.Expenditure;
 import com.bank.backend.service.ExpenditureService;
 import com.bank.backend.util.DataResponse;
@@ -18,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 
 @CrossOrigin
@@ -105,6 +116,31 @@ public class ExpenditureController {
         } catch (Exception e) {
             return new DataResponse<ExpenditureWrapper>(false, "Data not found: "+ id);
         }
+    }
+
+    // export csv
+    @GetMapping(path = "/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List<ExpenditureWrapper> listExpenditure = expenditureService.findAll();
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Expenditure ID", "Bank ID", "University ID", "Account Number", "Mutation ID", "Transaction Date", "Value", "Purchase ID", "Account Type ID", "Fund ID", "Description", "Status ID", "User ID"};
+        String[] nameMapping = {"expenditureId", "bankId", "universityId", "accountNumber", "mutationId", "transactionDate", "value", "purchaseId", "accountTypeId", "fundId", "description", "statusId", "userId"};
+
+        csvWriter.writeHeader(csvHeader);
+         
+        for (ExpenditureWrapper expenditure : listExpenditure) {
+            csvWriter.write(expenditure, nameMapping);
+        }
+        csvWriter.close();
     }
 
 
