@@ -21,7 +21,7 @@
     [rowsPerPageOptions]="[10,25,50]">
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
+        <th>No</th>
         <th>Bank</th>
         <th>Nomor Rekening</th>
         <th>Jenis Rekening</th>
@@ -35,9 +35,9 @@
         <th>Aksi</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-point>
+    <ng-template pTemplate="body" let-point let-i="rowIndex">
       <tr>
-        <td>{{point.expenditureId}}</td>
+        <td>{{i+1}}</td>
         <td>{{point.bankName}}</td>
         <td>{{point.accountNumber}}</td>
         <td>{{point.accountTypeName}}</td>

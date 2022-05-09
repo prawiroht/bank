@@ -33,7 +33,7 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-point>
+    <ng-template pTemplate="body" let-point let-i="rowIndex">
       <tr>
         <td>{{point.bankName}}</td>
         <td>{{point.product}}</td>
