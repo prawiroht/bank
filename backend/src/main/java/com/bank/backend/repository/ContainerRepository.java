@@ -1,5 +1,7 @@
 package com.bank.backend.repository;
 
+import java.util.Date;
+
 // import java.util.List;
 
 import com.bank.backend.entity.Container;
@@ -78,4 +80,10 @@ public interface ContainerRepository extends JpaRepository<Container, Long>{
     Page<Container> findAllByStatus(@Param("pStatus") String status, Pageable page);    
 
     Page<Container> findByStatus(Status Status, Pageable page);
+
+    // @Query("SELECT sum(value) from container where status_id = 2")
+    // public Long sumValueWithStatusApproved();
+
+    @Query("SELECT sum(value) from Container where status.statusId = 2 and (transactionDate BETWEEN :pStartDate AND :pEndDate) and bank.bankId = :pBankId")
+    public Long sumValueWithStatusApprovedAndParam(@Param("pStartDate") Date startDate, @Param("pEndDate") Date endDate, @Param("pBankId") Long bankId);
 }

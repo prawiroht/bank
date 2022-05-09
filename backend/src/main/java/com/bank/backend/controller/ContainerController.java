@@ -18,6 +18,8 @@ import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.ContainerWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +63,12 @@ public class ContainerController {
     @GetMapping(path = "/findByRequestStatus")
     public DataResponsePagination<ContainerWrapper, Container> findByRequestStatus(int page, int size){
         return new DataResponsePagination<ContainerWrapper, Container>(containerService.findByRequestStatus(page, size));
+    }
+
+    // FIND BY STATUS QUERY METHOD
+    @GetMapping(path = "/findByApprovedStatus")
+    public DataResponsePagination<ContainerWrapper, Container> findByApprovedStatus(int page, int size){
+        return new DataResponsePagination<ContainerWrapper, Container>(containerService.findByApprovedStatus(page, size));
     }
 
     // FIND BY ID
@@ -159,6 +167,11 @@ public class ContainerController {
          
         csvWriter.close();
 
+    }
+
+    @GetMapping(path="/getTotalContainerWithParam")
+    public Long getTotalContainerWithParam(@RequestParam @DateTimeFormat(iso = ISO.DATE) Date startDate, @RequestParam @DateTimeFormat(iso = ISO.DATE) Date endDate, @RequestParam Long bankId){
+        return containerService.sumValueWithParam(startDate, endDate, bankId);
     }
 
 }
