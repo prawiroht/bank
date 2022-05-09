@@ -3,7 +3,11 @@ package com.bank.backend.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+// import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import com.bank.backend.entity.Investation;
+import com.bank.backend.entity.Status;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.InvestationRepository;
@@ -16,6 +20,7 @@ import com.bank.backend.wrapper.InvestationWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -130,5 +135,15 @@ public class InvestationService {
         if (id == null)
             throw new BusinessException("Id cannot be null");
         investationRepository.deleteById(id);
+    }
+
+    // Find by request status
+    public PaginationList<InvestationWrapper, Investation> findByRequestStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(1L);
+        Page<Investation> investationPage = investationRepository.findByStatus(status, paging);
+        List<Investation> investationList = investationPage.getContent();
+        List<InvestationWrapper> investationWrappers = toWrapperList(investationList);
+        return new PaginationList<InvestationWrapper, Investation>(investationWrappers, investationPage);
     }
 }

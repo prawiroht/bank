@@ -1,6 +1,7 @@
 package com.bank.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -171,5 +172,9 @@ public class ExpenditureService {
     //delete
     public void delete(Long id){
         expenditureRepository.deleteById(id);
+    }
+
+    public Long sumValueWithParam (Date startDate, Date endDate, Long bankId){
+        return expenditureRepository.sumValueWithStatusApprovedAndParam(startDate, endDate, bankId);
     }
 }

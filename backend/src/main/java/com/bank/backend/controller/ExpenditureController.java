@@ -17,6 +17,8 @@ import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.ExpenditureWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +73,11 @@ public class ExpenditureController {
     @GetMapping (path = "/findByRequestStatus")
     public DataResponsePagination<ExpenditureWrapper, Expenditure> findByRequestStatus(int page, int size){
         return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findByResquestStatus(page, size));
+    }
+
+    @GetMapping(path="/getTotalExpenditureWithParam")
+    public Long getTotalExpenditureWithParam(@RequestParam @DateTimeFormat(iso = ISO.DATE) Date startDate, @RequestParam @DateTimeFormat(iso = ISO.DATE) Date endDate, @RequestParam Long bankId){
+        return expenditureService.sumValueWithParam(startDate, endDate, bankId);
     }
 
     @PostMapping (path = "/post")

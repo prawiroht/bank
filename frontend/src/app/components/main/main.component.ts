@@ -5,6 +5,8 @@ import { BankService } from 'src/app/services/bank.service';
 import { FundService } from 'src/app/services/fund.service';
 import { MainService } from 'src/app/services/main.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import { saveAs } from 'file-saver';
+import { DownloadService } from 'src/app/services/download.service';
 
 @Component({
   selector: 'app-main',
@@ -27,6 +29,8 @@ export class MainComponent implements OnInit {
   purchases: any;
   accountTypes: any;
   selectedMutation: any;
+  statusName: any;
+  statusId: any;
   mutations =[
     {label :'Debet', value: 'Debet'},
     {label :'Credit', value: 'Credit'}]
@@ -42,6 +46,8 @@ export class MainComponent implements OnInit {
     purchaseName: '',
     fundName: '',
     description: '',
+    statusName:'',
+    statusId:'',
   }
 
   constructor(
@@ -51,7 +57,8 @@ export class MainComponent implements OnInit {
     private fundService : FundService,
     private bankService : BankService,
     private purchaseService : PurchaseService,
-    private accountTypeService : AccountTypeService
+    private accountTypeService : AccountTypeService,
+    private downloadService : DownloadService
   ) { }
 
   ngOnInit(): void {
@@ -208,4 +215,29 @@ export class MainComponent implements OnInit {
 
   }
 
+//   downloadFile(data: Response) {
+//     const blob = new Blob([data], { type: 'text/csv' });
+//     const url = window.URL.createObjectURL(blob);
+//     const anchor = document.createElement('a');
+//     anchor.download = 'myfile.txt'; // here you can specify file name
+//     anchor.href = url;
+//     document.body.appendChild(anchor);
+//     anchor.click();
+//     document.body.removeChild(anchor);
+// }
+
+currentDate = new Date()
+getDatetime(){
+  return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
+   }
+
+filename="utama_" + this.getDatetime()+".csv"
+downloadFile(filename: string): void {
+  this.downloadService
+    .download(filename)
+    .subscribe(blob => saveAs(blob, filename));
 }
+
+}
+
+
