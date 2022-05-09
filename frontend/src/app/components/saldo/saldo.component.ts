@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+
 import { SaldoService } from 'src/app/services/saldo.service';
 
 @Component({

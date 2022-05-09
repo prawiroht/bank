@@ -1,6 +1,8 @@
+<h2>SALDO</h2>
 <div class="grid">
     <div class="col-12 md:col-8 flex align-items-center justify-content-center">
-        <p-card class="w-full"><i class="pi pi-filter"></i> Filter
+        <p-card class="w-full">
+            <!-- <i class="pi pi-filter"></i> Filter -->
             <div class="filter">
                 <label for="icon" [style]="{'padding':'0 10px'}"> Periode </label>
                 <p-calendar [style]="{'width':'127px'}" id="date" [(ngModel)]="date" dateFormat="yy-mm-dd" [showIcon]="true" inputId="icon"></p-calendar>
@@ -41,14 +43,14 @@
     <div class="col-12 md:col-4 flex align-items-center justify-content-center">
         <p-card class="w-full bgblue"><i class="pi pi-copy"></i> Total Giro
             <div class="card-label">
-                500,000,000
+                <p class="txtsaldo">{{saldo}}</p>
             </div>
         </p-card>
     </div>
     <div class="col-12 md:col-4 flex align-items-center justify-content-center">
         <p-card class="w-full bgyellow"><i class="pi pi-briefcase"></i> Total Deposito
             <div class="card-label">
-                465,000,000
+              <p class="txtsaldo">{{saldo}}</p>
             </div>
         </p-card>
     </div>
