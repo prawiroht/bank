@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'app-approval-transaction-utama',
@@ -12,7 +13,9 @@ export class ApprovalTransactionUtamaComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
-  constructor() { }
+  constructor(
+    private mainService: MainService
+  ) { }
 
   ngOnInit(): void {
     this.loadData(this.page);
@@ -39,6 +42,18 @@ export class ApprovalTransactionUtamaComponent implements OnInit {
   }
 
   loadData(page: number) {
+    this.mainService.getRequestedMain().subscribe(
+      {
+        next: (data) => {
+          this.data=data.data
+          console.log(this.data);
+          
+        },
+        error: (err) => {
+          console.log('error')
+        }
+      }
+    )
   }
 
 }
