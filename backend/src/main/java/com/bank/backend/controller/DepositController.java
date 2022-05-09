@@ -99,4 +99,9 @@ public class DepositController {
             @RequestParam Long bankId) {
         return depositService.sumNominalWithParam(startDate, endDate, bankId);
     }
+
+    @GetMapping(path = "/findByRequestStatus")
+    public DataResponsePagination<DepositWrapper, Deposit> findByRequestStatus(int page, int size){
+        return new DataResponsePagination<DepositWrapper, Deposit>(depositService.findByRequestStatus(page, size));
+    }
 }

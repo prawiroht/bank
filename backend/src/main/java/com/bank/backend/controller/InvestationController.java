@@ -79,4 +79,9 @@ public class InvestationController {
             @RequestParam Long bankId) {
         return investationService.sumNominalWithParam(startDate, endDate, bankId);
     }
+
+    @GetMapping(path = "/findByRequestStatus")
+    public DataResponsePagination<InvestationWrapper, Investation> findByRequestStatus(int page, int size){
+        return new DataResponsePagination<InvestationWrapper, Investation>(investationService.findByRequestStatus(page, size));
+    }
 }

@@ -28,6 +28,8 @@ export class ContainerComponent implements OnInit {
   bankName: string = '';
   accountNumber: number = 0;
   selectedMutation: any;
+  statusId: any;
+  statusName: any;
   mutations =[
     {label :'Debet', value: 'Debet'},
     {label :'Credit', value: 'Credit'}]
@@ -45,7 +47,8 @@ export class ContainerComponent implements OnInit {
     fundInd:0,
     fundName:'',
     description:'',
-    status:''
+    statusId:'',
+    statusName:'',
 
   };
 
@@ -109,6 +112,7 @@ export class ContainerComponent implements OnInit {
     this.banks=this.getBankName();
     this.purchases=this.getPurchaseName();
     this.funds=this.getFundName();
+    this.accountTypes=this.getAccountTypeName();
 
   }
 
@@ -201,6 +205,7 @@ export class ContainerComponent implements OnInit {
       {
         next: (data) => {
           this.accountTypes=data.data
+          console.log(data.data, 'tesss')
         },
 
         error: (err) => {
