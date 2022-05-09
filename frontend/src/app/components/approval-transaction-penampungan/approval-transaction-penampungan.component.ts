@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContainerService } from 'src/app/services/container.service';
+import {formatToString} from 'rupiah-formatter';
 
 @Component({
   selector: 'app-approval-transaction-penampungan',
@@ -54,6 +55,10 @@ export class ApprovalTransactionPenampunganComponent implements OnInit {
         }
       }
     )
+  }
+
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
   }
 
 }
