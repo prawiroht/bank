@@ -1,6 +1,7 @@
 package com.bank.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.bank.backend.entity.Investation;
 import com.bank.backend.exception.BusinessException;
@@ -108,6 +109,15 @@ public class InvestationService {
         List<Investation> iList = investationPage.getContent();
         List<InvestationWrapper> investationWrappers = toWrapperList(iList);
         return new PaginationList<InvestationWrapper, Investation>(investationWrappers, investationPage);
+    }
+
+    public Long sumNominalWithStatusApprove() {
+        return investationRepository.sumNominalWithStatusApprove();
+    }
+
+    public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
+        return investationRepository.sumNominalWithStatusApproveAndParam(startDate,
+                endDate, bankId);
     }
 
     // Create and update data

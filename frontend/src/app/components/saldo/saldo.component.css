@@ -6,10 +6,11 @@
     text-align: center;
 }
 
-.filter {
-    position: absolute;
+:host ::ng-deep .filter {
+    /* position: absolute; */
     top: 30px;
-    left: 100px;
+    left: 0px;
+    /* z-index: 999; */
 }
 
 :host ::ng-deep .nopad .p-card .p-card-body {
@@ -38,4 +39,8 @@
 
 :host ::ng-deep .bgyellow .p-card .p-card-body {
     background-color: #f5f29590;
+}
+
+:host ::ng-deep .txtsaldo{
+    font-size: 30px;
 }

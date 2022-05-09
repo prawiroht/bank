@@ -44,5 +44,8 @@ export class MainService {
   }
 
 
+  getRequestedMain():Observable<any>{
+    return this.http.get<any>(API_URL + 'main/findByRequestStatus?page=0&size=100' , httpOptions);
+  }
   
 }

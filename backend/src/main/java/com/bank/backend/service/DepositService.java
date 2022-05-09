@@ -1,6 +1,7 @@
 package com.bank.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.bank.backend.entity.Deposit;
@@ -101,6 +102,10 @@ public class DepositService {
 
     public Long sumNominalWithStatusApprove() {
         return depositRepository.sumNominalWithStatusApprove();
+    }
+
+    public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
+        return depositRepository.sumNominalWithStatusApproveAndParam(startDate, endDate, bankId);
     }
 
     // Retrieve all data with pagination

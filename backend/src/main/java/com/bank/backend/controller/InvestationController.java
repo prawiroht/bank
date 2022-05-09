@@ -1,5 +1,7 @@
 package com.bank.backend.controller;
 
+import java.util.Date;
+
 import com.bank.backend.entity.Investation;
 import com.bank.backend.service.InvestationService;
 import com.bank.backend.util.DataResponse;
@@ -8,6 +10,8 @@ import com.bank.backend.util.DataResponsePagination;
 import com.bank.backend.wrapper.InvestationWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,5 +66,17 @@ public class InvestationController {
             @RequestParam("page") int page, @RequestParam("size") int size) {
         return new DataResponsePagination<InvestationWrapper, Investation>(
                 investationService.findAllCategoriesWithPagination(all, page, size));
+    }
+
+    @GetMapping(path = "/getTotalInvestment")
+    public Long getTotalInvestment() {
+        return investationService.sumNominalWithStatusApprove();
+    }
+
+    @GetMapping(path = "/getTotalInvestmentWithParam")
+    public Long getTotalInvestmentWithParam(@RequestParam @DateTimeFormat(iso = ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = ISO.DATE) Date endDate,
+            @RequestParam Long bankId) {
+        return investationService.sumNominalWithParam(startDate, endDate, bankId);
     }
 }
