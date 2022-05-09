@@ -118,8 +118,8 @@ public class MainController {
          List<MainWrapper> listMain = mainService.findAll();
  
          ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-         String[] csvHeader = {"Utama ID", "Universitas ID", "Nama Bank", "No Rekening", "Mutasi", "Jenis Rekening", "Waktu", "Nilai", "Pembelian", "Sumber Dana", "Keterangan", "Status"};
-         String[] nameMapping = {"mainId", "bankName", "accountNumber", "mutationId", "accountTypeId", "transactionDate", "value", "purchaseName", "fundName", "description","statusName"};
+         String[] csvHeader = {"Utama ID", "Universitas ID", "Nama Bank", "No Rekening", "Jenis Rekening", "Mutasi", "Waktu", "Nilai", "Pembelian", "Sumber Dana", "Keterangan", "Status"};
+         String[] nameMapping = {"mainId", "bankName", "accountNumber", "accountTypeId", "mutationId", "transactionDate", "value", "purchaseName", "fundName", "description","statusName"};
  
          csvWriter.writeHeader(csvHeader);
           

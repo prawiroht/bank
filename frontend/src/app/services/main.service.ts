@@ -28,6 +28,22 @@ export class MainService {
       .get<any>(API_URL + 'main/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
   }
 
+  // exporttoCsv(stickSearch: any): Observable<any> {
+  //   return this.http
+  //     .get<any>(API_URL + 'main/export', httpOptions);
+  // }
+
+  getCsv(): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/csv');
+  
+    return this.http.get(API_URL + 'main/export', {
+      headers: headers,
+      responseType: 'text'
+    });
+  }
+
+
   getRequestedMain():Observable<any>{
     return this.http.get<any>(API_URL + 'main/findByRequestStatus?page=0&size=100' , httpOptions);
   }

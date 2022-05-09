@@ -109,6 +109,7 @@ export class ContainerComponent implements OnInit {
     this.banks=this.getBankName();
     this.purchases=this.getPurchaseName();
     this.funds=this.getFundName();
+    this.accountTypes=this.getAccountTypeName();
 
   }
 
@@ -201,6 +202,7 @@ export class ContainerComponent implements OnInit {
       {
         next: (data) => {
           this.accountTypes=data.data
+          console.log(data.data, 'tesss')
         },
 
         error: (err) => {
