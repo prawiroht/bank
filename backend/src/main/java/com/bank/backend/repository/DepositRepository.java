@@ -48,7 +48,7 @@ public interface DepositRepository extends JpaRepository<Deposit, Long> {
 
     Page<Deposit> findByStatus(Status status, Pageable page);
 
-    @Query("SELECT sum(nominal) FROM Deposit where status_id = 2")
+    @Query("SELECT sum(nominal) FROM Deposit where status.statusId = 2")
     public Long sumNominalWithStatusApprove();
 
     @Query("SELECT sum(nominal) FROM Deposit where status.statusId = 2 AND ((startDate BETWEEN :pStartDate AND :pEndDate) OR (dueDate BETWEEN :pStartDate AND :pEndDate)) AND bank.bankId = :pBankId")

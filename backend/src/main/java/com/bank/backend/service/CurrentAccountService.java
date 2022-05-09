@@ -124,15 +124,14 @@ public class CurrentAccountService {
                 currentAccountRepository.findByStatus(statusRepository.getById(1L), PageRequest.of(page, size)));
     }
 
-    // public Long sumNominalWithStatusApprove() {
-    // return currentAccountRepository.sumNominalWithStatusApprove();
-    // }
+    public Long sumNominalWithStatusApprove() {
+        return currentAccountRepository.sumNominalWithStatusApprove();
+    }
 
-    // public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
-    // return
-    // currentAccountRepository.sumNominalWithStatusApproveAndParam(startDate,
-    // endDate, bankId);
-    // }
+    public Long sumNominalWithParam(Date startDate, Date endDate, Long bankId) {
+        return currentAccountRepository.sumNominalWithStatusApproveAndParam(startDate,
+                endDate, bankId);
+    }
 
     // Create and Update
     public CurrentAccountWrapper save(CurrentAccountWrapper wrapper) {

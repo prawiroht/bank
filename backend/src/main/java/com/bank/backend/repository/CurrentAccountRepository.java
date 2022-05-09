@@ -57,7 +57,7 @@ public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, 
     @Query("SELECT sum(initialBalanceAccount) FROM CurrentAccount where status.statusId = 2")
     public Long sumNominalWithStatusApprove();
 
-    @Query("SELECT sum(initialBalanceAccount) FROM CurrentAccount where status.statusId = 2 AND((startDate BETWEEN:pStartDate AND:pEndDate)    OR (dueDate BETWEEN:pStartDate AND:pEndDate)) AND bank.bankId=:pBankId")
+    @Query("SELECT sum(initialBalanceAccount) FROM CurrentAccount where status.statusId = 2 AND (initialBalanceDate BETWEEN :pStartDate AND :pEndDate) AND bank.bankId = :pBankId")
     public Long sumNominalWithStatusApproveAndParam(@Param("pStartDate") Date startDate,
             @Param("pEndDate") Date endDate, @Param("pBankId") Long bankId);
 }
