@@ -47,3 +47,69 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog [header]="action == 'Add' ? 'Add Giro' : 'Edit Giro'" [(visible)]="display" [modal]="true"
+        [style]="{ width: '50vw', height: '40vw' }" [maximizable]="true" [baseZIndex]="10000" [draggable]="false"
+        [resizable]="false" (onHide)="handleReset($event,'click')">
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <h5>Bank Name</h5>
+                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Select a Bank Name">
+                    <ng-template let-bank pTemplate="item">
+                        <div class="bank-item">
+                            <div>{{bank.code}} : {{bank.bankName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
+                    Bank Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Account Number</h5>
+                <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
+                    Account Number Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Account Type Name</h5>
+                <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="bankId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Select a Account Type Name">
+                    <ng-template let-accountType pTemplate="item">
+                        <div class="accountType-item">
+                            <div> {{accountType.accountTypeName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
+                    Account Type Name Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Date</h5>
+                    <input type="date" pInputText [(ngModel)]="row.Date" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.Date">
+                   Date Required!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Initial Balance Account</h5>
+                    <input type="date" pInputText [(ngModel)]="row.transactionDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.transactionDate">
+                    Initial Balance Account Required!
+                </h5>
+            </div>
+            </div>
+            
+    <ng-template pTemplate="footer">
+    <button pButton type="button" label="Save" icon="pi pi-check"></button>
+    <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
+        class="mt-2 ml-1 p-button-danger"></button>
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
+        class="mt-2 ml-1 p-button-danger"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+

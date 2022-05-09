@@ -1,5 +1,7 @@
 package com.bank.backend.repository;
 
+import java.util.Date;
+
 import com.bank.backend.entity.Investation;
 import com.bank.backend.entity.Status;
 
@@ -36,6 +38,11 @@ public interface InvestationRepository extends JpaRepository<Investation, Long> 
 
     Page<Investation> findByStatus(Status status, Pageable page);
 
-    @Query("SELECT sum(initialValue) FROM Investation where status_id = 2")
+    @Query("SELECT sum(initialValue) FROM Investation where status.statusId = 2")
     public Long sumNominalWithStatusApprove();
+
+    @Query("SELECT sum(initialValue) FROM Investation where status.statusId = 2 AND (startDate BETWEEN :pStartDate AND :pEndDate) AND bank.bankId = :pBankId")
+
+    public Long sumNominalWithStatusApproveAndParam(@Param("pStartDate") Date startDate,
+            @Param("pEndDate") Date endDate, @Param("pBankId") Long bankId);
 }
