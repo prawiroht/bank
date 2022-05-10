@@ -18,8 +18,8 @@ import lombok.Setter;
 public class Bank {
 
     @Id
-    @GeneratedValue(generator = "CURRENT_ACCOUNT_GEN", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "CURRENT_ACCOUNT_GEN", sequenceName = "BANK_SEQ", allocationSize = 1)
+    @GeneratedValue(generator = "BANK_GEN", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "BANK_GEN", sequenceName = "BANK_SEQ", allocationSize = 1)
     @Column(name = "BANK_ID")
     private Long bankId;
     @Column(name = "CODE")
