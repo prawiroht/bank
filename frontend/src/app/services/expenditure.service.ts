@@ -39,4 +39,8 @@ export class ExpenditureService {
   putExpenditure(req: any): Observable<any> {
     return this.http.put<any>(API_URL + 'expenditure/put', req, httpOptions)
   }
+
+  deleteExpenditure(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'expenditure/delete'+id,httpOptions);
+  }
 }
