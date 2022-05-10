@@ -16,6 +16,8 @@ export class SaldoComponent implements OnInit {
   purchasing = '';
   logobni: string = '/assets/images/logobank/bni.png';
   logomandiri: string = '/assets/images/logobank/mandiri.png';
+  logobca: string = '/assets/images/logobank/bca.jpg';
+  logobri: string = '/assets/images/logobank/bri.jpg';
 
   saldo:any;
   giro:any;

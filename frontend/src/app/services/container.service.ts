@@ -41,6 +41,6 @@ export class ContainerService {
     }
 
   deleteContainer(id:number):Observable<any>{
-    return this.http.delete<any>(API_URL+'container/delete'+id,httpOptions);
+    return this.http.delete<any>(API_URL+'container/delete?containerId='+id,httpOptions);
   }
 }

@@ -93,13 +93,12 @@ export class ApprovalTransactionPenampunganComponent implements OnInit {
     });
   }
 
-  delete(point:any){
-    this.point=point;
+  delete(id:number){
     this.confirmationService.confirm({
       header: 'Confirmation',
       message: 'Are you sure that you want to perform this action?',
       accept:()=>{
-        this.containerService.putContainer(this.point).subscribe({
+        this.containerService.deleteContainer(id).subscribe({
           next: (data)=>{
             this.messageService.add({
               severity: 'success',

@@ -41,6 +41,6 @@ export class ExpenditureService {
   }
 
   deleteExpenditure(id:number):Observable<any>{
-    return this.http.delete<any>(API_URL+'expenditure/delete'+id,httpOptions);
+    return this.http.delete<any>(API_URL+'expenditure/delete?id='+id,httpOptions);
   }
 }
