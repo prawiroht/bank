@@ -31,4 +31,8 @@ export class ContainerService {
   getRequestedContainer():Observable<any>{
     return this.http.get<any>(API_URL + 'container/findByRequestStatus?page=0&size=100' , httpOptions);
   }
+
+  putContainer(req: any):Observable<any>{
+    return this.http.put<any>(API_URL+'container/put/',req, httpOptions);
+  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/services/main.service';
 import {formatToString} from 'rupiah-formatter';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-approval-transaction-utama',
@@ -14,8 +15,12 @@ export class ApprovalTransactionUtamaComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
+  point:any;
+
   constructor(
-    private mainService: MainService
+    private mainService: MainService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -46,12 +51,14 @@ export class ApprovalTransactionUtamaComponent implements OnInit {
     this.mainService.getRequestedMain().subscribe(
       {
         next: (data) => {
-          this.data=data.data
-          console.log(this.data);
-          
+          this.data=data.data          
         },
         error: (err) => {
-          console.log('error')
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Can not load the data \n',
+          });
         }
       }
     )
@@ -59,5 +66,66 @@ export class ApprovalTransactionUtamaComponent implements OnInit {
 
   formatRupiah(nominal:number){
     return formatToString(nominal);
+  }
+
+  approve(point:any){
+    this.point=point;
+    this.point.statusId=2;
+    console.log(this.point);
+
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept:()=>{
+        this.mainService.putMain(this.point).subscribe({
+          next: (data)=>{
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'The request has been approved!',
+            });
+            this.loadData(this.page);
+          },
+          error: (err)=>{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Input Failed',
+            });
+          }
+        })
+      },
+      reject: () => {
+      },
+    });
+  }
+
+  delete(point:any){
+    this.point=point;
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept:()=>{
+        this.mainService.putMain(this.point).subscribe({
+          next: (data)=>{
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'The request has been approved!',
+            });
+            this.loadData(this.page);
+          },
+          error: (err)=>{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Input Failed',
+            });
+          }
+        })
+      },
+      reject: () => {
+      },
+    });
   }
 }
