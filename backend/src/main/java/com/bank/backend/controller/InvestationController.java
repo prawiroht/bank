@@ -1,12 +1,17 @@
 package com.bank.backend.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.bank.backend.entity.Investation;
 import com.bank.backend.service.InvestationService;
 import com.bank.backend.util.DataResponse;
 import com.bank.backend.util.DataResponseList;
 import com.bank.backend.util.DataResponsePagination;
+import com.bank.backend.wrapper.DepositWrapper;
 import com.bank.backend.wrapper.InvestationWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +27,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
+
+import javax.servlet.http.HttpServletResponse;
 
 @CrossOrigin
 @RestController
@@ -32,21 +42,21 @@ public class InvestationController {
 
     @PostMapping(path = "/posts")
     public DataResponse<InvestationWrapper> save(@RequestBody InvestationWrapper wrapper) {
-        return new DataResponse<InvestationWrapper>(investationService.save(wrapper));
+        return new DataResponse<>(investationService.save(wrapper));
     }
 
     @GetMapping(path = "/findAll")
     public DataResponseList<InvestationWrapper> findAll() {
-        return new DataResponseList<InvestationWrapper>(investationService.findAll());
+        return new DataResponseList<>(investationService.findAll());
     }
 
     @GetMapping(path = "/findById")
     public DataResponse<InvestationWrapper> findById(@RequestParam Long id) {
         try {
-            InvestationWrapper hasil = investationService.getInvestationById(id);
-            return new DataResponse<InvestationWrapper>(hasil);
+            InvestationWrapper result = investationService.getInvestationById(id);
+            return new DataResponse<>(result);
         } catch (Exception e) {
-            return new DataResponse<InvestationWrapper>(false, "Current Account not found with id: " + id);
+            return new DataResponse<>(false, "Current Account not found with id: " + id);
         }
     }
 
@@ -57,14 +67,14 @@ public class InvestationController {
 
     @PutMapping(path = "/update")
     public DataResponse<InvestationWrapper> update(@RequestBody InvestationWrapper wrapper) {
-        return new DataResponse<InvestationWrapper>(investationService.save(wrapper));
+        return new DataResponse<>(investationService.save(wrapper));
     }
 
     @GetMapping(path = "/getAllCategories")
     public DataResponsePagination<InvestationWrapper, Investation> getByAllCategories(
             @RequestParam("all") String all,
             @RequestParam("page") int page, @RequestParam("size") int size) {
-        return new DataResponsePagination<InvestationWrapper, Investation>(
+        return new DataResponsePagination<>(
                 investationService.findAllCategoriesWithPagination(all, page, size));
     }
 
@@ -82,6 +92,31 @@ public class InvestationController {
 
     @GetMapping(path = "/findByRequestStatus")
     public DataResponsePagination<InvestationWrapper, Investation> findByRequestStatus(int page, int size){
-        return new DataResponsePagination<InvestationWrapper, Investation>(investationService.findByRequestStatus(page, size));
+        return new DataResponsePagination<>(investationService.findByRequestStatus(page, size));
+    }
+
+    @GetMapping(path = "/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey,headerValue);
+
+        List<InvestationWrapper> listContainer = investationService.findAll();
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Investment Id", "University ID","Investment Name", "Initial NAB", "Initial Unit","Initial Value","Market NAB","Market Unit", "Market Value","Market Value", "Start Date", "Bank ID", "Bank Name", "Status ID","Status Name", "User ID","User Name"};
+        String[] nameMapping = {"investationId", "universityId","investationName", "initialNAB","initialUnit","initialValue", "marketNAB", "marketUnit","marketValue", "startDate","bankId","bankName","statusId","statusName", "userId","userName"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (InvestationWrapper container : listContainer) {
+            csvWriter.write(container, nameMapping);
+        }
+
+        csvWriter.close();
+
     }
 }

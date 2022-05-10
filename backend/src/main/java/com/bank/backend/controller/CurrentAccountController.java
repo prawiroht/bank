@@ -1,6 +1,10 @@
 package com.bank.backend.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.bank.backend.entity.CurrentAccount;
 import com.bank.backend.service.CurrentAccountService;
@@ -22,6 +26,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -34,22 +43,22 @@ public class CurrentAccountController {
 
     @PostMapping(path = "/posts")
     public DataResponse<CurrentAccountWrapper> save(@RequestBody CurrentAccountWrapper wrapper) {
-        return new DataResponse<CurrentAccountWrapper>(currentAccountService.save(wrapper));
+        return new DataResponse<>(currentAccountService.save(wrapper));
     }
 
     @GetMapping(path = "/findById")
     public DataResponse<CurrentAccountWrapper> findById(@RequestParam Long id) {
         try {
             CurrentAccountWrapper hasil = currentAccountService.getCurrentAccountById(id);
-            return new DataResponse<CurrentAccountWrapper>(hasil);
+            return new DataResponse<>(hasil);
         } catch (Exception e) {
-            return new DataResponse<CurrentAccountWrapper>(false, "Current Account not found with id: " + id);
+            return new DataResponse<>(false, "Current Account not found with id: " + id);
         }
     }
 
     @GetMapping(path = "/findAll")
     public DataResponseList<CurrentAccountWrapper> findAll() {
-        return new DataResponseList<CurrentAccountWrapper>(currentAccountService.findAll());
+        return new DataResponseList<>(currentAccountService.findAll());
     }
 
     @DeleteMapping(path = "/{id}")
@@ -60,7 +69,7 @@ public class CurrentAccountController {
     @PutMapping(path = "/update")
     public DataResponse<CurrentAccountWrapper> update(@RequestBody CurrentAccountWrapper wrapper) {
         try {
-            return new DataResponse<CurrentAccountWrapper>(currentAccountService.save(wrapper));
+            return new DataResponse<>(currentAccountService.save(wrapper));
         } catch (Exception e) {
             if (e.getMessage().contains("CurrentAccount"))
                 errorMassage = "Current Account not found with id: " + wrapper.getCurrentAccountId();
@@ -77,7 +86,7 @@ public class CurrentAccountController {
             else {
                 errorMassage = e.getMessage();
             }
-            return new DataResponse<CurrentAccountWrapper>(false, errorMassage);
+            return new DataResponse<>(false, errorMassage);
         }
 
     }
@@ -86,7 +95,7 @@ public class CurrentAccountController {
     public DataResponsePagination<CurrentAccountWrapper, CurrentAccount> getByAllCategories(
             @RequestParam("all") String all,
             @RequestParam("page") int page, @RequestParam("size") int size) {
-        return new DataResponsePagination<CurrentAccountWrapper, CurrentAccount>(
+        return new DataResponsePagination<>(
                 currentAccountService.getAllCategories(all, page, size));
     }
 
@@ -104,7 +113,32 @@ public class CurrentAccountController {
 
     @GetMapping(path = "/findByRequestStatus")
     public DataResponsePagination<CurrentAccountWrapper, CurrentAccount> findByRequestStatus(int page, int size){
-        return new DataResponsePagination<CurrentAccountWrapper, CurrentAccount>(currentAccountService.findByRequestStatus(page, size));
+        return new DataResponsePagination<>(currentAccountService.findByRequestStatus(page, size));
     }
 
+//    Export CSV
+    @GetMapping(path = "/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey,headerValue);
+
+        List<CurrentAccountWrapper> listContainer = currentAccountService.findAll();
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Current Account Id", "University ID","University Name", "Bank ID", "Code","Bank Name", "Account Number", "Account Type ID","Account Type Name", "Initial Balance Date", "Status ID","Status Name", "User ID","User Name"};
+        String[] nameMapping = {"currentAccountId", "universityId","universityName", "bankId","code","bankName", "accountNumber", "accountTypeId","accountTypeName", "initialBalanceDate","statusId","statusName", "userId","userName"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (CurrentAccountWrapper container : listContainer) {
+            csvWriter.write(container, nameMapping);
+        }
+
+        csvWriter.close();
+
+    }
 }

@@ -37,7 +37,7 @@ import org.supercsv.prefs.CsvPreference;
 @RestController
 @RequestMapping(path = "/container")
 public class ContainerController {
-    
+
     @Autowired
     ContainerService containerService;
 
@@ -80,7 +80,7 @@ public class ContainerController {
         } catch (Exception e) {
             return new DataResponse<ContainerWrapper>(false, "Container dengan id " + id + " tidak ditemukan");
         }
-        
+
     }
 
     // FIND BY ALL CATEGORIES
@@ -139,7 +139,7 @@ public class ContainerController {
             return new DataResponse<ContainerWrapper>(true, "Delete Success");
         } catch (Exception e) {
             return new DataResponse<ContainerWrapper>(false, "Container dengan id " + containerId + " tidak ditemukan");
-        }   
+        }
     }
 
     // EXPORT CSV
@@ -160,11 +160,11 @@ public class ContainerController {
         String[] nameMapping = {"containerId", "universityId", "bankId", "accountNumber", "mutationId", "transactionDate", "value", "purchaseId", "accountTypeId", "fundId", "description", "statusId", "userId"};
 
         csvWriter.writeHeader(csvHeader);
-         
+
         for (ContainerWrapper container : listContainer) {
             csvWriter.write(container, nameMapping);
         }
-         
+
         csvWriter.close();
     }
 

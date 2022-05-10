@@ -1,6 +1,10 @@
 package com.bank.backend.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.bank.backend.entity.Deposit;
 import com.bank.backend.service.DepositService;
@@ -22,6 +26,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
+
+import javax.servlet.http.HttpServletResponse;
 
 @CrossOrigin
 @RestController
@@ -33,21 +42,21 @@ public class DepositController {
 
     @PostMapping(path = "/posts")
     public DataResponse<DepositWrapper> save(@RequestBody DepositWrapper wrapper) {
-        return new DataResponse<DepositWrapper>(depositService.save(wrapper));
+        return new DataResponse<>(depositService.save(wrapper));
     }
 
     @GetMapping(path = "/findAll")
     public DataResponseList<DepositWrapper> findAll() {
-        return new DataResponseList<DepositWrapper>(depositService.findAll());
+        return new DataResponseList<>(depositService.findAll());
     }
 
     @GetMapping(path = "/findById")
     public DataResponse<DepositWrapper> findById(@RequestParam Long id) {
         try {
-            DepositWrapper hasil = depositService.getDepositById(id);
-            return new DataResponse<DepositWrapper>(hasil);
+            DepositWrapper result = depositService.getDepositById(id);
+            return new DataResponse<>(result);
         } catch (Exception e) {
-            return new DataResponse<DepositWrapper>(false, "Current Account not found with id: " + id);
+            return new DataResponse<>(false, "Current Account not found with id: " + id);
         }
     }
 
@@ -59,7 +68,7 @@ public class DepositController {
     @PutMapping(path = "/update")
     public DataResponse<DepositWrapper> update(@RequestBody DepositWrapper wrapper) {
         try {
-            return new DataResponse<DepositWrapper>(depositService.save(wrapper));
+            return new DataResponse<>(depositService.save(wrapper));
         } catch (Exception e) {
             if (e.getMessage().contains("Deposit"))
                 errorMassage = "Current Account not found with id: " + wrapper.getBankId();
@@ -76,7 +85,7 @@ public class DepositController {
             else {
                 errorMassage = e.getMessage();
             }
-            return new DataResponse<DepositWrapper>(false, errorMassage);
+            return new DataResponse<>(false, errorMassage);
         }
 
     }
@@ -84,7 +93,7 @@ public class DepositController {
     @GetMapping(path = "/getAllCategories")
     public DataResponsePagination<DepositWrapper, Deposit> getAllCategories(
             @RequestParam("all") String all, @RequestParam("page") int page, @RequestParam("size") int size) {
-        return new DataResponsePagination<DepositWrapper, Deposit>(
+        return new DataResponsePagination<>(
                 depositService.getAllCategories(all, page, size));
     }
 
@@ -102,6 +111,31 @@ public class DepositController {
 
     @GetMapping(path = "/findByRequestStatus")
     public DataResponsePagination<DepositWrapper, Deposit> findByRequestStatus(int page, int size){
-        return new DataResponsePagination<DepositWrapper, Deposit>(depositService.findByRequestStatus(page, size));
+        return new DataResponsePagination<>(depositService.findByRequestStatus(page, size));
+    }
+
+    @GetMapping(path = "/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey,headerValue);
+
+        List<DepositWrapper> listContainer = depositService.findAll();
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Deposit Id", "University ID","Deposit Name", "Bank ID", "Code","Bank Name", "Account Number", "Period ID","Period", "Nominal", "Earning Interest", "Start Date", "Due Date", "Status ID","Status Name", "User ID","User Name"};
+        String[] nameMapping = {"depositId", "universityId","depositName", "bankId","code","bankName", "accountNumber", "periodId","period", "nominal","earningInterest","startDate","dueDate","statusId","statusName", "userId","userName"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (DepositWrapper container : listContainer) {
+            csvWriter.write(container, nameMapping);
+        }
+
+        csvWriter.close();
+
     }
 }
