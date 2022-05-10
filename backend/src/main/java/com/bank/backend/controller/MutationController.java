@@ -49,7 +49,7 @@ public class MutationController {
     }
 
     @DeleteMapping (path = "/delete")
-    public DataResponse<Mutation> delete(@RequestParam("id") Long id){
+    public DataResponse<Mutation> delete(@RequestParam("id") String id){
         try {
             mutationService.delete(id);
             return new DataResponse<Mutation>(true, "Data is deleted");

@@ -46,7 +46,7 @@ public class MutationService {
         }
     }
 
-    public void delete(Long id){
+    public void delete(String id){
         mutationRepository.deleteById(id);
     }
 }

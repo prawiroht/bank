@@ -9,7 +9,7 @@ public class MutationRightWrapper {
     private Long mutationRightId;
     private Long bankId;
     private String bankName;
-    private Long mutationId;
+    private String mutationId;
     private String mutationName;
     
 }

@@ -4,6 +4,6 @@ import com.bank.backend.entity.Mutation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MutationRepository extends JpaRepository<Mutation, Long>{
+public interface MutationRepository extends JpaRepository<Mutation, String>{
     
 }
