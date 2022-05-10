@@ -55,6 +55,7 @@ import { HomeComponent } from './components/home/home.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { SaldoComponent } from './components/saldo/saldo.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +114,8 @@ import { SaldoComponent } from './components/saldo/saldo.component';
     ConfirmDialogModule,
     DropdownModule,
     InputTextareaModule,
-    RadioButtonModule
+    RadioButtonModule,
+    
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

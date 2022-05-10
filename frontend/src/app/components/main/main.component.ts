@@ -31,6 +31,7 @@ export class MainComponent implements OnInit {
   selectedMutation: any;
   statusName: any;
   statusId: any;
+  displayMaximizable: any;
   mutations =[
     {label :'Debet', value: 'Debet'},
     {label :'Credit', value: 'Credit'}]
@@ -138,7 +139,7 @@ export class MainComponent implements OnInit {
 
   handleReset(event: any,  param: string): void {
     this.row = {
-      mainId: (this.action == 'edit' && param == 'click') ? this.row.mainId : 0,
+      mainId: (this.action == 'Edit' && param == 'click') ? this.row.mainId : 0,
       bankId:0,
       bankName: '',
       accountNumber:0,
@@ -148,7 +149,7 @@ export class MainComponent implements OnInit {
       value:0,
       purchaseId:0,
       purchase:'',
-      fundInd:0,
+      fundId:0,
       fundName:'',
       description:'',
       status:''
@@ -215,17 +216,6 @@ export class MainComponent implements OnInit {
 
   }
 
-//   downloadFile(data: Response) {
-//     const blob = new Blob([data], { type: 'text/csv' });
-//     const url = window.URL.createObjectURL(blob);
-//     const anchor = document.createElement('a');
-//     anchor.download = 'myfile.txt'; // here you can specify file name
-//     anchor.href = url;
-//     document.body.appendChild(anchor);
-//     anchor.click();
-//     document.body.removeChild(anchor);
-// }
-
 currentDate = new Date()
 getDatetime(){
   return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
@@ -237,6 +227,187 @@ downloadFile(filename: string): void {
     .download(filename)
     .subscribe(blob => saveAs(blob, filename));
 }
+
+// handleSaveMain(event:any){
+  
+//   this.submitted=true;
+//   if(this.handleValidation() && this.action=='Add'){
+//     this.confirmationService.confirm({
+//       message:'Are you sure that you want to perform this action?',
+//     accept: () => {
+//     this.mainService.postMain(this.row).subscribe(
+//       {
+//       next: (data) => {
+//         //console.log(data,'tes');
+//         if(data.status){
+//           this.messageService.add({
+//             severity: 'success',
+//             summary: 'Input',
+//             detail: 'Data has been inserted',
+//           });
+//           this.loadData();
+//           this.displayMaximizable=false;
+          
+//         }
+//       },
+//       error: (err) => {
+//         this.messageService.add({
+//           severity: 'error',
+//           summary: 'Error',
+//           detail: 'Could not add a new record',
+//         })
+//         console.log('error cuy');
+//       },
+//     });
+//   },
+
+//   reject: () => {
+//     this.messageService.add({
+//       severity: 'error',
+//       summary: 'Error',
+//       detail: 'Input Failed',
+//     });
+//   },
+  
+//   } );
+
+//   }else if(this.handleValidation() && this.action=='Edit'){
+//     this.confirmationService.confirm({
+//       message:'Are you sure that you want to perform this action?',
+//     accept: () => {
+//     this.mainService.putMain(this.row).subscribe({
+//       next: (data) => {
+//         //console.log(data);
+//         if(data.status){
+//           this.messageService.add({
+//             severity: 'success',
+//             summary: 'Edit',
+//             detail: 'Data has been edited',
+//           });
+          
+//           this.loadData();
+//           this.displayMaximizable=false;
+          
+//         }
+//       } ,
+//       error: (err) => {
+//         this.messageService.add({
+//           severity: 'error',
+//           summary: 'Error',
+//           detail: 'Could not add a new record',
+//         })
+//         console.log('error cuy');
+//       },
+//     });
+//   },
+//   reject: () => {
+//     this.messageService.add({
+//       severity: 'error',
+//       summary: 'Error',
+//       detail: 'Edit Failed',
+//     });
+//   }
+// })}
+
+// }
+
+  handleValidation() {
+    if (this.row.bankId == 0 ||
+      this.row.accountNumber.length == 0 ||
+      this.row.accountTypeId == 0 ||
+      this.row.mutationId == 0 ||
+      this.row.transactionDate == null ||
+      this.row.value <= 0 ||
+      this.row.purchaseId == 0 ||
+      this.row.fundId == 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  handleSaveMain(event: any) {
+    this.submitted = true;
+    if (this.handleValidation()){
+      return;
+    }
+
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        if (this.row.mainId === 0 || this.row.mainId === null) {
+          this.row.mainId = null;
+          console.log(this.row.data, 'pppp')
+          this.mainService.postMain(this.row).subscribe({
+            next: (data) => { 
+              console.log(data);
+              if (data.status) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Input',
+                  detail: 'Data has been inserted',
+                });
+                this.loadData();
+                this.display = false;
+              }
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not add a new record',
+              });
+            },
+          });
+        } else {
+          this.mainService.putMain(this.row).subscribe({
+            next: (data) => {
+              console.log(data);
+              console.log(this.row, 'mmmm')
+              if (data.status) {
+                console.log('jjjj')
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Input',
+                  detail: 'Data has been updated',
+                });
+                this.loadData();
+                this.display = false;
+              }
+              console.log(data.status)
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not edit a record',
+              });
+            },
+          });
+        }
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Input Failed',
+        });
+      },
+    });
+  }
+
+  openEdit(row: any) {
+    this.row = { ...row };
+    this.display = true;
+    this.action = 'Edit';
+    console.log(this.row, 'sss')
+  }
+
+  
+
+
 
 }
 

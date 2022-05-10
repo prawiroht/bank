@@ -35,15 +35,15 @@
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-container>
+        <ng-template pTemplate="body" let-container >
             <tr>
-                <td>{{container.containerId}}</td>
+                <td *ngFor="let i=index">{{i+1}}</td>
                 <td>{{container.bankName}}</td>
                 <td>{{container.accountNumber}}</td>
                 <td>{{container.accountTypeName}}</td>
                 <td>{{container.mutationId}}</td>
                 <td>{{container.transactionDate}}</td>
-                <td>{{container.value}}</td>
+                <td>{{formatRupiah(container.value)}}</td>
                 <td>{{container.purchaseName}}</td>
                 <td>{{container.fundName}}</td>
                 <td>{{container.description}}</td>
