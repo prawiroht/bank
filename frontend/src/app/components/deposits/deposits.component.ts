@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DepositsService } from 'src/app/services/deposits.service';
+import { BankService } from 'src/app/services/bank.service';
+import { PeriodService } from 'src/app/services/period.service';
+import { saveAs } from 'file-saver';
+import { DownloadService } from 'src/app/services/download.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -17,6 +21,7 @@ export class DepositsComponent implements OnInit {
   display = false;
   banks : any;
   submitted = false;
+  periods : any;
 
   row: any = {
     depositId : 0,
@@ -33,7 +38,10 @@ export class DepositsComponent implements OnInit {
   constructor(
     private depositsService :DepositsService,
     private messageService : MessageService,
+    private bankService : BankService,
+    private periodService : PeriodService,
     private confirmationService : ConfirmationService,
+    private downloadService : DownloadService
   ) { }
 
   ngOnInit(): void {
@@ -79,6 +87,8 @@ export class DepositsComponent implements OnInit {
         }
       }
     )
+    this.banks=this.getBankName();
+    this.periods=this.getPeriod();
   }
 
   searchDepositsByAllCategories(keyword:string): void {
@@ -101,6 +111,46 @@ export class DepositsComponent implements OnInit {
     this.action = action;
   }
 
+  filename="utama_" + this.getDatetime()+".csv"
+  downloadFile(filename: string): void {
+  this.downloadService
+    .download(filename)
+    .subscribe(blob => saveAs(blob, filename));
+  }
+
+  currentDate = new Date()
+  getDatetime(){
+  return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
+  }
+
+  getBankName(){
+    this.bankService.getBank().subscribe(
+      {
+        next: (data) => {
+          this.banks=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy');
+        }
+      }
+    )
+  }
+
+  getPeriod(){
+    this.periodService.getPeriod().subscribe(
+      {
+        next: (data) => {
+          this.periods=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy')
+        }
+      }
+    )
+  }
+
   openEdit(row: any) {
     this.row = { ...row };
     this.display = true;
@@ -120,5 +170,93 @@ export class DepositsComponent implements OnInit {
       dueDate : ''
     };
   }
+
+  handleValidation() {
+    if (this.row.bankId == 0 ||
+      this.row.accountNumber.length == 0 ||
+      this.row.periodId == 0 ||
+      this.row.startDate == null ||
+      this.row.dueDate == null ||
+      this.row.earningInterest == 0 ||
+      this.row.interest < 0 ||
+      this.row.nominal <= 0 ) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  handleSaveDeposits(event: any) {
+    this.submitted = true;
+    if (this.handleValidation()){
+      return;
+    }
+
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        if (this.row.depositId === 0 || this.row.depositId === null) {
+          this.row.depositId = null;
+          console.log(this.row.data, 'pppp')
+          this.depositsService.postDeposits(this.row).subscribe({
+            next: (data) => { 
+              console.log(data);
+              if (data.status) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Input',
+                  detail: 'Data has been inserted',
+                });
+                this.loadData();
+                this.display = false;
+              }
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not add a new record',
+              });
+            },
+          });
+        } else {
+          this.depositsService.putDeposits(this.row).subscribe({
+            next: (data) => {
+              console.log(data);
+              console.log(this.row, 'mmmm')
+              if (data.status) {
+                console.log('jjjj')
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Input',
+                  detail: 'Data has been updated',
+                });
+                this.loadData();
+                this.display = false;
+              }
+              console.log(data.status)
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not edit a record',
+              });
+            },
+          });
+        }
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Input Failed',
+        });
+      },
+    });
+  }
+
 
 }

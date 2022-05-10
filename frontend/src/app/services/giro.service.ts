@@ -28,4 +28,12 @@ export class GiroService {
     return this.http.get<any>(API_URL + `currentaccount/getAllCategories?all=` + keyword + `&page=0&size=20`, httpOptions);
   }
 
+  postGiro(req: any): Observable<any> {
+    return this.http.post<any>(API_URL + 'currentaccount/posts', httpOptions)
+  }
+
+  putGiro(req: any): Observable<any> {
+    return this.http.put<any>(API_URL + 'currentaccount/update', req,  httpOptions)
+  }
+
 }
