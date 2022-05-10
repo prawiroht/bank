@@ -100,13 +100,12 @@ export class ApprovalTransactionUtamaComponent implements OnInit {
     });
   }
 
-  delete(point:any){
-    this.point=point;
+  delete(id:any){
     this.confirmationService.confirm({
       header: 'Confirmation',
       message: 'Are you sure that you want to perform this action?',
       accept:()=>{
-        this.mainService.putMain(this.point).subscribe({
+        this.mainService.deleteMain(id).subscribe({
           next: (data)=>{
             this.messageService.add({
               severity: 'success',
