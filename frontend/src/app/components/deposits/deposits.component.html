@@ -7,7 +7,7 @@
 <div class="grid justify-content-start lg:justify-content-end text-center">
     <div class="col-12 lg:col-5">
         <button pButton icon="pi pi-plus" pRipple type="button" label="Add Deposito" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" (click)="downloadFile(filename)" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
                 <th>Tanggal Buka</th>
                 <th>Jatuh Tempo</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Aksi</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-deposits>
@@ -44,7 +44,9 @@
                 <td>{{deposits.interest}}</td>
                 <td>{{deposits.startDate}}</td>
                 <td>{{deposits.dueDate}}</td>
-                <td></td>
+                <td>
+                    <div [ngStyle]="{'color': deposits.statusId==2? 'green' : 'red'}"><b>{{deposits.statusName}}</b></div>
+                </td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success" (click)="openEdit(deposits)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger" style="margin-left: 7px;"></button>
@@ -78,19 +80,19 @@
                     Rekening diperlukan!
                 </h5>
             </div>
-            <!-- <div class="col-12 md:col-6">
+            <div class="col-12 md:col-6">
                 <h5>Jangka Waktu</h5>
-                <p-dropdown appendTo="body" [options]="period" [(ngModel)]="row.periodId" optionLabel="period" optionValue="periodId" [filter]="true" filterBy="period" [showClear]="true" placeholder="Pilih Jangka Waktu">
+                <p-dropdown appendTo="body" [options]="periods" [(ngModel)]="row.periodId" optionLabel="period" optionValue="periodId" [filter]="true" filterBy="period" [showClear]="true" placeholder="Pilih Jangka Waktu">
                     <ng-template let-period pTemplate="item">
                         <div class="period-item">
-                            <div> {{accountType.accountTypeName}} </div>
+                            <div> {{period.periodId}} </div>
                         </div>
                     </ng-template>
                 </p-dropdown>
-                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
-                    Jenis Rekening diperlukan!
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.periodId">
+                    Jangka Waktu diperlukan!
                 </h5>
-            </div> -->
+            </div>
             <div class="col-12 md:col-6">
                 <h5>Nominal</h5>
                 <input type="number" pInputText id="nominal" [(ngModel)]="row.nominal" required="autofocus" />
@@ -129,12 +131,12 @@
             </div>
             
     <ng-template pTemplate="footer">
-    <button pButton type="button" label="Save" icon="pi pi-check"></button>
+    <button pButton type="button" label="Simapn" icon="pi pi-check" (click)="handleSaveDeposits($event)"></button>
     <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
         class="mt-2 ml-1 p-button-danger"></button>
-    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Batal"
         class="mt-2 ml-1 p-button-danger"></button>
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

@@ -7,7 +7,7 @@
 <div class="grid justify-content-start lg:justify-content-end text-center">
     <div class="col-12 lg:col-5">
         <button pButton icon="pi pi-plus" pRipple type="button" label="Add Giro" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" (click)="downloadFile(filename)" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
 
@@ -38,7 +38,9 @@
                 <td>{{giro.accountNumber}}</td>
                 <td>{{giro.initialBalanceAccount}}</td>
                 <td>{{giro.initialBalanceDate}}</td>
-                <td></td>
+                <td>
+                    <div [ngStyle]="{'color': giro.statusId==2? 'green' : 'red'}"><b>{{giro.statusName}}</b></div>
+                </td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success" (click)="openEdit(giro)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger" style="margin-left: 7px;"></button>
@@ -62,14 +64,14 @@
                     </ng-template>
                 </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
-                    Nama Bank diperlukan!
+                    Nama Bank harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
                 <h5>Rekening</h5>
                 <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
-                    Rekening diperlukan!
+                    Rekening harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
@@ -82,34 +84,34 @@
                     </ng-template>
                 </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
-                    Jenis Rekening diperlukan!
+                    Jenis Rekening harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
                 <h5>Tanggal</h5>
-                    <input type="date" pInputText [(ngModel)]="row.Date" inputId="time">
-                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.Date">
-                   Tanggal diperlukan!
+                    <input type="date" pInputText [(ngModel)]="row.initialBalanceDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.initialBalanceDate">
+                   Tanggal harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
                 <h5>Rekening Saldo Awal</h5>
                 <input type="number" pInputText id="initialBalanceAccount" [(ngModel)]="row.initialBalanceAccount" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.initialBalanceAccount">
-                    Rekening Saldo Awal diperlukan!
+                    Rekening Saldo Awal harus diisi!
                 </h5>
             </div>
             </div>
             
     <ng-template pTemplate="footer">
-    <button pButton type="button" label="Save" icon="pi pi-check"></button>
+    <button pButton type="button" label="Simpan" icon="pi pi-check" (click)="handleSaveGiro($event)"></button>
     <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
         class="mt-2 ml-1 p-button-danger"></button>
-    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Batal"
         class="mt-2 ml-1 p-button-danger"></button>
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 
 
