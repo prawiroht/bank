@@ -21,4 +21,12 @@ export class SaldoService {
   getSaldo():Observable<any>{
     return this.http.get<any>(API_URL + '/deposit/getTotalDeposit', httpOptions);
   }
+
+  getGiro():Observable<any>{
+    return this.http.get<any>(API_URL + '/currentaccount/getTotalCurrentAccount', httpOptions);
+  }
+
+  getInvestment():Observable<any>{
+    return this.http.get<any>(API_URL + '/investment/getTotalInvestment', httpOptions);
+  }
 }

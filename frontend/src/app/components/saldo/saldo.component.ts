@@ -18,6 +18,10 @@ export class SaldoComponent implements OnInit {
   logomandiri: string = '/assets/images/logobank/mandiri.png';
 
   saldo:any;
+  giro:any;
+  investment:any;
+  total:any
+
   formatter = new Intl.NumberFormat('en-ID', {
     style: 'currency',
     currency: 'IDR',
@@ -91,15 +95,22 @@ export class SaldoComponent implements OnInit {
     //   }
     // })
     // console.log('hasil', this.arr)
-    this.getSaldo();
+    // this.getSaldo();
+    // this.getGiro();
+    // this.getInvestment();
+    this.totalAccount();
   }
 
-  getSaldo(){
+  totalAccount(){
     this.saldoService.getSaldo().subscribe((res)=>{
-      this.saldo = this.formatter.format(res);
-      console.log(res, 'ini resi')
+      this.saldoService.getGiro().subscribe((resu)=>{
+        this.saldoService.getInvestment().subscribe((result)=>{
+          this.giro=this.formatter.format(res);
+          this.saldo=this.formatter.format(resu);
+          this.investment=this.formatter.format(result);
+          this.total=this.formatter.format(res+resu+result);
+        })
+      })
     })
-      
   }
-
 }

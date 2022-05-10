@@ -8,10 +8,27 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./deposits.component.css']
 })
 export class DepositsComponent implements OnInit {
-  deposito: any;
+  deposito: [] = [];
   first = 0;
   rows = 10;
   keyword = '';
+
+  action = '';
+  display = false;
+  banks : any;
+  submitted = false;
+
+  row: any = {
+    depositId : 0,
+    code : '',
+    bankName : '',
+    accountNumber : '',
+    period : '',
+    nominal : 0,
+    interest : 0,
+    startDate : '',
+    dueDate : '',
+  }
 
   constructor(
     private depositsService :DepositsService,
@@ -77,6 +94,31 @@ export class DepositsComponent implements OnInit {
         }
       }
     );
+  }
+
+  showDialog(action: string) {
+    this.display = true;
+    this.action = action;
+  }
+
+  openEdit(row: any) {
+    this.row = { ...row };
+    this.display = true;
+    this.action = 'edit';
+  }
+
+  handleReset(event: any,  param: string): void {
+    this.row = {
+      depositId: (this.action == 'edit' && param == 'click') ? this.row.depositId : 0,
+      code : '',
+      bankName: '',
+      accountNumber : '',
+      period : '',
+      nominal : 0,
+      interest : 0,
+      startDate : '',
+      dueDate : ''
+    };
   }
 
 }

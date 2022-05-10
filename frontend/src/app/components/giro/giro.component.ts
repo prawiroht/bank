@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GiroService } from 'src/app/services/giro.service';
+import { BankService } from 'src/app/services/bank.service';
+import { AccountTypeService } from 'src/app/services/account-type.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -31,6 +33,8 @@ export class GiroComponent implements OnInit {
   constructor(
     private giroService : GiroService,
     private messageService : MessageService,
+    private bankService : BankService,
+    private accountTypeService : AccountTypeService,
     private confirmationService : ConfirmationService, 
     
   ) { }
@@ -78,6 +82,8 @@ export class GiroComponent implements OnInit {
         }
       }
     )
+    this.banks=this.getBankName();
+    this.accountTypes=this.getAccountTypeName();
   }
 
   searchGiroByAllCategories(keyword:string): void {
@@ -95,6 +101,11 @@ export class GiroComponent implements OnInit {
     );
   }
 
+  showDialog(action: string) {
+    this.display = true;
+    this.action = action;
+  }
+
   handleReset(event: any,  param: string): void {
     this.row = {
       currentAccountId: (this.action == 'edit' && param == 'click') ? this.row.currentAccountId : 0,
@@ -104,17 +115,41 @@ export class GiroComponent implements OnInit {
       accountTypeName:'',
       initialBalanceDate: '',
       initialBalanceAccount : 0
-
-      // mutationId: '',
-      // transactionDate:'',
-      // value:0,
-      // purchaseId:0,
-      // purchase:'',
-      // fundInd:0,
-      // fundName:'',
-      // description:'',
-      // status:''
     };
+  }
+
+  getBankName(){
+    this.bankService.getBank().subscribe(
+      {
+        next: (data) => {
+          this.banks=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy');
+        }
+      }
+    )
+  }
+
+  getAccountTypeName(){
+    this.accountTypeService.getAccountType().subscribe(
+      {
+        next: (data) => {
+          this.accountTypes=data.data
+        },
+
+        error: (err) => {
+          console.log('error cuy')
+        }
+      }
+    )
+  }
+
+  openEdit(row: any) {
+    this.row = { ...row };
+    this.display = true;
+    this.action = 'edit';
   }
 
 }

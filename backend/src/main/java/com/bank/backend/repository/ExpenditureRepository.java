@@ -1,5 +1,7 @@
 package com.bank.backend.repository;
 
+import java.util.Date;
+
 import com.bank.backend.entity.Expenditure;
 import com.bank.backend.entity.Status;
 
@@ -71,4 +73,7 @@ public interface ExpenditureRepository extends JpaRepository<Expenditure, Long>{
     // Page<Expenditure> findAllWithRequestStatus(Pageable page);
 
     Page<Expenditure> findByStatus(Status status, Pageable page);
+
+    @Query("SELECT sum(value) from Expenditure where status.statusId = 2 and (transactionDate BETWEEN :pStartDate AND :pEndDate) and bank.bankId = :pBankId")
+    public Long sumValueWithStatusApprovedAndParam(@Param("pStartDate") Date startDate, @Param("pEndDate") Date endDate, @Param("pBankId") Long bankId);
 }

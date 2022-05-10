@@ -28,8 +28,28 @@ export class MainService {
       .get<any>(API_URL + 'main/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
   }
 
+  getCsv(): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/csv');
+  
+    return this.http.get(API_URL + 'main/export', {
+      headers: headers,
+      responseType: 'text'
+    });
+  }
+
   getRequestedMain():Observable<any>{
     return this.http.get<any>(API_URL + 'main/findByRequestStatus?page=0&size=100' , httpOptions);
   }
+
+  postMain(req: any): Observable<any> {
+    return this.http.post<any>(API_URL + 'main/input', httpOptions)
+  }
+
+  putMain(req: any): Observable<any> {
+    return this.http.put<any>(API_URL + 'main/update', req,  httpOptions)
+  }
+
+
   
 }
