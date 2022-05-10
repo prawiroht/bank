@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContainerService } from 'src/app/services/container.service';
 import {formatToString} from 'rupiah-formatter';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-approval-transaction-penampungan',
@@ -14,8 +15,11 @@ export class ApprovalTransactionPenampunganComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
+  point:any;
   constructor(
-    private containerService: ContainerService
+    private containerService: ContainerService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +59,67 @@ export class ApprovalTransactionPenampunganComponent implements OnInit {
         }
       }
     )
+  }
+
+  approve(point:any){
+    this.point=point;
+    this.point.statusId=2;
+    console.log(this.point);
+
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept:()=>{
+        this.containerService.putContainer(this.point).subscribe({
+          next: (data)=>{
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'The request has been approved!',
+            });
+            this.loadData(this.page);
+          },
+          error: (err)=>{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Input Failed',
+            });
+          }
+        })
+      },
+      reject: () => {
+      },
+    });
+  }
+
+  delete(point:any){
+    this.point=point;
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept:()=>{
+        this.containerService.putContainer(this.point).subscribe({
+          next: (data)=>{
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'The request has been approved!',
+            });
+            this.loadData(this.page);
+          },
+          error: (err)=>{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Input Failed',
+            });
+          }
+        })
+      },
+      reject: () => {
+      },
+    });
   }
 
   formatRupiah(nominal:number){

@@ -31,4 +31,16 @@ export class ContainerService {
   getRequestedContainer():Observable<any>{
     return this.http.get<any>(API_URL + 'container/findByRequestStatus?page=0&size=100' , httpOptions);
   }
+
+  postContainer(req : any): Observable<any> {
+    return this.http.post<any>(API_URL + 'container/post', req, httpOptions)
+  }
+
+  putContainer(req : any): Observable<any> {
+    return this.http.put<any>(API_URL + 'container/put', req, httpOptions)
+    }
+
+  deleteContainer(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'container/delete'+id,httpOptions);
+  }
 }

@@ -7,6 +7,7 @@ import { MainService } from 'src/app/services/main.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
 import { saveAs } from 'file-saver';
 import { DownloadService } from 'src/app/services/download.service';
+import {formatToString} from 'rupiah-formatter';
 
 @Component({
   selector: 'app-main',
@@ -129,6 +130,10 @@ export class MainComponent implements OnInit {
         }
       }
     );
+  }
+
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
   }
 
   
@@ -404,6 +409,8 @@ downloadFile(filename: string): void {
     this.action = 'Edit';
     console.log(this.row, 'sss')
   }
+
+
 
   
 

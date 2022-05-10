@@ -20,7 +20,7 @@
         currentPageReportTemplate="Menampilkan {first} hingga {last} dari total {totalRecords} entri" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
+                <th>No.</th>
                 <th>Bank</th>
                 <th>Nomor Rekening</th>
                 <th>Jenis Rekening</th>
@@ -35,15 +35,15 @@
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-main >
-            <tr *ngIf="main.universityName=='Universitas Gadjah Mada'">
-                <td>{{main.mainId}}</td>
+        <ng-template pTemplate="body" let-main let-i="rowIndex">
+            <tr>
+                <td>{{i+1}}</td>
                 <td>{{main.bankName}}</td>
                 <td>{{main.accountNumber}}</td>
                 <td>{{main.accountTypeName}}</td>
                 <td>{{main.mutationId}}</td>
                 <td>{{main.transactionDate}}</td>
-                <td>{{main.value}}</td>
+                <td>{{formatRupiah(main.value)}}</td>
                 <td>{{main.purchaseName}}</td>
                 <td>{{main.fundName}}</td>
                 <td>{{main.description}}</td>
@@ -51,7 +51,7 @@
                 <div [ngStyle]="{'color': main.statusId==2? 'green' : 'red'}"><b>{{main.statusName}}</b></div>
                 </td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success p-button-sm" (click)="openEdit(main)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success p-button-sm" [disabled]="main.statusId==2" (click)="openEdit(main)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger p-button-sm" style="margin-left: 7px;"></button>
                 </td>
             </tr>

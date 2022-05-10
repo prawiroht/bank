@@ -43,11 +43,16 @@ export class MainService {
   }
 
   postMain(req: any): Observable<any> {
-    return this.http.post<any>(API_URL + 'main/input', httpOptions)
+    return this.http.post<any>(API_URL + 'main/input', req, httpOptions)
   }
 
   putMain(req: any): Observable<any> {
     return this.http.put<any>(API_URL + 'main/update', req,  httpOptions)
+  }
+
+  
+  deleteMain(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'main/delete'+id,httpOptions);
   }
 
 
