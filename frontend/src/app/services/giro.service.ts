@@ -29,11 +29,15 @@ export class GiroService {
   }
 
   postGiro(req: any): Observable<any> {
-    return this.http.post<any>(API_URL + 'currentaccount/posts', httpOptions)
+    return this.http.post<any>(API_URL + 'currentaccount/posts', req, httpOptions)
   }
 
   putGiro(req: any): Observable<any> {
     return this.http.put<any>(API_URL + 'currentaccount/update', req,  httpOptions)
+  }
+
+  deleteGiro(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'currentaccount/'+id,httpOptions);
   }
 
   getRequest():Observable<any>{

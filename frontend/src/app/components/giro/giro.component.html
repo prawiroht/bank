@@ -7,7 +7,7 @@
 <div class="grid justify-content-start lg:justify-content-end text-center">
     <div class="col-12 lg:col-5">
         <button pButton icon="pi pi-plus" pRipple type="button" label="Add Giro" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" (click)="downloadFile(filename)" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
 
@@ -36,7 +36,7 @@
                 <td>{{giro.code}}</td>
                 <td>{{giro.bankName}}</td>
                 <td>{{giro.accountNumber}}</td>
-                <td>{{giro.initialBalanceAccount}}</td>
+                <td>{{formatRupiah(giro.initialBalanceAccount)}}</td>
                 <td>{{giro.initialBalanceDate}}</td>
                 <td>
                     <div [ngStyle]="{'color': giro.statusId==2? 'green' : 'red'}"><b>{{giro.statusName}}</b></div>

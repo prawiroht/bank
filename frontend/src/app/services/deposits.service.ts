@@ -27,11 +27,15 @@ export class DepositsService {
   }
 
   postDeposits(req: any): Observable<any> {
-    return this.http.post<any>(API_URL + 'deposit/posts', httpOptions)
+    return this.http.post<any>(API_URL + 'deposit/posts', req, httpOptions)
   }
 
   putDeposits(req: any): Observable<any> {
     return this.http.put<any>(API_URL + 'deposit/update', req,  httpOptions)
+  }
+
+  deleteDeposits(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'deposit/'+id,httpOptions);
   }
 
   getRequest(): Observable<any>{

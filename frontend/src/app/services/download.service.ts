@@ -18,4 +18,18 @@ export class DownloadService {
       responseType: 'blob'
     });
   }
+
+  downloadGiro(file: string | undefined): Observable<Blob> {
+    return this.http.get(API_URL + 'currentaccount/export', {
+      responseType: 'blob'
+    });
+  }
+
+  downloadDeposits(file: string | undefined): Observable<Blob> {
+    return this.http.get(API_URL + 'deposit/export', {
+      responseType: 'blob'
+    });
+  }
+
+
 }

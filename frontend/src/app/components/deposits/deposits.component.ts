@@ -4,6 +4,7 @@ import { BankService } from 'src/app/services/bank.service';
 import { PeriodService } from 'src/app/services/period.service';
 import { saveAs } from 'file-saver';
 import { DownloadService } from 'src/app/services/download.service';
+import { formatToString } from 'rupiah-formatter/lib';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -106,22 +107,26 @@ export class DepositsComponent implements OnInit {
     );
   }
 
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
+  }
+
   showDialog(action: string) {
     this.display = true;
     this.action = action;
   }
 
-  // filename="utama_" + this.getDatetime()+".csv"
-  // downloadFile(filename: string): void {
-  // this.downloadService
-  //   .download(filename)
-  //   .subscribe(blob => saveAs(blob, filename));
-  // }
+  currentDate = new Date()
+  getDatetime(){
+  return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
+  }
 
-  // currentDate = new Date()
-  // getDatetime(){
-  // return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
-  // }
+  filename="deposits_" + this.getDatetime()+".csv"
+  downloadFile(filename: string): void {
+  this.downloadService
+    .download(filename)
+    .subscribe(blob => saveAs(blob, filename));
+  }
 
   getBankName(){
     this.bankService.getBank().subscribe(

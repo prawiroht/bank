@@ -5,6 +5,7 @@ import { AccountTypeService } from 'src/app/services/account-type.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { saveAs } from 'file-saver';
 import { DownloadService } from 'src/app/services/download.service';
+import { formatToString } from 'rupiah-formatter/lib';
 
 @Component({
   selector: 'app-giro',
@@ -103,22 +104,26 @@ export class GiroComponent implements OnInit {
     );
   }
 
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
+  }
+
   showDialog(action: string) {
     this.display = true;
     this.action = action;
   }
 
-  // filename="utama_" + this.getDatetime()+".csv"
-  // downloadFile(filename: string): void {
-  // this.downloadService
-  //   .download(filename)
-  //   .subscribe(blob => saveAs(blob, filename));
-  // }
-
-  // currentDate = new Date()
-  // getDatetime(){
-  // return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
-  // }
+  currentDate = new Date()
+  getDatetime(){
+  return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
+  }
+  
+  filename="giro_" + this.getDatetime()+".csv"
+  downloadFile(filename: string): void {
+  this.downloadService
+    .downloadGiro(filename)
+    .subscribe(blob => saveAs(blob, filename));
+  }
 
   handleReset(event: any,  param: string): void {
     this.row = {
