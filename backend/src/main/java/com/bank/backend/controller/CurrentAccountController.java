@@ -101,4 +101,10 @@ public class CurrentAccountController {
             @RequestParam Long bankId) {
         return currentAccountService.sumNominalWithParam(startDate, endDate, bankId);
     }
+
+    @GetMapping(path = "/findByRequestStatus")
+    public DataResponsePagination<CurrentAccountWrapper, CurrentAccount> findByRequestStatus(int page, int size){
+        return new DataResponsePagination<CurrentAccountWrapper, CurrentAccount>(currentAccountService.findByRequestStatus(page, size));
+    }
+
 }

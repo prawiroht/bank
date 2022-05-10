@@ -1,8 +1,9 @@
 package com.bank.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+// import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -14,7 +15,7 @@ import com.bank.backend.entity.Purchase;
 import com.bank.backend.entity.Status;
 import com.bank.backend.entity.University;
 import com.bank.backend.entity.User;
-import com.bank.backend.exception.BusinessException;
+// import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
 import com.bank.backend.repository.BankRepository;
 import com.bank.backend.repository.ContainerRepository;
@@ -66,10 +67,11 @@ public class ContainerService {
     private Container toEntity(ContainerWrapper wrapper){
         Container entity = new Container();
         if(wrapper.getContainerId() != null){
-            Optional<Container> container = containerRepository.findById(wrapper.getContainerId());
-            if(!container.isPresent())
-                throw new BusinessException("Container not found: " + wrapper.getContainerId() + '.');
-            entity = container.get();
+            entity = containerRepository.getById(wrapper.getContainerId());
+            // Optional<Container> container = containerRepository.findById(wrapper.getContainerId());
+            // if(!container.isPresent())
+            //     throw new BusinessException("Container not found: " + wrapper.getContainerId() + '.');
+            // entity = container.get();
         }
         // Optional<University> optionalUniv = universityRepository.findById(wrapper.getUniversityId());
         // List<University> university = optionalUniv.isPresent() ? (List<University>) optionalUniv.get() : null;
@@ -158,11 +160,22 @@ public class ContainerService {
         return toPaginationList(containerRepository.findAllByStatus(status, paging));
     }
 
-    // FIND BY STATUS METHOD QUERY
+    // FIND BY STATUS REQUEST METHOD QUERY
     public PaginationList<ContainerWrapper, Container> findByRequestStatus(int page, int size){
         Pageable paging = PageRequest.of(page, size);
         Status status = statusRepository.getById(1L);
         return toPaginationList(containerRepository.findByStatus(status, paging));
+    }
+
+    // FIND BY STATUS APPROVED METHOD QUERY
+    public PaginationList<ContainerWrapper, Container> findByApprovedStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(2L);
+        return toPaginationList(containerRepository.findByStatus(status, paging));
+    }
+    
+    public Long sumValueWithParam (Date startDate, Date endDate, Long bankId){
+        return containerRepository.sumValueWithStatusApprovedAndParam(startDate, endDate, bankId);
     }
 
     // FIND ALL CATEGORIES

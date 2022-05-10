@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.bank.backend.entity.CurrentAccount;
+import com.bank.backend.entity.Status;
 // import com.bank.backend.entity.Investation;
 import com.bank.backend.exception.BusinessException;
 import com.bank.backend.repository.AccountTypeRepository;
@@ -20,6 +21,7 @@ import com.bank.backend.wrapper.CurrentAccountWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -147,5 +149,15 @@ public class CurrentAccountService {
         if (!entity.isPresent())
             throw new BusinessException("Cannot found Current Account with id :" + id + ".");
         currentAccountRepository.deleteById(id);
+    }
+
+    // Find by request status
+    public PaginationList<CurrentAccountWrapper, CurrentAccount> findByRequestStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(1L);
+        Page<CurrentAccount> currentAccountPage = currentAccountRepository.findByStatus(status, paging);
+        List<CurrentAccount> currentAccountList = currentAccountPage.getContent();
+        List<CurrentAccountWrapper> currentAccountWrappers = toWrapperList(currentAccountList);
+        return new PaginationList<CurrentAccountWrapper, CurrentAccount>(currentAccountWrappers, currentAccountPage);
     }
 }

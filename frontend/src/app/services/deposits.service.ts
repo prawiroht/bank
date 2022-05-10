@@ -25,4 +25,12 @@ export class DepositsService {
   getDepositsByAllCategories(keyword: string): Observable<any> {
     return this.http.get<any>(API_URL + `deposit/getAllCategories?all=` + keyword + `&page=0&size=20`, httpOptions);
   }
+
+  postDeposits(req: any): Observable<any> {
+    return this.http.post<any>(API_URL + 'deposit/posts', httpOptions)
+  }
+
+  putDeposits(req: any): Observable<any> {
+    return this.http.put<any>(API_URL + 'deposit/update', req,  httpOptions)
+  }
 }

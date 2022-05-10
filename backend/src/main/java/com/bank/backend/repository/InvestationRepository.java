@@ -45,4 +45,5 @@ public interface InvestationRepository extends JpaRepository<Investation, Long> 
 
     public Long sumNominalWithStatusApproveAndParam(@Param("pStartDate") Date startDate,
             @Param("pEndDate") Date endDate, @Param("pBankId") Long bankId);
+
 }

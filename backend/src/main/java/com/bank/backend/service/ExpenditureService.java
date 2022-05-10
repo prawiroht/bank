@@ -1,6 +1,7 @@
 package com.bank.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -157,9 +158,15 @@ public class ExpenditureService {
     //     return toPaginationList(expenditureRepository.findAllWithRequestStatus(paging));
     // }
 
-    public PaginationList<ExpenditureWrapper, Expenditure> findByResquestStatus(int page, int size){
+    public PaginationList<ExpenditureWrapper, Expenditure> findByRequestStatus(int page, int size){
         Pageable paging = PageRequest.of(page, size);
         Status status = statusRepository.getById(1L);
+        return toPaginationList(expenditureRepository.findByStatus(status, paging));
+    }
+
+    public PaginationList<ExpenditureWrapper, Expenditure> findByApprovedStatus(int page, int size){
+        Pageable paging = PageRequest.of(page, size);
+        Status status = statusRepository.getById(2L);
         return toPaginationList(expenditureRepository.findByStatus(status, paging));
     }
 
@@ -171,5 +178,10 @@ public class ExpenditureService {
     //delete
     public void delete(Long id){
         expenditureRepository.deleteById(id);
+    }
+
+    //sum value
+    public Long sumValueWithParam (Date startDate, Date endDate, Long bankId){
+        return expenditureRepository.sumValueWithStatusApprovedAndParam(startDate, endDate, bankId);
     }
 }

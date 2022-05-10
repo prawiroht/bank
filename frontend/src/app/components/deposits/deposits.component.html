@@ -6,8 +6,8 @@
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
     <div class="col-12 lg:col-5">
-        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Deposito" class="p-button-outlined mr-3 button-nav"></button>
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Deposito" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" (click)="downloadFile(filename)" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
                 <th>Tanggal Buka</th>
                 <th>Jatuh Tempo</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Aksi</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-deposits>
@@ -44,12 +44,99 @@
                 <td>{{deposits.interest}}</td>
                 <td>{{deposits.startDate}}</td>
                 <td>{{deposits.dueDate}}</td>
-                <td></td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success"></button>
+                    <div [ngStyle]="{'color': deposits.statusId==2? 'green' : 'red'}"><b>{{deposits.statusName}}</b></div>
+                </td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success" (click)="openEdit(deposits)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger" style="margin-left: 7px;"></button>
                 </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog [header]="action == 'Add' ? 'Add Deposito' : 'Edit Deposito'" [(visible)]="display" [modal]="true"
+        [style]="{ width: '50vw', height: '40vw' }" [maximizable]="true" [baseZIndex]="10000" [draggable]="false"
+        [resizable]="false" (onHide)="handleReset($event,'click')">
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <h5>Nama Bank</h5>
+                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Pilih Nama Bank">
+                    <ng-template let-bank pTemplate="item">
+                        <div class="bank-item">
+                            <div>{{bank.code}} : {{bank.bankName}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
+                    Nama Bank diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Rekening</h5>
+                <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
+                    Rekening diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Jangka Waktu</h5>
+                <p-dropdown appendTo="body" [options]="periods" [(ngModel)]="row.periodId" optionLabel="period" optionValue="periodId" [filter]="true" filterBy="period" [showClear]="true" placeholder="Pilih Jangka Waktu">
+                    <ng-template let-period pTemplate="item">
+                        <div class="period-item">
+                            <div> {{period.periodId}} </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.periodId">
+                    Jangka Waktu diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Nominal</h5>
+                <input type="number" pInputText id="nominal" [(ngModel)]="row.nominal" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.nominal">
+                    Nominal diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Bunga</h5>
+                <input type="number" pInputText id="interest" [(ngModel)]="row.interest" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.interest">
+                    Bunga diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Perolehan Bunga</h5>
+                <input type="number" pInputText id="earningInterest" [(ngModel)]="row.earningInterest" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.earningInterest">
+                    Perolehan Bunga diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Tanggal Buka</h5>
+                    <input type="date" pInputText [(ngModel)]="row.startDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.startDate">
+                   Tanggal Buka diperlukan!
+                </h5>
+            </div>
+            <div class="col-12 md:col-6">
+                <h5>Tanggal Jatuh Tempo</h5>
+                    <input type="date" pInputText [(ngModel)]="row.dueDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.dueDate">
+                   Tanggal Jatuh Tempo diperlukan!
+                </h5>
+            </div>
+            </div>
+            
+    <ng-template pTemplate="footer">
+    <button pButton type="button" label="Simapn" icon="pi pi-check" (click)="handleSaveDeposits($event)"></button>
+    <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
+        class="mt-2 ml-1 p-button-danger"></button>
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Batal"
+        class="mt-2 ml-1 p-button-danger"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

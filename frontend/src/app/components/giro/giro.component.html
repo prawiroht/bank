@@ -6,8 +6,8 @@
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
     <div class="col-12 lg:col-5">
-        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Giro" class="p-button-outlined mr-3 button-nav"></button>
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
+        <button pButton icon="pi pi-plus" pRipple type="button" label="Add Giro" (click)="showDialog('Add')" class="p-button-outlined mr-3 button-nav"></button>
+        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" (click)="downloadFile(filename)" class="p-button-outlined p-button-success button-nav"></button>
     </div>
 </div>
 
@@ -17,7 +17,7 @@
         <input type="text" pInputText placeholder="Search" [(ngModel)]="keyword" (keyup.enter)="searchGiroByAllCategories(keyword)" />
     </span>
     <p-table [value]="giros" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        currentPageReportTemplate="Menampilkan {first} hingga {last} dari total {totalRecords} entri" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
                 <th>No</th>
@@ -27,7 +27,7 @@
                 <th>Saldo</th>
                 <th>Tanggal</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Aksi</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-giro>
@@ -38,9 +38,11 @@
                 <td>{{giro.accountNumber}}</td>
                 <td>{{giro.initialBalanceAccount}}</td>
                 <td>{{giro.initialBalanceDate}}</td>
-                <td></td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success"></button>
+                    <div [ngStyle]="{'color': giro.statusId==2? 'green' : 'red'}"><b>{{giro.statusName}}</b></div>
+                </td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-success" (click)="openEdit(giro)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger" style="margin-left: 7px;"></button>
                 </td>
             </tr>
@@ -53,8 +55,8 @@
         [resizable]="false" (onHide)="handleReset($event,'click')">
         <div class="grid p-fluid">
             <div class="col-12 md:col-6">
-                <h5>Bank Name</h5>
-                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Select a Bank Name">
+                <h5>Nama Bank</h5>
+                <p-dropdown appendTo="body" [options]="banks" [(ngModel)]="row.bankId" optionLabel="bankName" optionValue="bankId" [filter]="true" filterBy="bankName" [showClear]="true" placeholder="Pilih Nama Bank">
                     <ng-template let-bank pTemplate="item">
                         <div class="bank-item">
                             <div>{{bank.code}} : {{bank.bankName}} </div>
@@ -62,18 +64,18 @@
                     </ng-template>
                 </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.bankName">
-                    Bank Name Required!
+                    Nama Bank harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Account Number</h5>
+                <h5>Rekening</h5>
                 <input type="number" pInputText id="accountNumber" [(ngModel)]="row.accountNumber" required="autofocus" />
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountNumber">
-                    Account Number Required!
+                    Rekening harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Account Type Name</h5>
+                <h5>Jenis Rekening</h5>
                 <p-dropdown appendTo="body" [options]="accountTypes" [(ngModel)]="row.accountTypeId" optionLabel="accountTypeName" optionValue="bankId" [filter]="true" filterBy="accountTypeName" [showClear]="true" placeholder="Select a Account Type Name">
                     <ng-template let-accountType pTemplate="item">
                         <div class="accountType-item">
@@ -82,34 +84,34 @@
                     </ng-template>
                 </p-dropdown>
                 <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.accountName">
-                    Account Type Name Required!
+                    Jenis Rekening harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Date</h5>
-                    <input type="date" pInputText [(ngModel)]="row.Date" inputId="time">
-                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.Date">
-                   Date Required!
+                <h5>Tanggal</h5>
+                    <input type="date" pInputText [(ngModel)]="row.initialBalanceDate" inputId="time">
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.initialBalanceDate">
+                   Tanggal harus diisi!
                 </h5>
             </div>
             <div class="col-12 md:col-6">
-                <h5>Initial Balance Account</h5>
-                    <input type="date" pInputText [(ngModel)]="row.transactionDate" inputId="time">
-                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.transactionDate">
-                    Initial Balance Account Required!
+                <h5>Rekening Saldo Awal</h5>
+                <input type="number" pInputText id="initialBalanceAccount" [(ngModel)]="row.initialBalanceAccount" required="autofocus" />
+                <h5 class="p-invalid" style="color: red" *ngIf="submitted && !row.initialBalanceAccount">
+                    Rekening Saldo Awal harus diisi!
                 </h5>
             </div>
             </div>
             
     <ng-template pTemplate="footer">
-    <button pButton type="button" label="Save" icon="pi pi-check"></button>
+    <button pButton type="button" label="Simpan" icon="pi pi-check" (click)="handleSaveGiro($event)"></button>
     <button pButton pRipple type="button" (click)="handleReset($event, 'click')" icon="pi pi-spinner" label="Reset"
         class="mt-2 ml-1 p-button-danger"></button>
-    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Cancel"
+    <button pButton pRipple type="button" (click)="display=false" icon="pi pi-times" label="Batal"
         class="mt-2 ml-1 p-button-danger"></button>
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 
 

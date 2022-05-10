@@ -28,11 +28,6 @@ export class MainService {
       .get<any>(API_URL + 'main/findByAllCategories?all='+ keyword +'&page=0&size=50', httpOptions);
   }
 
-  // exporttoCsv(stickSearch: any): Observable<any> {
-  //   return this.http
-  //     .get<any>(API_URL + 'main/export', httpOptions);
-  // }
-
   getCsv(): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/csv');
@@ -43,9 +38,23 @@ export class MainService {
     });
   }
 
-
   getRequestedMain():Observable<any>{
     return this.http.get<any>(API_URL + 'main/findByRequestStatus?page=0&size=100' , httpOptions);
   }
+
+  postMain(req: any): Observable<any> {
+    return this.http.post<any>(API_URL + 'main/input', req, httpOptions)
+  }
+
+  putMain(req: any): Observable<any> {
+    return this.http.put<any>(API_URL + 'main/update', req,  httpOptions)
+  }
+
+  
+  deleteMain(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'main/{id}?mainId='+id,httpOptions);
+  }
+
+
   
 }
