@@ -31,4 +31,12 @@ export class ExpenditureService {
   getRequestedExpenditure():Observable<any>{
     return this.http.get<any>(API_URL + 'expenditure/findByRequestStatus?page=0&size=100' , httpOptions);
   }
+
+  postExpenditure(req: any): Observable<any> {
+    return this.http.post<any>(API_URL + 'expenditure/input', req, httpOptions)
+  }
+
+  putExpenditure(req: any): Observable<any> {
+    return this.http.put<any>(API_URL + 'expenditure/put', req, httpOptions)
+  }
 }

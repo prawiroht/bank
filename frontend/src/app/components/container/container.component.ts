@@ -139,7 +139,7 @@ export class ContainerComponent implements OnInit {
 
   handleReset(event: any,  param: string): void {
     this.row = {
-      containerId: (this.action == 'edit' && param == 'click') ? this.row.containerId : 0,
+      containerId: (this.action == 'Edit' && param == 'click') ? this.row.containerId : 0,
       bankId:0,
       bankName: '',
       accountNumber:0,
@@ -218,6 +218,100 @@ export class ContainerComponent implements OnInit {
   }
   formatRupiah(nominal:number){
     return formatToString(nominal);
+  }
+
+  handleValidation() {
+    if (this.row.bankId == 0 ||
+      this.row.accountNumber.length == 0 ||
+      this.row.accountTypeId == 0 ||
+      this.row.mutationId == 0 ||
+      this.row.transactionDate == null ||
+      this.row.value <= 0 ||
+      this.row.purchaseId == 0 ||
+      this.row.fundId == 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  handleSaveContainer(event: any) {
+    this.submitted = true;
+    if (this.handleValidation()){
+      return;
+    }
+
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        if (this.row.containerId === 0 || this.row.containerId === null) {
+          this.row.containerId = null;
+          console.log(this.row.data, 'pppp')
+          this.containerService.postContainer(this.row).subscribe({
+            next: (data) => { 
+              console.log(data);
+              if (data.status) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Input',
+                  detail: 'Data has been inserted',
+                });
+                this.loadData();
+                this.display = false;
+              }
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not add a new record',
+              });
+            },
+          });
+        } else {
+          this.containerService.putContainer(this.row).subscribe({
+            next: (data) => {
+              console.log(data);
+              console.log(this.row, 'mmmm')
+              if (data.status) {
+                console.log('jjjj')
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Input',
+                  detail: 'Data has been updated',
+                });
+                this.loadData();
+                this.display = false;
+              }
+              console.log(data.status)
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not edit a record',
+              });
+            },
+          });
+        }
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Input Failed',
+        });
+      },
+    });
+  }
+
+  openEdit(row: any) {
+    this.row = { ...row };
+    this.display = true;
+    this.action = 'Edit';
+    console.log(this.row, 'sss')
   }
 
 }
