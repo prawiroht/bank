@@ -50,6 +50,10 @@ export class MainService {
     return this.http.put<any>(API_URL + 'main/update', req,  httpOptions)
   }
 
+  deleteMain(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'main/delete'+id,httpOptions);
+  }
+
 
   
 }

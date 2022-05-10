@@ -35,4 +35,8 @@ export class ContainerService {
   putContainer(req: any):Observable<any>{
     return this.http.put<any>(API_URL+'container/put/',req, httpOptions);
   }
+
+  deleteContainer(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'container/delete'+id,httpOptions);
+  }
 }
