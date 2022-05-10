@@ -26,4 +26,8 @@ export class InvestmentService {
   getByAllCategories(keyword: string): Observable<any> {
     return this.http.get<any>(API_URL + `investment/getAllCategories?all=` + keyword + `&page=0&size=20`, httpOptions);
   }
+
+  getRequest():Observable<any>{
+    return this.http.get<any>(API_URL + `investment/findByRequestStatus?page=0&size=100`, httpOptions);
+  }
 }

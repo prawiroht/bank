@@ -33,4 +33,8 @@ export class DepositsService {
   putDeposits(req: any): Observable<any> {
     return this.http.put<any>(API_URL + 'deposit/update', req,  httpOptions)
   }
+
+  getRequest(): Observable<any>{
+    return this.http.get<any>(API_URL+'deposit/findByRequestStatus?page=0&size=100', httpOptions)
+  }
 }

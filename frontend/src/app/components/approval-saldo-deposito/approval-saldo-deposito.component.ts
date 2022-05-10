@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { formatToString } from 'rupiah-formatter';
+import { DepositsService } from 'src/app/services/deposits.service';
 
 @Component({
   selector: 'app-approval-saldo-deposito',
@@ -12,7 +14,9 @@ export class ApprovalSaldoDepositoComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
-  constructor() { }
+  constructor(
+    private depositsService : DepositsService
+  ) { }
 
   ngOnInit(): void {
     this.loadData(this.page);
@@ -39,6 +43,21 @@ export class ApprovalSaldoDepositoComponent implements OnInit {
   }
 
   loadData(page: number) {
+    this.depositsService.getRequest().subscribe(
+      {
+        next: (data) => {
+          this.data=data.data
+          console.log(this.data);
+          
+        },
+        error: (err) => {
+          console.log('error')
+        }
+      }
+    )
   }
 
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
+  }
 }

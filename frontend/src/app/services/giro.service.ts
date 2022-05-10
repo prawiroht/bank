@@ -36,4 +36,8 @@ export class GiroService {
     return this.http.put<any>(API_URL + 'currentaccount/update', req,  httpOptions)
   }
 
+  getRequest():Observable<any>{
+    return this.http.get<any>(API_URL + `currentaccount/findByRequestStatus?page=0&size=100`, httpOptions);
+  }
+
 }

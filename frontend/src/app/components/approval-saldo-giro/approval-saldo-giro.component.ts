@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { formatToString } from 'rupiah-formatter';
+import { GiroService } from 'src/app/services/giro.service';
 
 @Component({
   selector: 'app-approval-saldo-giro',
@@ -12,7 +14,9 @@ export class ApprovalSaldoGiroComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
-  constructor() { }
+  constructor(
+    private giroService : GiroService
+  ) { }
 
   ngOnInit(): void {
     this.loadData(this.page);
@@ -39,6 +43,21 @@ export class ApprovalSaldoGiroComponent implements OnInit {
   }
 
   loadData(page: number) {
+    this.giroService.getRequest().subscribe(
+      {
+        next: (data) => {
+          this.data=data.data
+          console.log(this.data);
+          
+        },
+        error: (err) => {
+          console.log('error')
+        }
+      }
+    )
   }
 
+  formatRupiah(nominal:number){
+    return formatToString(nominal);
+  }
 }

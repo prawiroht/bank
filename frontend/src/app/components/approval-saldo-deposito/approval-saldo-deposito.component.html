@@ -20,31 +20,35 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>No</th>
-                <th>Kode Bank</th>
+                <th>Kode</th>
                 <th>Nama Bank</th>
-                <th>No Rekening</th>
+                <th>Rekening</th>
                 <th>Waktu</th>
                 <th>Nominal</th>
                 <th>Bunga</th>
                 <th>Tanggal Buka</th>
-                <th>Jatuh tempo</th>
-                <th>Action</th>
+                <th>Jatuh Tempo</th>
+                <th>Status</th>
+                <th>Aksi</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-point>
+        <ng-template pTemplate="body" let-point let-i="rowIndex">
             <tr>
-                <td>{{point.depositoId}}</td>
-                <td>{{point.bankId}}</td>
+                <td>{{i+1}}</td>
+                <td>{{point.code}}</td>
                 <td>{{point.bankName}}</td>
-                <td>{{point.accountId}}</td>
-                <td>{{point.time}}</td>
-                <td>{{point.nominal}}</td>
+                <td>{{point.accountNumber}}</td>
+                <td>{{point.period}}</td>
+                <td>{{formatRupiah(point.nominal)}}</td>
                 <td>{{point.interest}}</td>
-                <td>{{point.OpenDate}}</td>                
-                <td>{{point.DueDate}}</td>
+                <td>{{point.startDate}}</td>
+                <td>{{point.dueDate}}</td>
+                <td style="color: red;">{{point.statusName}}</td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-check" class="p-button-outlined p-button-success"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-success"></button>
+                    <div style="width: 100px;">
+                        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-outlined p-button-success"></button>
+                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-success"></button>    
+                    </div>
                 </td>
             </tr>
         </ng-template>

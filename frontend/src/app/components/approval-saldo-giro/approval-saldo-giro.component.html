@@ -1,49 +1,58 @@
 <div class="grid">
-    <div class="col-12 lg:col-4">
-        <h2>&gt; Approval Giro</h2>
-    </div>
+  <div class="col-12 lg:col-4">
+    <h2>&gt; Approval Giro</h2>
+  </div>
 </div>
 
 <div class="grid justify-content-start lg:justify-content-end text-center">
-    <div class="col-12 lg:col-3">
-        <button pButton icon="pi pi-upload" pRipple type="button" label="Export" class="p-button-outlined p-button-success button-nav"></button>
-    </div>
+  <div class="col-12 lg:col-3">
+    <button pButton icon="pi pi-upload" pRipple type="button" label="Export"
+      class="p-button-outlined p-button-success button-nav"></button>
+  </div>
 </div>
 
 <div class="card">
-    <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData(page)" />
-    </span>
-    <p-table [value]="data" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>No</th>
-                <th>Kode Bank</th>
-                <th>Nama Bank</th>
-                <th>No Rekening</th>
-                <th>Saldo</th>
-                <th>Tanggal</th>
-                <th>Action</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-point>
-            <tr>
-                <td>{{point.giroId}}</td>
-                <td>{{point.bankId}}</td>
-                <td>{{point.bankName}}</td>
-                <td>{{point.accountId}}</td>
-                <td>{{point.balance}}</td>
-                <td>{{point.date}}</td>
-                <td>
-                    <button pButton pRipple type="button" icon="pi pi-check" class="p-button-outlined p-button-success"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-success"></button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData(page)" />
+  </span>
+  <p-table [value]="data" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10,25,50]">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>No</th>
+        <th>Kode Bank</th>
+        <th>Nama Bank</th>
+        <th>No. Rekening</th>
+        <th>Saldo</th>
+        <th>Tanggal</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-point let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <td>{{point.code}}</td>
+        <td>{{point.bankName}}</td>
+        <td>{{point.accountNumber}}</td>
+        <td>{{formatRupiah(point.initialBalanceAccount)}}</td>
+        <td>{{point.initialBalanceDate}}</td>
+        <td style="color: red;">{{point.statusName}}</td>
+        <td>
+          <div style="width: 100px;">
+            <button pButton pRipple type="button" icon="pi pi-check"
+              class="p-button-outlined p-button-success"></button>
+            <button pButton pRipple type="button" icon="pi pi-times"
+              class="p-button-outlined p-button-success"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
 
-<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}" [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 <p-toast></p-toast>
