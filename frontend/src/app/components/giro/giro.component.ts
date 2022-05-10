@@ -108,17 +108,17 @@ export class GiroComponent implements OnInit {
     this.action = action;
   }
 
-  filename="utama_" + this.getDatetime()+".csv"
-  downloadFile(filename: string): void {
-  this.downloadService
-    .download(filename)
-    .subscribe(blob => saveAs(blob, filename));
-  }
+  // filename="utama_" + this.getDatetime()+".csv"
+  // downloadFile(filename: string): void {
+  // this.downloadService
+  //   .download(filename)
+  //   .subscribe(blob => saveAs(blob, filename));
+  // }
 
-  currentDate = new Date()
-  getDatetime(){
-  return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
-  }
+  // currentDate = new Date()
+  // getDatetime(){
+  // return (this.currentDate).getDay()+"-"+(this.currentDate).getMonth()+"-"+(this.currentDate).getFullYear()+"at"+(this.currentDate).getHours()+":"+(this.currentDate).getMinutes();
+  // }
 
   handleReset(event: any,  param: string): void {
     this.row = {
