@@ -17,8 +17,7 @@
     <input type="text" pInputText placeholder="Search" (ngModel)="searchVal" (keyup.enter)="loadData(page)" />
   </span>
   <p-table [value]="data" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
-    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[10,25,50]">
+    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
     <ng-template pTemplate="header">
       <tr>
         <th>No</th>
