@@ -72,7 +72,12 @@ public class ExpenditureController {
 
     @GetMapping (path = "/findByRequestStatus")
     public DataResponsePagination<ExpenditureWrapper, Expenditure> findByRequestStatus(int page, int size){
-        return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findByResquestStatus(page, size));
+        return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findByRequestStatus(page, size));
+    }
+
+    @GetMapping (path = "/findByApprovedStatus")
+    public DataResponsePagination<ExpenditureWrapper, Expenditure> findByApprovedStatus(int page, int size){
+        return new DataResponsePagination<ExpenditureWrapper, Expenditure>(expenditureService.findByApprovedStatus(page, size));
     }
 
     @GetMapping(path="/getTotalExpenditureWithParam")
