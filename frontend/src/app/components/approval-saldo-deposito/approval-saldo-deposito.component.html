@@ -46,8 +46,8 @@
                 <td style="color: red;">{{point.statusName}}</td>
                 <td>
                     <div style="width: 100px;">
-                        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-outlined p-button-success"></button>
-                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-success"></button>    
+                        <button pButton pRipple type="button" icon="pi pi-check" (click)="approve(point)" class="p-button-outlined p-button-success"></button>
+                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-danger"></button>    
                     </div>
                 </td>
             </tr>

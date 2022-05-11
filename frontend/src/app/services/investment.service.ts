@@ -30,4 +30,14 @@ export class InvestmentService {
   getRequest():Observable<any>{
     return this.http.get<any>(API_URL + `investment/findByRequestStatus?page=0&size=100`, httpOptions);
   }
+
+  deleteInvestment(id:number):Observable<any>{
+    return this.http.delete<any>(API_URL+'currentaccount/'+id,httpOptions);
+  }
+
+  putInvestment(req: any): Observable<any> {
+    return this.http.put<any>(API_URL + 'investment/update', req,  httpOptions)
+  }
+
+  
 }

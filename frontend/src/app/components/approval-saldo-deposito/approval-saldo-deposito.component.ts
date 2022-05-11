@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { formatToString } from 'rupiah-formatter';
 import { DepositsService } from 'src/app/services/deposits.service';
 
@@ -14,8 +15,11 @@ export class ApprovalSaldoDepositoComponent implements OnInit {
   first = 0;
   rows = 10;
   searchVal = '';
+  point:any;
   constructor(
-    private depositsService : DepositsService
+    private depositsService : DepositsService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -59,5 +63,65 @@ export class ApprovalSaldoDepositoComponent implements OnInit {
 
   formatRupiah(nominal:number){
     return formatToString(nominal);
+  }
+
+  approve(point:any){
+    this.point=point;
+    this.point.statusId=2;
+    console.log(this.point);
+
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept:()=>{
+        this.depositsService.putDeposits(this.point).subscribe({
+          next: (data)=>{
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'The request has been approved!',
+            });
+            this.loadData(this.page);
+          },
+          error: (err)=>{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Input Failed',
+            });
+          }
+        })
+      },
+      reject: () => {
+      },
+    });
+  }
+
+  delete(id:any){
+    this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure that you want to perform this action?',
+      accept:()=>{
+        this.depositsService.deleteDeposits(id).subscribe({
+          next: (data)=>{
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'The request has been approved!',
+            });
+            this.loadData(this.page);
+          },
+          error: (err)=>{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Input Failed',
+            });
+          }
+        })
+      },
+      reject: () => {
+      },
+    });
   }
 }
