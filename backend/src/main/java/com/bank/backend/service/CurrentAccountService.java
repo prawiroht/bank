@@ -47,7 +47,7 @@ public class CurrentAccountService {
     private CurrentAccount toEntity(CurrentAccountWrapper wrapper) {
         CurrentAccount entity = new CurrentAccount();
         if (wrapper.getCurrentAccountId() != null) {
-            entity = currentAccountRepository.getById(wrapper.getAccountTypeId());
+            entity = currentAccountRepository.getById(wrapper.getCurrentAccountId());
         }
         entity.setUniversity(universityRepository.getById(wrapper.getUniversityId()));
         entity.setBank(bankRepository.getById(wrapper.getBankId()));
