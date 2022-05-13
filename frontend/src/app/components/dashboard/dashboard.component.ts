@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
       {
         label: 'Penampungan',
         icon: 'pi pi-fw pi-tag',
+        routerLink: '/dashboard-container'
         
       },
       {
@@ -52,7 +53,7 @@ export class DashboardComponent implements OnInit {
       {
         label: 'Pengeluaran',
         icon: 'pi pi-fw pi-cog',
-        
+        routerLink: '/dashboard-expenditure'
       }
     ];
     this.itemInput = [

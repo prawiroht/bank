@@ -43,4 +43,12 @@ export class ExpenditureService {
   deleteExpenditure(id:number):Observable<any>{
     return this.http.delete<any>(API_URL+'expenditure/delete?id='+id,httpOptions);
   }
+
+  getExpenditureByDateAndBank(startDate:string, endDate: string, bankId: number):Observable<any>{
+    return this.http.get<any>(API_URL + 'expenditure/getTotalExpenditureWithParam?startDate=' + startDate + '&endDate=' + endDate + '&bankId=' + bankId , httpOptions);
+  }
+
+  getApprovedExpenditure():Observable<any>{
+    return this.http.get<any>(API_URL + 'expenditure/findByApprovedStatus?page=0&size=100' , httpOptions);
+  }
 }

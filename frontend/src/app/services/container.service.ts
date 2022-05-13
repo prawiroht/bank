@@ -43,4 +43,14 @@ export class ContainerService {
   deleteContainer(id:number):Observable<any>{
     return this.http.delete<any>(API_URL+'container/delete?containerId='+id,httpOptions);
   }
+
+  
+  getContainerByDateAndBank(startDate:string, endDate: string, bankId: number):Observable<any>{
+    return this.http.get<any>(API_URL + 'container/getTotalContainerWithParam?startDate=' + startDate + '&endDate=' + endDate + '&bankId=' + bankId , httpOptions);
+  }
+
+  getApprovedContainer():Observable<any>{
+    return this.http.get<any>(API_URL + 'container/findByApprovedStatus?page=0&size=100' , httpOptions);
+  }
+
 }
